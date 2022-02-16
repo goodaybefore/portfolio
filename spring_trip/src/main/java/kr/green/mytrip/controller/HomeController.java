@@ -17,7 +17,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {
-		mv.setViewName("/main/home");
+		mv.setViewName("/main/main");
 		return mv;
 	}
 	
