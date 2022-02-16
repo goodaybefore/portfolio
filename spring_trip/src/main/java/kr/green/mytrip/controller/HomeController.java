@@ -14,24 +14,34 @@ import kr.green.mytrip.vo.MemberVO;
 public class HomeController {
 	@Autowired
 	MemberService memberService;
-	
+
+	//메인
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(ModelAndView mv) {
 		mv.setViewName("/main/main");
 		return mv;
 	}
 	
+	//회원가입
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signupGet(ModelAndView mv) {
 		mv.setViewName("/member/signup");
 		return mv;
 	}
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public ModelAndView loginPost(ModelAndView mv) {
+		mv.setViewName("/member/signup");
+		return mv;
+	}
 	
+	//로그인
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginGet(ModelAndView mv) {
 		mv.setViewName("/member/login");
 		return mv;
 	}
+	
+	
 	
 	
 }
