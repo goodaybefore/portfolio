@@ -31,6 +31,23 @@ public class MemberServiceImp implements MemberService {
 		memberDao.insertMember(member);
 		return true;
 	}
+	@Override
+	public MemberVO loginMember(MemberVO input) {
+		if(input == null) return null;
+		if(input.getMe_id()==null || input.getMe_pw()==null) return null;
+		
+		//id로 db회원 불러오기
+		MemberVO dbuser = memberDao.selectMember(input.getMe_id());
+		if(dbuser == null) return null;
+		
+		//input user의 비밀번호가 일치하는지 확인
+		if(dbuser.getMe_id().equals(input.getMe_id()) && passwordEncoder.matches(input.getMe_pw(), dbuser.getMe_pw())) {
+			return dbuser;
+		}
+		
+		
+		return null;
+	}
 	
 }
 

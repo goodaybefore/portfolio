@@ -29,7 +29,7 @@ public class HomeController {
 		return mv;
 	}
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ModelAndView loginPost(ModelAndView mv, MemberVO member) {
+	public ModelAndView signupPost(ModelAndView mv, MemberVO member) {
 		boolean isSignup = memberService.insertMember(member);
 		if(isSignup) {
 			mv.setViewName("redirect:/");
@@ -45,6 +45,16 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginGet(ModelAndView mv) {
 		mv.setViewName("/member/login");
+		return mv;
+	}
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView loginPost(ModelAndView mv, MemberVO input) {
+		MemberVO user = memberService.loginMember(input);
+		if(user == null) {
+			mv.setViewName("redirect:/login");
+		}else{
+			mv.setViewName("redirect:/");
+		}
 		return mv;
 	}
 	
