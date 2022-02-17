@@ -3,4 +3,18 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.green.mytrip.dao.MemberDAO">
+	
+	<select id="selectMember" resultType="kr.green.mytrip.vo.MemberVO">
+		SELECT * FROM member
+		WHERE
+			me_id = #{me_id};
+	</select>
+	
+	<insert id="insertMember">
+		INSERT INTO member (me_id, me_pw, me_name, me_gender, me_phone, me_email, me_birth, me_gr_name, me_op_num)
+		VALUES (
+			#{user.me_id}, #{user.me_pw}, #{user.me_name}, #{user.me_gender}, #{user.me_phone},
+			#{user.me_email}, #{user.me_birth}, #{user.me_gr_name}, #{user.me_op_num}
+		);
+	</insert>
 </mapper>
