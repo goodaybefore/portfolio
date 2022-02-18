@@ -5,3 +5,12 @@
 */
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
+
+//main 페이지 script
+(function($) {
+	$('form').submit(function(){
+		
+	});
+
+
+})(jQuery);

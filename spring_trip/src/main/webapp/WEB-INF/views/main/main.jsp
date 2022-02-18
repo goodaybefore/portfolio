@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -17,6 +18,7 @@
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&amp;display=swap" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="resources/assets/css/main/styles.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.js"></script>
     </head>
     <body>
         <!-- Background Video-->
@@ -34,34 +36,26 @@
                     <!-- To make this form functional, sign up at-->
                     <!-- https://startbootstrap.com/solution/contact-forms-->
                     <!-- to get an API token!-->
-                    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                        <!-- Email address input-->
-                        <div class="row input-group-newsletter">
-                        	<div class="form-group mt-3 col-12"><input class="form-control" id="me_id" type="text" placeholder="Enter your id..." aria-label="Enter your id..." /></div>
-                         	<div class="form-group mt-3 col-12"><input class="form-control" id="me_pw" type="password" placeholder="Enter your password..." aria-label="Enter your password..." /></div>
-													<div class="form-group mt-3" style="float: left; width: 50%;"></div>
-													<div class="form-group mt-3" style="float: right; width: 50%;"><button class="btn btn-primary" style="float: right;" type="submit">get started!</button></div>
-													<div class="form-group" style="float: right; width: 100%;"><a href="#" class="" id="" style="float: right; margin-right: 5px;">guest login</a></div>
-							
-                        </div>
-                        <!-- Submit success message-->
-                        <!---->
-                        <!-- This is what your users will see when the form-->
-                        <!-- has successfully submitted-->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3 mt-2">
-                                <div class="fw-bolder">Form submission successful!</div>
-                                To activate this form, sign up at
-                                <br />
-                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                            </div>
-                        </div>
-                        <!-- Submit error message-->
-                        <!---->
-                        <!-- This is what your users will see when there is-->
-                        <!-- an error submitting the form-->
-                        <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3 mt-2">Error sending message!</div></div>
-                    </form>
+                    <c:if test="${user==null}">
+	                    <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="<%=request.getContextPath()%>/login" method="post">
+	                        <!-- Email address input-->
+	                      <div class="row input-group-newsletter">
+	                      	<div class="form-group mt-3 col-12"><input class="form-control" name="me_id" type="text" placeholder="Enter your id..." aria-label="Enter your id..." /></div>
+	                       	<div class="form-group mt-3 col-12"><input class="form-control" name="me_pw" type="password" placeholder="Enter your password..." aria-label="Enter your password..." /></div>
+							<div class="form-group mt-3" style="float: left; width: 50%;"></div>
+							<div class="form-group mt-3" style="float: right; width: 50%;"><button class="btn btn-primary" style="float: right;" type="submit">get started!</button></div>
+							<div class="form-group" style="float: right; width: 100%;"><a href="#" class="" id="" style="float: right; margin-right: 5px;">guest login</a></div>
+	                      </div>
+	                    </form>
+					</c:if>
+					<c:if test="${user != null}">
+						logout<br>
+						myspot<br>
+						tripmate<br>
+						notice<br>
+						event<br>
+						special trip<br>
+					</c:if>
                 </div>
             </div>
         </div>

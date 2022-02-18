@@ -14,6 +14,8 @@ public class MemberServiceImp implements MemberService {
 	
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	
+	//signup
 	@Override
 	public boolean insertMember(MemberVO member) {
 		if(member.getMe_id()==null || member.getMe_pw()==null || member.getMe_pw().length()==0) return false;
@@ -31,6 +33,8 @@ public class MemberServiceImp implements MemberService {
 		memberDao.insertMember(member);
 		return true;
 	}
+	
+	//login
 	@Override
 	public MemberVO loginMember(MemberVO input) {
 		if(input == null) return null;
@@ -42,6 +46,7 @@ public class MemberServiceImp implements MemberService {
 		
 		//input user의 비밀번호가 일치하는지 확인
 		if(dbuser.getMe_id().equals(input.getMe_id()) && passwordEncoder.matches(input.getMe_pw(), dbuser.getMe_pw())) {
+			System.out.println("로그인성공");
 			return dbuser;
 		}
 		

@@ -1,6 +1,8 @@
 package kr.green.mytrip.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +19,27 @@ public class HomeController {
 
 	//메인
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView home(ModelAndView mv) {
+	public ModelAndView home(ModelAndView mv, HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		mv.addObject("user", user);
 		mv.setViewName("/main/main");
 		return mv;
 	}
+	
+	
+	//로그인
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView loginPost(ModelAndView mv, MemberVO input) {
+		MemberVO user = memberService.loginMember(input);
+		if(user == null) {
+			mv.setViewName("redirect:/");
+		}else{
+			mv.setViewName("redirect:/myspot/home");
+			mv.addObject("user", user);
+		}
+		return mv;
+	}
+	
 	
 	//회원가입
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -40,24 +59,6 @@ public class HomeController {
 		
 		return mv;
 	}
-	
-	//로그인
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView loginGet(ModelAndView mv) {
-		mv.setViewName("/member/login");
-		return mv;
-	}
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView loginPost(ModelAndView mv, MemberVO input) {
-		MemberVO user = memberService.loginMember(input);
-		if(user == null) {
-			mv.setViewName("redirect:/login");
-		}else{
-			mv.setViewName("redirect:/");
-		}
-		return mv;
-	}
-	
 	
 	
 	
