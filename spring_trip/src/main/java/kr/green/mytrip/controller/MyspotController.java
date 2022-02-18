@@ -17,8 +17,16 @@ public class MyspotController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView myspotHome(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		System.out.println("myspot home session : "+user);
+		mv.addObject("user", user);
 		mv.setViewName("/myspot/home");
+		return mv;
+	}
+	
+	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
+	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		mv.addObject("user", user);
+		mv.setViewName("/myspot/tripList");
 		return mv;
 	}
 

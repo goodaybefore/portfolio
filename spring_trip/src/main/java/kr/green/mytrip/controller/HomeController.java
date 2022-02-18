@@ -41,6 +41,14 @@ public class HomeController {
 	}
 	
 	
+	//로그아웃
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logoutGet(ModelAndView mv, HttpServletRequest request) {
+		request.getSession().removeAttribute("user");
+		mv.setViewName("redirect:/");
+		return mv;
+	}
+	
 	//회원가입
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signupGet(ModelAndView mv) {

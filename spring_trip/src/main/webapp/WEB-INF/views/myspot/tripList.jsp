@@ -16,7 +16,7 @@
 						<div class="inner">
 							<!-- Header -->
 								<header id="header">
-									<a href="/" class="logo"><strong>MY SPOT</strong></a>
+									<a href="/" class="logo"><strong>My Trip List</strong> ${user.me_id}</a>
 									<ul class="icons">
 										<c:if test="${user==null}"><li><a href="<%=request.getContextPath()%>/" class=""><span class="label">login</span></a></li></c:if>
 										<c:if test="${user!=null}"><li><a href="<%=request.getContextPath()%>/logout" class=""><span class="label">logout</span></a></li></c:if>
@@ -31,10 +31,10 @@
 								<section id="banner">
 									<div class="content">
 										<header>
-											<h1>My Spot Home</h1>
-											<p></p>
+											<h1>TRIP LIST</h1>
+											<p>여행지 목록을 등록해보세요</p>
 										</header>
-										<p>dd</p>
+										<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
 										<ul class="actions">
 											<li><a href="#" class="button big">Learn More</a></li>
 										</ul>
@@ -145,36 +145,40 @@
 					<div id="sidebar">
 						<div class="inner">
 
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
 
 							<!-- Menu -->
 								<nav id="menu">
 									<header class="major">
-										<h2>My Menu</h2>
-									<section id="search" class="alt">
-										<form method="post" action="#">
-											<input type="text" name="query" id="query" placeholder="Search" />
-										</form>
-									</section>
+										<h2>Menu</h2>
 									</header>
 									<ul>
-										<li><a href="<%=request.getContextPath()%>/myspot/home">my spot home</a></li>
+										<li><a href="/">Homepage</a></li>
+										<li><a href="/">Generic</a></li>
+										<li><a href="/">Elements</a></li>
 										<li>
-											<span class="opener">trip</span>
+											<span class="opener">Submenu</span>
 											<ul>
-												<li><a href="#">Default-Menu(Trip Plan)</a></li>
-												<li><a href="#">Add-Menu-1</a></li>
-												<li><a href="#">Add-Menu-2</a></li>
-												<li><a href="#">Add-Menu-3</a></li>
-												<li><a href="#">Add-Menu-4</a></li>
-												<li><a href="#">Add-Menu-5</a></li>
-												
+												<li><a href="#">Lorem Dolor</a></li>
+												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
 											</ul>
 										</li>
+										<li><a href="#">Etiam Dolore</a></li>
+										<li><a href="#">Adipiscing</a></li>
 										<li>
-											<span class="opener">Tripmate</span>
+											<span class="opener">Another Submenu</span>
 											<ul>
-												<li><a href="#">request</a></li>
-												<li><a href="#">my tripmates</a></li>
+												<li><a href="#">Lorem Dolor</a></li>
+												<li><a href="#">Ipsum Adipiscing</a></li>
+												<li><a href="#">Tempus Magna</a></li>
+												<li><a href="#">Feugiat Veroeros</a></li>
 											</ul>
 										</li>
 										<li><a href="#">Maximus Erat</a></li>
