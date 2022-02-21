@@ -19,6 +19,12 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="resources/assets/css/main/styles.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.js"></script>
+        <style>
+        .login-menu {
+        color : white;
+        font-weight : bold;
+        }
+        </style>
     </head>
     <body>
         <!-- Background Video-->
@@ -42,19 +48,19 @@
 	                      <div class="row input-group-newsletter">
 	                      	<div class="form-group mt-3 col-12"><input class="form-control" name="me_id" type="text" placeholder="Enter your id..." aria-label="Enter your id..." /></div>
 	                       	<div class="form-group mt-3 col-12"><input class="form-control" name="me_pw" type="password" placeholder="Enter your password..." aria-label="Enter your password..." /></div>
-							<div class="form-group mt-3" style="float: left; width: 50%;"></div>
+							<div class="form-group mt-3" style="float: left; width: 50%;"><a href="<%=request.getContextPath()%>/signup">sign up>></a></div>
 							<div class="form-group mt-3" style="float: right; width: 50%;"><button class="btn btn-primary" style="float: right;" type="submit">get started!</button></div>
-							<div class="form-group" style="float: right; width: 100%;"><a href="<%=request.getContextPath()%>/" class="" id="" style="float: right; margin-right: 5px;">guest login</a></div>
+							<div class="form-group" style="float: right; width: 100%;"><a href="<%=request.getContextPath()%>/board/notice" class="" id="" style="float: right; margin-right: 5px;">guest login>></a></div>
 	                      </div>
 	                    </form>
 					</c:if>
 					<c:if test="${user != null}">
-						logout<br>
-						myspot<br>
-						tripmate<br>
-						notice<br>
-						event<br>
-						special trip<br>
+						<a class="login-menu" href="<%=request.getContextPath()%>/logout">logout</a><br>
+						<a class="login-menu" href="<%=request.getContextPath()%>/myspot/home">myspot</a><br>
+						<a class="login-menu" href="<%=request.getContextPath()%>/myspot/tripmate_list">tripmate</a><br>
+						<a class="login-menu" href="<%=request.getContextPath()%>/board/notice">notice</a><br>
+						<a class="login-menu" href="<%=request.getContextPath()%>/board/event">event</a><br>
+						<a class="login-menu" href="<%=request.getContextPath()%>/board/special_trip">special trip</a><br>
 					</c:if>
                 </div>
             </div>

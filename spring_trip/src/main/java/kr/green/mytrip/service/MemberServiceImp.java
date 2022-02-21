@@ -28,7 +28,7 @@ public class MemberServiceImp implements MemberService {
 		//회원 기본 등급 저장
 		member.setMe_gr_name("트립비기너");
 		//기본 공개 범우 저장
-		member.setMe_op_num("1");
+		member.setMe_op_name("전체공개");
 		//DB에 회원 추가
 		memberDao.insertMember(member);
 		return true;

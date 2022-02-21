@@ -34,7 +34,7 @@
 											<h1>My Spot Home</h1>
 											<p></p>
 										</header>
-										<p>dd</p>
+										<p>${user.me_id }</p>
 										<ul class="actions">
 											<li><a href="#" class="button big">Learn More</a></li>
 										</ul>
@@ -161,7 +161,7 @@
 										<li>
 											<span class="opener">trip</span>
 											<ul>
-												<li><a href="#">Default-Menu(Trip Plan)</a></li>
+												<li><a href="<%=request.getContextPath()%>/member/mymenu/default">Default-Menu(Trip Plan)</a></li>
 												<li><a href="#">Add-Menu-1</a></li>
 												<li><a href="#">Add-Menu-2</a></li>
 												<li><a href="#">Add-Menu-3</a></li>
@@ -173,13 +173,18 @@
 										<li>
 											<span class="opener">Tripmate</span>
 											<ul>
-												<li><a href="#">request</a></li>
-												<li><a href="#">my tripmates</a></li>
+												<li><a href="<%=request.getContextPath()%>/myspot/tripmate_request">request</a></li>
+												<li><a href="<%=request.getContextPath()%>/myspot/my_tripmates">my tripmates</a></li>
 											</ul>
 										</li>
-										<li><a href="#">Maximus Erat</a></li>
-										<li><a href="#">Sapien Mauris</a></li>
-										<li><a href="#">Amet Lacinia</a></li>
+										<li>
+											<span class="opener">trip info</span>
+											<ul>
+												<li><a href="<%=request.getContextPath()%>/board/notice">notice</a></li>
+												<li><a href="<%=request.getContextPath()%>/board/special_trip">today's trip</a></li>
+											</ul>
+										</li>
+										<li><a href="<%=request.getContextPath()%>/member/mypage">my page</a></li>
 									</ul>
 								</nav>
 

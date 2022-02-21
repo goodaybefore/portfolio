@@ -11,10 +11,10 @@
 	</select>
 	
 	<insert id="insertMember">
-		INSERT INTO member (me_id, me_pw, me_name, me_gender, me_phone, me_email, me_birth, me_gr_name, me_op_num)
+		INSERT INTO member (me_id, me_pw, me_name, me_gender, me_phone, me_email, me_birth, me_gr_name, me_op_name)
 		VALUES (
 			#{user.me_id}, #{user.me_pw}, #{user.me_name}, #{user.me_gender}, #{user.me_phone},
-			#{user.me_email}, #{user.me_birth}, #{user.me_gr_name}, #{user.me_op_num}
+			#{user.me_email}, #{user.me_birth}, #{user.me_gr_name}, #{user.me_op_name}
 		);
 	</insert>
 </mapper>

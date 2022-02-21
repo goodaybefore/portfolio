@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.green.mytrip.dao.BoardDAO">
+	
+	
+	<insert id="insertBoard">
+	INSERT INTO board (	bd_title, bd_contents, bd_me_id, bd_date, bd_op_name, bd_type )
+	VALUES( #{board.bd_title},  #{board.bd_contents},  #{board.bd_me_id},  now(),  #{board.bd_op_name},  #{board.bd_type} );
+		
+	</insert>
+</mapper>
