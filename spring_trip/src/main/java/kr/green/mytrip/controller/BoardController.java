@@ -26,6 +26,7 @@ public class BoardController {
 		return mv;
 	}
 	
+	//등록
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView boardRegisteGetr(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
@@ -44,5 +45,12 @@ public class BoardController {
 		return mv;
 	}
 	
+	//확인
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public ModelAndView boardDetailGet(ModelAndView mv, Integer bd_num) {
+		System.out.println("bd_num : "+bd_num);
+		mv.setViewName("/board/detail");
+		return mv;
+	}
 	
 }
