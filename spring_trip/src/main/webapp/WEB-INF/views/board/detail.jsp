@@ -19,7 +19,11 @@
 		
 		<!-- 이 템플릿의 원래 css -->
 		<link rel="stylesheet" href="/resources/assets/css/myspot/main.css" />
-		
+		<style>
+		textarea.bd_contents{
+			resize: none;
+		}
+		</style>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -29,7 +33,7 @@
 						<div class="inner">
 							<!-- Header -->
 								<header id="header">
-									<a href="/" class="logo"><strong>Board</strong></a>
+									<a href="<%=request.getContextPath()%>/board/list" class="logo"><strong>Board</strong></a>
 									<ul class="icons">
 										<c:if test="${user==null}"><li><a href="<%=request.getContextPath()%>/" class=""><span class="label">login</span></a></li></c:if>
 										<c:if test="${user!=null}"><li><a href="<%=request.getContextPath()%>/logout" class=""><span class="label">logout</span></a></li></c:if>
@@ -44,46 +48,24 @@
 							<section id="banner">
 								<div class="content">
 									<header>
-										<h1>Notice</h1>
-										<p>공지가 올라오는 Board 게시판(트립매니저, 트립파트너만 작성가능)</p>
+										<h1>Detail</h1>
+										<p>게시글 상세</p>
+										<div class="board bd_title">
+											<p><strong>${board.bd_title}</strong></p>
+										</div>
+										
+										<div class="board bd_contents">
+											<textarea class="bd_contents" rows="10" readonly>${board.bd_contents}</textarea>
+										</div>
 									</header>
 								</div>
-								<span class="image object">
-								</span>
+								<span>span 태그 테스트</span>
+								ㅗㅑ
 							</section>
 							
-							
-							<table class="table table-hover">
-							  <thead>
-							    <tr>
-							      <th scope="col">#</th>
-							      <th scope="col">First</th>
-							      <th scope="col">Last</th>
-							      <th scope="col">Handle</th>
-							    </tr>
-							  </thead>
-							  <tbody>
-							    <tr>
-							      <th scope="row">1</th>
-							      <td>Mark</td>
-							      <td>Otto</td>
-							      <td>@mdo</td>
-							    </tr>
-							    <tr>
-							      <th scope="row">2</th>
-							      <td>Jacob</td>
-							      <td>Thornton</td>
-							      <td>@fat</td>
-							    </tr>
-							    <tr>
-							      <th scope="row">3</th>
-							      <td colspan="2">Larry the Bird</td>
-							      <td>@twitter</td>
-							    </tr>
-							  </tbody>
-							</table>
 					<c:if test="${user.me_gr_name == '트립매니저' || user.me_gr_name =='트립파트너'}">
-						<a href="<%=request.getContextPath()%>/board/register" style="border-bottom : none;"><button>write</button></a>
+						<a href="<%=request.getContextPath()%>/board/register" style="border-bottom : none;"><button>modify</button></a>
+						<a href="<%=request.getContextPath()%>/board/register" style="border-bottom : none;"><button>delete</button></a>
 					</c:if>
 					</div>
 				</div>
@@ -108,7 +90,7 @@
 												<li>
 													<span class="opener">trip</span>
 													<ul>
-														<li><a href="#">Default-Menu(Trip Plan)</a></li>
+														<li><a href="<%=request.getContextPath()%>/member/trip">Default-Menu(Trip Plan)</a></li>
 														<li><a href="#">Add-Menu-1</a></li>
 														<li><a href="#">Add-Menu-2</a></li>
 														<li><a href="#">Add-Menu-3</a></li>

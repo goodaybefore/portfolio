@@ -1,5 +1,7 @@
 package kr.green.mytrip.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,13 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	@RequestMapping(value = "/notice", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView notice(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		List<BoardVO> boardList = boardService.getBoardList();
+		mv.addObject("list", boardList);
 		mv.addObject("user", user);
-		mv.setViewName("/board/notice");
+		mv.setViewName("/board/list");
 		return mv;
 	}
 	
@@ -40,16 +44,27 @@ public class BoardController {
 	public ModelAndView boardRegisterPost(ModelAndView mv, HttpServletRequest request, BoardVO board) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		boolean isInsert = boardService.registerBoard(board, user);
-		System.out.println(isInsert);
-		mv.setViewName("/board/register");
+		if(!isInsert) {
+			mv.setViewName("/board/register");
+		}else {
+			mv.setViewName("redirect:/board/list");
+		}
+		
+		
 		return mv;
 	}
 	
 	//확인
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public ModelAndView boardDetailGet(ModelAndView mv, Integer bd_num) {
-		System.out.println("bd_num : "+bd_num);
-		mv.setViewName("/board/detail");
+		BoardVO board = boardService.getBoard(bd_num);
+		if(board==null) {
+			mv.setViewName("redirece:/board/list");
+		}else {
+			mv.addObject("board", board);
+			mv.setViewName("/board/detail");
+		}
+		
 		return mv;
 	}
 	

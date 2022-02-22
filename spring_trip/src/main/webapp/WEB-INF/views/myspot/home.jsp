@@ -161,7 +161,7 @@
 										<li>
 											<span class="opener">trip</span>
 											<ul>
-												<li><a href="<%=request.getContextPath()%>/member/mymenu/default">Default-Menu(Trip Plan)</a></li>
+												<li><a href="<%=request.getContextPath()%>/member/trip">Default-Menu(Trip Plan)</a></li>
 												<li><a href="#">Add-Menu-1</a></li>
 												<li><a href="#">Add-Menu-2</a></li>
 												<li><a href="#">Add-Menu-3</a></li>
@@ -180,7 +180,7 @@
 										<li>
 											<span class="opener">trip info</span>
 											<ul>
-												<li><a href="<%=request.getContextPath()%>/board/notice">notice</a></li>
+												<li><a href="<%=request.getContextPath()%>/board/list">notice</a></li>
 												<li><a href="<%=request.getContextPath()%>/board/special_trip">today's trip</a></li>
 											</ul>
 										</li>
