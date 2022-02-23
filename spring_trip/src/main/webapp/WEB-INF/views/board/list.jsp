@@ -99,7 +99,7 @@
 												<li>
 													<span class="opener">trip</span>
 													<ul>
-														<li><a href="#">Default-Menu(Trip Plan)</a></li>
+														<li><a href="<%=request.getContextPath()%>/myspot/tripList">Default-Menu(Trip Plan)</a></li>
 														<li><a href="#">Add-Menu-1</a></li>
 														<li><a href="#">Add-Menu-2</a></li>
 														<li><a href="#">Add-Menu-3</a></li>
