@@ -1,6 +1,9 @@
 package kr.green.mytrip.controller;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,10 @@ public class HomeController {
 		if(user == null) {
 			mv.setViewName("redirect:/");
 		}else{
+			//회원의 사용자메뉴리스트 불러오기
+			List<String> menuList = memberService.getMenuList(user);
+			System.out.println("menuList : "+menuList);
+			mv.addObject("menu", menuList);
 			mv.setViewName("redirect:/myspot/home");
 			mv.addObject("user", user);
 		}
