@@ -17,4 +17,15 @@
 			#{user.me_email}, #{user.me_birth}, #{user.me_gr_name}, #{user.me_op_name}
 		);
 	</insert>
+	
+	<insert id="insertDefaultMenu">
+		INSERT INTO spot_menu (sm_me_id, sm_name)
+		VALUES (
+			#{menu.sm_me_id}, #{menu.sm_name}
+		);
+	</insert>
+	
+	<select id="selectMenuList" resultType="String">
+		SELECT sm_name FROM spot_menu WHERE sm_me_id = #{user.me_id};
+	</select>
 </mapper>

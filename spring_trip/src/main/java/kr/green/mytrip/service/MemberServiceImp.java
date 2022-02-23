@@ -1,11 +1,14 @@
 package kr.green.mytrip.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import kr.green.mytrip.dao.MemberDAO;
 import kr.green.mytrip.vo.MemberVO;
+import kr.green.mytrip.vo.SpotMenuVO;
 
 @Service
 public class MemberServiceImp implements MemberService {
@@ -29,8 +32,13 @@ public class MemberServiceImp implements MemberService {
 		member.setMe_gr_name("트립비기너");
 		//기본 공개 범우 저장
 		member.setMe_op_name("전체공개");
+		
 		//DB에 회원 추가
 		memberDao.insertMember(member);
+		//기본메뉴 생성
+		SpotMenuVO menu = new SpotMenuVO(member.getMe_id());
+		memberDao.insertDefaultMenu(menu);
+		
 		return true;
 	}
 	
@@ -53,6 +61,13 @@ public class MemberServiceImp implements MemberService {
 		
 		return null;
 	}
+	//login - 사용자 메뉴리스트 불러오기
+	@Override
+	public List<String> getMenuList(MemberVO user) {
+		return memberDao.selectMenuList(user);
+	}
+
+	
 	
 }
 
