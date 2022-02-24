@@ -190,13 +190,9 @@
 									<li>
 										<span class="opener">trip</span>
 										<ul>
-											<li><a href="#">Default-Menu(Trip Plan)</a></li>
-											<li><a href="#">Add-Menu-1</a></li>
-											<li><a href="#">Add-Menu-2</a></li>
-											<li><a href="#">Add-Menu-3</a></li>
-											<li><a href="#">Add-Menu-4</a></li>
-											<li><a href="#">Add-Menu-5</a></li>
-											
+										<c:forEach items="${menu}" var="menu">
+											<li><a href="<%=request.getContextPath()%>/myspot/tripList?menu=${menu}">${menu}</a></li>
+										</c:forEach>
 										</ul>
 									</li>
 									<li>
@@ -216,7 +212,6 @@
 									<li><a href="#">my page</a></li>
 								</ul>
 							</nav>
-							
 						</div>
 					</div>
 

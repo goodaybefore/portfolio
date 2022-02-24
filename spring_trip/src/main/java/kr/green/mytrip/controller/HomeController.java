@@ -39,10 +39,9 @@ public class HomeController {
 		}else{
 			//회원의 사용자메뉴리스트 불러오기
 			List<String> menuList = memberService.getMenuList(user);
-			System.out.println("menuList : "+menuList);
-			mv.addObject("menu", menuList);
 			mv.setViewName("redirect:/myspot/home");
 			mv.addObject("user", user);
+			mv.addObject("menu", menuList);
 		}
 		return mv;
 	}

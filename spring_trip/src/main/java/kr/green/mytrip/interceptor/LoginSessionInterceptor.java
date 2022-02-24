@@ -19,11 +19,12 @@ public class LoginSessionInterceptor extends HandlerInterceptorAdapter {
 	    throws Exception {
 	    ModelMap modelMap = modelAndView.getModelMap();
 	    Object user = (Object)modelMap.get("user");
+	    Object menu = (Object)modelMap.get("menu");
 	    
-	    System.out.println("login Interceptor : "+user);
 	    if(user != null) {
 	        HttpSession session = request.getSession();
 	        session.setAttribute("user", user);
+	        session.setAttribute("menu", menu);
 	    }
 	}
 }
