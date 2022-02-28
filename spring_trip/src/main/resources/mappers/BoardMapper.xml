@@ -11,10 +11,14 @@
 	</insert>
 	
 	<select id="selectBoardList" resultType="kr.green.mytrip.vo.BoardVO">
-		SELECT * FROM board WHERE bd_op_name="전체공개" OR bd_op_name="회원공개" ORDER BY bd_num DESC;
+		SELECT * FROM board WHERE bd_op_name="전체공개" OR bd_op_name="회원공개" ORDER BY bd_num DESC LIMIT #{cri.pageStart}, #{cri.perPageNum};
 	</select>
 	
 	<select id="selectBoard" resultType="kr.green.mytrip.vo.BoardVO">
 		SELECT * FROM board WHERE bd_num = #{bd_num};
+	</select>
+	
+	<select id="selectTotalBoardCount" resultType="int">
+		SELECT COUNT(*) FROM board;
 	</select>
 </mapper>

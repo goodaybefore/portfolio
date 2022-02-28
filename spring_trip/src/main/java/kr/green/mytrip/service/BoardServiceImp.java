@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.green.mytrip.dao.BoardDAO;
+import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.vo.BoardVO;
 import kr.green.mytrip.vo.MemberVO;
 
@@ -34,8 +35,8 @@ public class BoardServiceImp implements BoardService{
 	
 	//board list 게시글 목록 가져오기
 	@Override
-	public List<BoardVO> getBoardList() {
-		return boardDao.selectBoardList();
+	public List<BoardVO> getBoardList(Criteria cri) {
+		return boardDao.selectBoardList(cri);
 	}
 
 	//board detail 게시글 1개 가져오기
@@ -45,6 +46,13 @@ public class BoardServiceImp implements BoardService{
 		BoardVO board = boardDao.selectBoard(bd_num);
 		if(board == null) return null;
 		return board;
+	}
+	
+	
+	//pagination
+	@Override
+	public int getTotalBoardCount() {
+		return boardDao.selectTotalBoardCount();
 	}
 	
 	

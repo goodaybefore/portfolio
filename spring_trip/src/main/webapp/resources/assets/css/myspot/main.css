@@ -119,6 +119,14 @@ a {
     color: #f56a6a !important; }
     a:hover strong {
       color: inherit; }
+      
+a.disabled{
+	pointer-events: none;
+	cursor: default;	
+	border-bottom : none !important;
+	color : #f7b2b2;
+}
+
 
 strong, b {
   color: #3d4449;

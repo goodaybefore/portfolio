@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.green.mytrip.pagination.Criteria;
+import kr.green.mytrip.pagination.PageMaker;
 import kr.green.mytrip.service.BoardService;
 import kr.green.mytrip.vo.BoardVO;
 import kr.green.mytrip.vo.MemberVO;
@@ -21,11 +23,14 @@ public class BoardController {
 	BoardService boardService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView notice(ModelAndView mv, HttpServletRequest request) {
-		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		List<BoardVO> boardList = boardService.getBoardList();
+	public ModelAndView notice(ModelAndView mv, Criteria cri) {
+		cri.setPerPageNum(5);
+		List<BoardVO> boardList = boardService.getBoardList(cri);
+		
+		int totalCount = boardService.getTotalBoardCount();
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
 		mv.addObject("list", boardList);
-		mv.addObject("user", user);
+		mv.addObject("pm", pm);
 		mv.setViewName("/board/list");
 		return mv;
 	}

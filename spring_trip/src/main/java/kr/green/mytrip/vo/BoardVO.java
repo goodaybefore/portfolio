@@ -1,5 +1,6 @@
 package kr.green.mytrip.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Data;
@@ -13,4 +14,10 @@ public class BoardVO {
 	private Date bd_date;
 	private String bd_op_name;
 	private String bd_type;
+	
+	public String getBd_date_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String str = format.format(bd_date);
+		return str;
+	}
 }

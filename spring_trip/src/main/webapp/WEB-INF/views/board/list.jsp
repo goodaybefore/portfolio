@@ -69,11 +69,23 @@
 							      <th scope="row">${list.bd_num}</th>
 							      <td><a href="<%=request.getContextPath()%>/board/detail?bd_num=${list.bd_num}">${list.bd_title}</a></td>
 							      <td>${list.bd_me_id}</td>
-							      <td>${list.bd_date}</td>
+							      <td>${list.bd_date_str}</td>
 							    </tr>
 							 </c:forEach>
 							  </tbody>
 							</table>
+							<!-- pagination -->
+							<ul class="pagination justify-content-center">
+								<li><a href="<%=request.getContextPath()%>/board/list?page=${pm.startPage-1}" class="<c:if test="${!pm.prev}">disabled</c:if>">Prev</a></li>
+								<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+									<li class="">
+										<a href="<%=request.getContextPath()%>/board/list?page=${i}" class="page <c:if test="${pm.criteria.page==i}">active</c:if>">${i}</a>
+									</li>
+								</c:forEach>
+								<li><a href="<%=request.getContextPath()%>/board/list?page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
+							</ul>
+							
+							
 					<c:if test="${user.me_gr_name == '트립매니저' || user.me_gr_name =='트립파트너'}">
 						<a href="<%=request.getContextPath()%>/board/register" style="border-bottom : none;"><button>write</button></a>
 					</c:if>

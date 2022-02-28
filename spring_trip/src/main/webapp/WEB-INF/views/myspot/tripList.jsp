@@ -44,9 +44,9 @@
 										    <tr>
 										      <th scope="col" style="width:50px;">num</th>
 										      <th scope="col" style="width:70px;" class="">area</th>
-										      <th scope="col" class="col-12">trip title</th>
-										      <th scope="col" class="col-3" style="width:200px;">period</th>
-										      <th scope="col" class="col-3" style="width:200px;">with</th>
+										      <th scope="col" class="col-12" style="min-width:200px;">trip title</th>
+										      <th scope="col" class="col-3" style="width:150px;">period</th>
+										      <th scope="col" class="col-3" style="width:100px;">with</th>
 										      <th scope="col" class="" style="width:90px;">공개범위</th>
 										      <th scope="col" class="" style="width:50px;">즐찾</th>
 										    </tr>
@@ -57,7 +57,7 @@
 										  		<td>지역</td>
 										  		<td style="text-overflow: ellipsis; overflow:hidden">2아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주 긴 여행제목</td>
 										  		<td>2022.02.20 ~ 2022.02.23</td>
-										  		<td>홍길동 홍길동 홍길동</td>
+										  		<td>홍길동 외 2</td>
 										  		<td>전체공개</td>
 										  		<td class="text-center">*</td>
 										  		
