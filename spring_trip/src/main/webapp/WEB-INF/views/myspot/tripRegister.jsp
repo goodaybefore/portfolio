@@ -129,6 +129,12 @@
 									</div>
 									<div class="trip-reg-box area-select-container">
 										<label>지역선택박스</label>
+										<div class="area-select-container">
+											<select>
+												${ }
+											</select>
+										</div>
+										<div class="area-select-container"><p>area-select-container</p></div>
 									</div>
 									<div class="trip-reg-box box-open-range">
 										<label class="open-range-label">

@@ -1,7 +1,9 @@
 package kr.green.mytrip.controller;
 
 import java.text.ParseException;
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.mytrip.service.TripService;
@@ -35,10 +38,27 @@ public class MyspotController {
 	@RequestMapping(value = "/tripReg", method = RequestMethod.GET)
 	public ModelAndView tripRegGet(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		//List<String> ;
 		mv.addObject("user", user); 
 		mv.setViewName("/myspot/tripRegister");
+		
 		return mv;
 	}
+	
+	//여행지 select box
+	@ResponseBody
+	@RequestMapping(value="/middlecategory", method = RequestMethod.GET)
+	public Map<String, Object> middleCategoryGet(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		return map;
+	}
+	@ResponseBody
+	@RequestMapping(value="/smallcategory", method = RequestMethod.GET)
+	public Map<String, Object> smallCategoryGet(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		return map;
+	}
+	
 	@RequestMapping(value = "/tripReg", method = RequestMethod.POST)
 	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, TripVO trip, String from) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
@@ -57,6 +77,8 @@ public class MyspotController {
 		mv.setViewName("/myspot/tripRegister");
 		return mv;
 	}
+	
+	
 	
 	//여행지(trip) 출력
 	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
