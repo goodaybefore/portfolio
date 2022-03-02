@@ -18,8 +18,7 @@ public class TripServiceImp implements TripService{
 
 	@Override
 	public boolean insertTrip(MemberVO user, TripVO trip) {
-		//필수로 들어가있어야 하는 항목 : tr_me_id, tr_sm_num(사용자메뉴번호), tr_sc_num(소분류), tr_op_name
-		
+		//필수로 들어가있어야 하는 항목 : tr_me_id, tr_ca_name, tr_ca_num(사용자메뉴번호), tr_sc_num(소분류), tr_op_name
 		if(user == null || trip== null || user.getMe_id()==null) return false;
 		//세션의 ID와 trip의 ID가 같지 않은 경우
 		if(!user.getMe_id().equals(trip.getTr_me_id())) return false;
@@ -27,7 +26,7 @@ public class TripServiceImp implements TripService{
 		if(trip.getTr_end_date() ==null) trip.setTr_end_date(trip.getTr_start_date());
 		
 		//현재의 사용자 메뉴 번호 추가
-		
+		System.out.println("trip 정보2 : \n "+trip);
 		
 		return false;
 	}

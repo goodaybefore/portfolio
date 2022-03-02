@@ -1,6 +1,7 @@
 package kr.green.mytrip.controller;
 
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,6 @@ public class MyspotController {
 	@RequestMapping(value = "/tripReg", method = RequestMethod.GET)
 	public ModelAndView tripRegGet(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		//List<String> ;
 		mv.addObject("user", user); 
 		mv.setViewName("/myspot/tripRegister");
 		
@@ -60,7 +60,6 @@ public class MyspotController {
 	@ResponseBody
 	@RequestMapping(value="/smallcategory", method = RequestMethod.GET)
 	public Map<String, Object> smallCategoryGet(Integer sc_mc_num){
-		System.out.println("sc_mc_num : "+sc_mc_num);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		List<SmallCategoryVO> list = tripService.selectSmallCategory(sc_mc_num);
 		map.put("list", list);
@@ -68,14 +67,20 @@ public class MyspotController {
 	}
 	
 	@RequestMapping(value = "/tripReg", method = RequestMethod.POST)
-	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, TripVO trip, String from) {
+	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, TripVO trip, String from, Integer sc_num, Integer mc_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		
 		//여행기간(String)을 Date로 변환
 		String tr_dates[] = from.split(" ~ ");
 		try {
 			trip.setTr_start_date_str(tr_dates[0]);
-			trip.setTr_end_date_str(tr_dates[1]);
+			System.out.println("tr_dates.length : "+tr_dates.length);
+			//*****잘못입력되었을때 alert 출력하는거 넣고싶음 *****
+			if(tr_dates.length < 1) mv.setViewName("redirect:/tripRegister");
+			if(tr_dates.length == 1) trip.setTr_end_date_str(tr_dates[0]);
+			if(tr_dates.length == 2) trip.setTr_end_date_str(tr_dates[1]);
+			if(tr_dates.length>2) mv.setViewName("redirect:/tripRegister");
+			
+			
 		} catch (ParseException e) {
 			System.out.println("tripReg에서의 period 변환 문제");
 			e.printStackTrace();

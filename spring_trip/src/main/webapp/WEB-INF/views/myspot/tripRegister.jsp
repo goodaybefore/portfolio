@@ -117,7 +117,7 @@
 							<div class="content">
 								<header>
 									<h1>Trip Register</h1>
-									<p>여행 등록</p>
+									<p>여행 등록 ${menu}</p>
 								</header>
 								<form action="<%=request.getContextPath()%>/myspot/tripReg" method="post">
 									<div class="trip-reg-box period-select-container">
@@ -146,6 +146,8 @@
 												<option value="0">세부선택</option>
 											</select>
 										</div>
+										<div class="area-select-mcnum"></div>
+										<div class="area-select-scnum"></div>
 									</div>
 									<div class="trip-reg-box box-open-range">
 										<label class="open-range-label">
