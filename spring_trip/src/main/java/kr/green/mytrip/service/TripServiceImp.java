@@ -1,10 +1,13 @@
 package kr.green.mytrip.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.green.mytrip.dao.TripDAO;
 import kr.green.mytrip.vo.MemberVO;
+import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.TripVO;
 
 @Service
@@ -26,6 +29,11 @@ public class TripServiceImp implements TripService{
 		
 		
 		return false;
+	}
+
+	@Override
+	public List<MiddleCategoryVO> selectMiddleCategory(int lc_num) {
+		return tripDao.selectMiddleCategory(lc_num);
 	}
 
 
