@@ -10,7 +10,7 @@ import lombok.Data;
 public class TripVO {
 	private int tr_num;
 	private String tr_me_id;
-	private int st_sm_num;
+	private int tr_sm_num;
 	private int tr_ca_name;//분류 카테고리 이름(large, middle, small)
 	private int tr_ca_num;//분류 번호
 	private String tr_title;

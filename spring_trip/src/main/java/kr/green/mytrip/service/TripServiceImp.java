@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.green.mytrip.dao.TripDAO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
+import kr.green.mytrip.vo.SmallCategoryVO;
 import kr.green.mytrip.vo.TripVO;
 
 @Service
@@ -32,8 +33,13 @@ public class TripServiceImp implements TripService{
 	}
 
 	@Override
-	public List<MiddleCategoryVO> selectMiddleCategory(int lc_num) {
+	public List<MiddleCategoryVO> selectMiddleCategory(Integer lc_num) {
 		return tripDao.selectMiddleCategory(lc_num);
+	}
+
+	@Override
+	public List<SmallCategoryVO> selectSmallCategory(Integer mc_num) {
+		return tripDao.selectSmallCategory(mc_num);
 	}
 
 

@@ -5,6 +5,10 @@
 <mapper namespace="kr.green.mytrip.dao.TripDAO">
 	
 	<select id="selectMiddleCategory" resultType="kr.green.mytrip.vo.MiddleCategoryVO">
-		SELECT mc_name FROM middle_category WHERE mc_lc_num = #{lc_num};
+		SELECT * FROM middle_category WHERE mc_lc_num = #{lc_num};
+	</select>
+	
+	<select id="selectSmallCategory" resultType="kr.green.mytrip.vo.SmallCategoryVO">
+		SELECT * FROM small_category WHERE sc_mc_num = #{mc_num};
 	</select>
 </mapper>

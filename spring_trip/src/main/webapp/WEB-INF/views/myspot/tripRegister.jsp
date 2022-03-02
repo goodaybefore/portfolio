@@ -138,12 +138,12 @@
 										<label style="flex:1;">지역선택박스</label>
 										<div class="area-select-box col-6">
 											<select class="middle-category">
-												<option value="null">시/도선택</option>
+												<option value="0">시/도선택</option>
 											</select>
 										</div>
 										<div class="area-select-box col-6">
 											<select class="small-category">
-												<option>세부선택</option>
+												<option value="0">세부선택</option>
 											</select>
 										</div>
 									</div>
@@ -235,28 +235,7 @@
 			</div>
 			<script>
 
-			setMiddleCategory();
-			console.log('hey123');
 			
-			function setMiddleCategory(){
-				let str = '<option value="null">시/도선택</option>';
-				$.ajax({
-						async :false,
-				    type:'get',
-				    url : '<%=request.getContextPath()%>/myspot/middlecategory',
-				    dataType:"json",
-				    success : function(res){
-				    	console.log("success!");
-				    	//str += '<option value="'+middle.mc_num+'">'+middle.mc_name+'</option>'
-				    	//$('.middle-category').html(str);
-				    	}
-				    ,error : function(a,b,c){
-				    	console.log(a);
-				    	console.log(b);
-				    	console.log(c);
-				    }
-				})
-			}
 			
 			</script>
 			<!-- <script src="/resources/assets/js/myspot/jquery.min.js"></script> -->

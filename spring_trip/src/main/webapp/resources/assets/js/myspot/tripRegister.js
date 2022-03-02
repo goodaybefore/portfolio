@@ -2,6 +2,51 @@
  * 
  */
 $(function() {
+	setMiddleCategory();
+	$('.middle-category').change(function(){
+		let mc_num = $(this).val();
+		console.log('mc_num : '+mc_num);
+		setSmallCategory(mc_num);
+	})
+	
+	function setMiddleCategory(){
+		let str = '<option value="0">시/도선택</option>';
+		$.ajax({
+				async :false,
+		    type:'get',
+		    url : '/myspot/middlecategory',
+		    dataType:"json",
+		    success : function(res){
+		    	for(middle of res.list){
+		    		str += '<option value="'+middle.mc_num+'">'+middle.mc_name+'</option>';
+		    	}
+		    	$('.middle-category').html(str);
+		    	}
+		})
+	}
+	
+	function setSmallCategory(mc_num){
+		let str = '<option value="0">세부선택</option>';
+		if(mc_num<=0){
+			$('.middle-category').html(str);
+			return;
+		}
+		$.ajax({
+				async :false,
+		    type:'get',
+		    url : '/myspot/smallcategory?sc_mc_num='+mc_num,
+		    dataType:"json",
+		    success : function(res){
+		    	for(small of res.list){
+		    		str += '<option value="'+small.sc_num+'">'+small.sc_name+'</option>';
+		    	}
+		    	$('.small-category').html(str);
+		    	}
+		})
+	}
+	
+			
+			
 	$('#from').daterangepicker({
 	    "locale": {
 	        "format": "YYYY-MM-DD",

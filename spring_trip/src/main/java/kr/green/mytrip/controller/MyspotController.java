@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.green.mytrip.service.TripService;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
+import kr.green.mytrip.vo.SmallCategoryVO;
 import kr.green.mytrip.vo.TripVO;
 
 
@@ -50,17 +51,19 @@ public class MyspotController {
 	@ResponseBody
 	@RequestMapping(value="/middlecategory", method = RequestMethod.GET)
 	public Map<String, Object> middleCategoryGet(){
-		int lc_num = 1;//large-category = '지역'
+		Integer lc_num = 1;//large-category = '지역'
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		List<MiddleCategoryVO> list = tripService.selectMiddleCategory(lc_num);
-		System.out.println("list"+list);
 		map.put("list", list);
 		return map;
 	}
 	@ResponseBody
 	@RequestMapping(value="/smallcategory", method = RequestMethod.GET)
-	public Map<String, Object> smallCategoryGet(){
+	public Map<String, Object> smallCategoryGet(Integer sc_mc_num){
+		System.out.println("sc_mc_num : "+sc_mc_num);
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<SmallCategoryVO> list = tripService.selectSmallCategory(sc_mc_num);
+		map.put("list", list);
 		return map;
 	}
 	
