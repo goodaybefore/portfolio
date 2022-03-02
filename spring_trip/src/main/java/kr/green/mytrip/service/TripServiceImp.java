@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.mytrip.dao.TripDAO;
+import kr.green.mytrip.utills.UploadFileUtills;
+import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
@@ -15,9 +18,11 @@ import kr.green.mytrip.vo.TripVO;
 public class TripServiceImp implements TripService{
 	@Autowired
 	TripDAO tripDao;
-
+	
+	String uploadPath = "E:\\2021\\portfolio\\upload_file";
+	
 	@Override
-	public boolean insertTrip(MemberVO user, TripVO trip) {
+	public boolean insertTrip(MemberVO user, TripVO trip, List<MultipartFile> file) {
 		//필수로 들어가있어야 하는 항목 : tr_me_id, tr_ca_name, tr_ca_num(사용자메뉴번호), tr_sc_num(소분류), tr_op_name
 		if(user == null || trip== null || user.getMe_id()==null) return false;
 		//세션의 ID와 trip의 ID가 같지 않은 경우
@@ -26,7 +31,13 @@ public class TripServiceImp implements TripService{
 		if(trip.getTr_end_date() ==null) trip.setTr_end_date(trip.getTr_start_date());
 		
 		//현재의 사용자 메뉴 번호 추가
-		System.out.println("trip 정보2 : \n "+trip);
+		
+		
+		//trip insert
+		//tripDao.insertTrip(trip);
+		
+		//file insert
+		uploadFile(file, trip.getTr_num());
 		
 		return false;
 	}
@@ -40,6 +51,26 @@ public class TripServiceImp implements TripService{
 	public List<SmallCategoryVO> selectSmallCategory(Integer mc_num) {
 		return tripDao.selectSmallCategory(mc_num);
 	}
-
+	
+	
+	//file upload 함수
+	private void uploadFile(List<MultipartFile> file, Integer tr_num) {
+		if(file == null) return;
+		for(MultipartFile tmpFile : file) {
+			if(tmpFile != null && tmpFile.getOriginalFilename().length()!=0) {
+				String path;
+				try {
+					path = UploadFileUtills.uploadFile(uploadPath, tmpFile.getOriginalFilename(), tmpFile.getBytes());
+					FileVO f = new FileVO(tmpFile.getOriginalFilename(), path, tr_num);
+					tripDao.insertFile(f);
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+				
+		}
+		
+	}
 
 }

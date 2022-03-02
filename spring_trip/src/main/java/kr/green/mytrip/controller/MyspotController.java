@@ -1,18 +1,25 @@
 package kr.green.mytrip.controller;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.mytrip.service.TripService;
@@ -67,7 +74,8 @@ public class MyspotController {
 	}
 	
 	@RequestMapping(value = "/tripReg", method = RequestMethod.POST)
-	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, TripVO trip, String from, Integer sc_num, Integer mc_num) {
+	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, TripVO trip, String from,
+			Integer sc_num, Integer mc_num, List<MultipartFile> file) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		//여행기간(String)을 Date로 변환
 		String tr_dates[] = from.split(" ~ ");
@@ -86,11 +94,40 @@ public class MyspotController {
 			e.printStackTrace();
 		}
 		
-		boolean isRegSuccess = tripService.insertTrip(user, trip);
+		boolean isRegSuccess = tripService.insertTrip(user, trip, file);
 		mv.setViewName("/myspot/tripRegister");
 		return mv;
 	}
-	
+	//file upload
+	@ResponseBody//리턴값이 직접적으로 화면에(요청한곳에) 가도록 해줌 
+	@RequestMapping("/download")
+	public ResponseEntity<byte[]> downloadFile(String fileName)throws Exception{
+		//집
+//		String uploadPath = "C:\\Users\\tsj02\\Documents\\java_gny\\upload";
+		//학원
+		String uploadPath = "E:\\2021\\portfolio\\upload_file";
+		
+	    InputStream in = null;
+	    //byte에 담아서 전송
+	    ResponseEntity<byte[]> entity = null;
+	    try{
+	        String FormatName = fileName.substring(fileName.lastIndexOf(".")+1);
+	        HttpHeaders headers = new HttpHeaders();
+	        in = new FileInputStream(uploadPath+fileName);
+
+	        fileName = fileName.substring(fileName.indexOf("_")+1);
+	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	        headers.add("Content-Disposition",  "attachment; filename=\"" 
+				+ new String(fileName.getBytes("UTF-8"), "ISO-8859-1")+"\"");
+	        entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),headers,HttpStatus.CREATED);
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	        entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+	    }finally {
+	        in.close();
+	    }
+	    return entity;
+	}
 	
 	
 	//여행지(trip) 출력

@@ -117,7 +117,7 @@
 							<div class="content">
 								<header>
 									<h1>Trip Register</h1>
-									<p>여행 등록 ${menu}</p>
+									<p>여행 등록 ${menu }</p>
 								</header>
 								<form action="<%=request.getContextPath()%>/myspot/tripReg" method="post">
 									<div class="trip-reg-box period-select-container">
@@ -170,15 +170,15 @@
 										<input type="hidden" name="tr_me_id" value="${user.me_id}"/>
 									</div>
 									<div class="trip-reg-box with-container">
-										<label>with<br>
-										같이 간 사람 작성하는 박스<br>
-										네이버 블로그에 태그 입력할때 방식처럼 하고싶은데....
-										</label>
-										<input type="text" class="form-control" name="tc_name"/>
+										<label>with</label>
+										<input type="text" class="form-control" name="tc_name" placeholder="누구와 함께였나요?"/>
 									</div>
 									<div class="trip-reg-box file-container">
-										file<br>
-										~첨부파일~
+										<label>첨부파일</label>
+										<div class="">
+							        <input type="file" class="form-control" name="file"/>
+							        <input type="file" class="form-control" name="file"/>
+							    	</div>
 									</div>
 									<div>
 										<input type="submit" class="btn-write" value="write">

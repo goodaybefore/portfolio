@@ -11,4 +11,9 @@
 	<select id="selectSmallCategory" resultType="kr.green.mytrip.vo.SmallCategoryVO">
 		SELECT * FROM small_category WHERE sc_mc_num = #{mc_num};
 	</select>
+	
+	<insert id="insertFile">
+		INSERT INTO file(fi_ori_name, fi_name, fi_tr_num)
+		VALUES (#{file.fi_ori_name}, #{file.fi_name}, #{file.fi_tr_num});
+	</insert>
 </mapper>
