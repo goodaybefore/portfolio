@@ -1,5 +1,7 @@
 package kr.green.mytrip.interceptor;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,6 +27,8 @@ public class LoginSessionInterceptor extends HandlerInterceptorAdapter {
 	        HttpSession session = request.getSession();
 	        session.setAttribute("user", user);
 	        session.setAttribute("menu", menu);
+	        System.out.println("user :" +user);
+	        System.out.println("menu :" +menu);
 	    }
 	}
 }

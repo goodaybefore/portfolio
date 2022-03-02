@@ -1,8 +1,10 @@
 package kr.green.mytrip.vo;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class SpotMenuVO {
 	private int sm_num;
 	private String sm_me_id;

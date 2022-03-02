@@ -63,7 +63,9 @@ public class MemberServiceImp implements MemberService {
 	}
 	//login - 사용자 메뉴리스트 불러오기
 	@Override
-	public List<String> getMenuList(MemberVO user) {
+	public List<SpotMenuVO> getMenuList(MemberVO user) {
+		if(user == null) return null;
+		System.out.println("user : "+user);
 		return memberDao.selectMenuList(user);
 	}
 

@@ -1,7 +1,6 @@
 package kr.green.mytrip.controller;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.mytrip.service.MemberService;
 import kr.green.mytrip.vo.MemberVO;
+import kr.green.mytrip.vo.SpotMenuVO;
 
 @Controller
 public class HomeController {
@@ -38,7 +38,8 @@ public class HomeController {
 			mv.setViewName("redirect:/");
 		}else{
 			//회원의 사용자메뉴리스트 불러오기
-			List<String> menuList = memberService.getMenuList(user);
+			List<SpotMenuVO> menuList = memberService.getMenuList(user);
+			System.out.println("menuList : "+menuList);
 			mv.setViewName("redirect:/myspot/home");
 			mv.addObject("user", user);
 			mv.addObject("menu", menuList);

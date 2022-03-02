@@ -37,7 +37,7 @@
 									<div class="content">
 										<header>
 											<h1>TRIP LIST</h1>
-											<p>여행지 목록을 등록해보세요</p>
+											<p>여행지 목록을 등록해보세요${sm_name}</p>
 										</header>
 										<table class="table table-hover" style="table-layout: fixed;">
 										  <thead>
@@ -64,7 +64,7 @@
 										  	</tr>
 										  </tbody>
 										</table>
-										<a href="<%=request.getContextPath()%>/myspot/tripReg"><button class="btn-trip-write">add</button></a>
+										<a href="<%=request.getContextPath()%>/myspot/tripReg?sm_name=${menu}"><button class="btn-trip-write">add</button></a>
 									</div>
 									
 								</section>
