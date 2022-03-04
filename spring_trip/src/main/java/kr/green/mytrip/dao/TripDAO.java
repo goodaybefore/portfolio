@@ -20,7 +20,8 @@ public interface TripDAO {
 	void insertFile(@Param("file")FileVO f);
 	
 	//테이블이름
-	int selectCategoryCount(@Param("tableName")String tableName, @Param("col_name")String columnName, @Param("num")Integer num);
+	int selectCategoryCount(@Param("tableName")String tableName, @Param("col_name")String columnName,
+			@Param("num")Integer num, @Param("col_name2")String string, @Param("num2")Integer sc_num);
 	
 
 }

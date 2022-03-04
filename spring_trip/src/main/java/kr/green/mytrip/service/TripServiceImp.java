@@ -57,16 +57,16 @@ public class TripServiceImp implements TripService{
 		
 		//카테고리 분류 (2차) => 소분류or중분류에 입력된 숫자가 해당 분류의 개수범위에 들어가지 않을 때 return false;
 		//tripDao.selectCategoryCount(개수가져올테이블이름, 상위카테고리행이름, 상위카테고리번호);
-		int count;
+		int exist;
 		if(trip.getTr_ca_name().equals("small_category")) {//소분류가 마지막일때
-			 count = tripDao.selectCategoryCount(trip.getTr_ca_name(), "sc_mc_num", mc_num);
+			exist = tripDao.selectCategoryCount(trip.getTr_ca_name(), "sc_mc_num", mc_num, "sc_num", sc_num);
 		}else if(trip.getTr_ca_name().equals("middle_category")) {//중분류가 마지막일때
-			count = tripDao.selectCategoryCount(trip.getTr_ca_name(), "mc_lc_num",1);
+			exist = tripDao.selectCategoryCount(trip.getTr_ca_name(), "mc_lc_num",1, "mc_num", mc_num);
 		}else {
 			return false;
 		}
-		//만약 결과값(count)의 범위안에 tr_ca_num이 없는경우 return false
-		if(trip.getTr_ca_num()<=0 || trip.getTr_ca_num()>count) return false;
+		//만약 결과값(exist)이 1이 아니면 return false(해당조건에 맞는 결과는 1개만 나와야함)
+		if(trip.getTr_ca_num()<=0 || exist != 1) return false;
 		
 		return true;
 	}

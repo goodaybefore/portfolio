@@ -27,7 +27,7 @@
 	</insert>
 	
 	<select id="selectCategoryCount" resultType="int">
-		SELECT COUNT(*) FROM ${tableName} WHERE ${col_name} = #{num};
+		SELECT COUNT(*) FROM ${tableName} WHERE ${col_name} = #{num} AND ${col_name2} = #{num2};
 	</select>
 	
 </mapper>
