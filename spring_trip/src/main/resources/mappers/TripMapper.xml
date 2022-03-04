@@ -14,10 +14,10 @@
 	
 	<insert id="insertTrip">
 		INSERT INTO trip(
-			tr_me_id, tr_sm_num, tr_ca_num, tr_ca_name, tr_title, tr_start_date, tr_end_date, tr_op_name
+			tr_me_id, tr_sm_num, tr_ca_name, tr_ca_sort_name, tr_title, tr_start_date, tr_end_date, tr_op_name
 		)
 		VALUES(
-			#{trip.tr_me_id}, #{trip.tr_sm_num}, #{trip.tr_ca_num}, #{trip.tr_ca_name}, #{trip.tr_title}, #{trip.tr_start_date}, #{trip.tr_end_date}, #{trip.tr_op_name}
+			#{trip.tr_me_id}, #{trip.tr_sm_num}, #{trip.tr_ca_name}, #{trip.tr_ca_sort_name}, #{trip.tr_title}, #{trip.tr_start_date}, #{trip.tr_end_date}, #{trip.tr_op_name}
 		);
 	</insert>
 	
@@ -30,4 +30,13 @@
 		SELECT COUNT(*) FROM ${tableName} WHERE ${col_name} = #{num} AND ${col_name2} = #{num2};
 	</select>
 	
+	<select id="selectTripList" resultType="kr.green.mytrip.vo.TripVO">
+		SELECT * FROM trip WHERE tr_del='N' ORDER BY tr_num DESC;
+	</select>
+	
+	<select id="selectCategoryName" resultType="String">
+		SELECT ${selectName} from ${tableName}
+		WHERE ${colName1} = #{colVal1}
+		AND ${colName2} = #{colVal2};
+	</select>
 </mapper>

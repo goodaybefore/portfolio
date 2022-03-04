@@ -16,5 +16,8 @@ public interface TripService {
 	//카테고리
 	List<MiddleCategoryVO> selectMiddleCategory(Integer lc_num);
 	List<SmallCategoryVO> selectSmallCategory(Integer mc_num);
+	
+	//등록한 여행지 목록 출력
+	List<TripVO> getTripList(MemberVO user);
 
 }

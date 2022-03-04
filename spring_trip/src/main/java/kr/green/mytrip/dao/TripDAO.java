@@ -18,10 +18,14 @@ public interface TripDAO {
 	void insertTrip(@Param("trip")TripVO trip);
 	//여행지 파일업로드
 	void insertFile(@Param("file")FileVO f);
-	
-	//테이블이름
+	//여행지 카테고리가 맞는지 검사
 	int selectCategoryCount(@Param("tableName")String tableName, @Param("col_name")String columnName,
 			@Param("num")Integer num, @Param("col_name2")String string, @Param("num2")Integer sc_num);
+	//여행지 목록 불러오기 tripList
+	List<TripVO> selectTripList();
+	String selectCategoryName(@Param("tableName")String tableName,  @Param("selectName")String selectName,
+			@Param("colName1")String colName1, @Param("colVal1")Integer colVal1,
+			@Param("colName2")String colName2,  @Param("colVal2")Integer calVal2);
 	
 
 }

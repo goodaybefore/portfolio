@@ -37,30 +37,32 @@
 									<div class="content">
 										<header>
 											<h1>TRIP LIST</h1>
-											<p>여행지 목록을 등록해보세요 ${thisSmNum }</p>
+											<p>여행지 목록을 등록해보세요</p>
 										</header>
 										<table class="table table-hover" style="table-layout: fixed;">
 										  <thead>
 										    <tr>
 										      <th scope="col" style="width:50px;">num</th>
-										      <th scope="col" style="width:70px;" class="">area</th>
-										      <th scope="col" class="col-12" style="min-width:200px;">trip title</th>
-										      <th scope="col" class="col-3" style="width:150px;">period</th>
-										      <th scope="col" class="col-3" style="width:100px;">with</th>
-										      <th scope="col" class="" style="width:90px;">공개범위</th>
-										      <th scope="col" class="" style="width:50px;">즐찾</th>
+										      <th scope="col" style="width:100px;" class="">area</th>
+										      <th scope="col" class="col-12 " style="min-width:200px;">trip title</th>
+										      <th scope="col" class="text-center" style="width:150px;">period</th>
+										      <th scope="col" class="text-center" style="width:100px;">with</th>
+										      <th scope="col" class="text-center" style="width:120px;">공개범위</th>
+										      <th scope="col" class="text-center" style="width:50px;">즐찾</th>
 										    </tr>
 										  </thead>
 										  <tbody>
+										  	<c:forEach items="${tripList}" var="tripList">
 										  	<tr>
-										  		<td>1</td>
-										  		<td>지역</td>
-										  		<td style="text-overflow: ellipsis; overflow:hidden">2아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주아주 긴 여행제목</td>
-										  		<td>2022.02.20 ~ 2022.02.23</td>
-										  		<td>홍길동 외 2</td>
-										  		<td>전체공개</td>
+										  		<td>${tripList.tr_num}</td>
+										  		<td>${tripList.tr_ca_name}</td>
+										  		<td style="text-overflow: ellipsis; overflow:hidden">${tripList.tr_title}</td>
+										  		<td>${tripList.tr_start_date_str} ~ ${tripList.tr_end_date_str }</td>
+										  		<td>아직안함</td>
+										  		<td>${tripList.tr_op_name }</td>
 										  		<td class="text-center">*</td>
 										  	</tr>
+										  	</c:forEach>
 										  </tbody>
 										</table>
 										<a href="<%=request.getContextPath()%>/myspot/tripReg?reg_sm_num=${thisSmNum}"><button class="btn-trip-write">add</button></a>

@@ -15,7 +15,7 @@ $(function() {
 		let sc_num = $(this).val();
 		let small_ca_str = '<input type="hidden" name="sc_num" value="'+sc_num+'">'; 
 		$('.area-select-scnum').html(small_ca_str);
-		setSmallCategory(sc_num);
+		//setSmallCategory(sc_num);
 	})
 	
 	function setMiddleCategory(){

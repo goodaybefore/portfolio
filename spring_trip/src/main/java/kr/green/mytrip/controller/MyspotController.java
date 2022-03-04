@@ -94,12 +94,11 @@ public class MyspotController {
 			e.printStackTrace();
 		}
 		if(tripService.insertTrip(user, trip, file, mc_num, sc_num)) {
-			mv.setViewName("/myspot/tripList");
+			mv.setViewName("redirect:/myspot/tripList");
 		}else {
 			//***** 비정상적인 접근입니다 하는 alert 경고창 넣을 수 없나? *****
 			mv.setViewName("redirect:/myspot/tripRegister");
 		}
-		mv.setViewName("/myspot/tripRegister");
 		return mv;
 	}
 	//file upload
@@ -140,7 +139,9 @@ public class MyspotController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		//List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
 		//mv.addObject("user", user);
-		mv.addObject("thisSmNum", sm_num);
+		List<TripVO> tripList = tripService.getTripList(user);
+		mv.addObject("tripList", tripList);
+		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
 		mv.setViewName("/myspot/tripList");
 		return mv;
 	}

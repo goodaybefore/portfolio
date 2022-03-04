@@ -11,8 +11,8 @@ public class TripVO {
 	private int tr_num;
 	private String tr_me_id;
 	private int tr_sm_num;
-	private String tr_ca_name;//분류 카테고리 이름(large, middle, small)
-	private int tr_ca_num;//분류 번호
+	private String tr_ca_name;//분류 이름(성남시, 청주시, 대구광역시 등..)
+	private String tr_ca_sort_name;//분류 카테고리 이름(large, middle, small)
 	private String tr_title;
 	private Date tr_start_date;
 	private Date tr_end_date;
@@ -23,12 +23,12 @@ public class TripVO {
 	private int tr_charge;
 	
 	public String getTr_start_date_str() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
 		String str = format.format(tr_start_date);
 		return str;
 	}
 	public String getTr_end_date_str() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
 		String str = format.format(tr_end_date);
 		return str;
 	}
