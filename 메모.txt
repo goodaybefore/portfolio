@@ -1,0 +1,10 @@
+<HomeController>
+Guest login
+ - 게스트로 로그인 했을 경우 임시 id를 주고 세션에 저장시키기
+
+
+<MyspotController>
+
+공개범위
+user.getMe_id != spot_user인 경우 : 기본적으로 전체공개만 볼 수 있음.
+ but 상황에 따라 selectTripList("공개범위")를 통해 합당한 범위를 추가해서 볼 수 있음...? => 정렬은 어떻게 하지? Imp에서 정렬시켜서 보여주면 되나?

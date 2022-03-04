@@ -30,8 +30,12 @@
 		SELECT COUNT(*) FROM ${tableName} WHERE ${col_name} = #{num} AND ${col_name2} = #{num2};
 	</select>
 	
-	<select id="selectTripList" resultType="kr.green.mytrip.vo.TripVO">
+	<select id="selectTripListAll" resultType="kr.green.mytrip.vo.TripVO">
 		SELECT * FROM trip WHERE tr_del='N' ORDER BY tr_num DESC;
+	</select>
+	
+	<select id="selectTripList" resultType="kr.green.mytrip.vo.TripVO">
+		SELECT * FROM trip WHERE tr_del='N' AND tr_op_name = "전체공개" ORDER BY tr_num DESC;
 	</select>
 	
 	<select id="selectCategoryName" resultType="String">

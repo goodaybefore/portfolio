@@ -107,16 +107,19 @@ public class TripServiceImp implements TripService{
 					e.printStackTrace();
 				}
 			}
-				
 		}
 		
 	}
 	
 	//여행지리스트(tripList)가져오기
 	@Override
-	public List<TripVO> getTripList(MemberVO user) {
-		if(user == null) return null;
-		return tripDao.selectTripList();
+	public List<TripVO> getTripList(MemberVO user, String spot_user) {
+		if(spot_user == null) return null;
+		//guest로그인시..일단 다 보여주기
+		if(user == null) return tripDao.selectTripList("전체공개");
+		if(user.getMe_id().equals(spot_user)) //본인이면 모든 게시글 보여주기
+			return tripDao.selectTripListAll();
+		return null;
 	}
 
 }

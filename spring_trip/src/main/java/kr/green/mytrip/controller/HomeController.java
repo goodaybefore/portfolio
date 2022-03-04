@@ -35,7 +35,7 @@ public class HomeController {
 	public ModelAndView loginPost(ModelAndView mv, MemberVO input) {
 		MemberVO user = memberService.loginMember(input);
 		if(user == null) {
-			mv.setViewName("redirect:/");
+			mv.setViewName("redirect:/board/list");
 		}else{
 			//회원의 사용자메뉴리스트 불러오기
 			List<SpotMenuVO> menu = memberService.getMenuList(user);

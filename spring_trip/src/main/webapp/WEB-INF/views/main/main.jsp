@@ -50,7 +50,7 @@
 	                       	<div class="form-group mt-3 col-12"><input class="form-control" name="me_pw" type="password" placeholder="Enter your password..." aria-label="Enter your password..." /></div>
 							<div class="form-group mt-3" style="float: left; width: 50%;"><a href="<%=request.getContextPath()%>/signup">sign up>></a></div>
 							<div class="form-group mt-3" style="float: right; width: 50%;"><button class="btn btn-primary" style="float: right;" type="submit">get started!</button></div>
-							<div class="form-group" style="float: right; width: 100%;"><a href="<%=request.getContextPath()%>/board/list" class="" id="" style="float: right; margin-right: 5px;">guest login>></a></div>
+							<div class="form-group" style="float: right; width: 100%;"><button class="" id="" style="float: right; margin-right: 5px;">guest login>></button></div>
 	                      </div>
 	                    </form>
 					</c:if>

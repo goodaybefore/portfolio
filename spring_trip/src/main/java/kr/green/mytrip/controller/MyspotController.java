@@ -135,11 +135,12 @@ public class MyspotController {
 	
 	//여행지(trip) 출력
 	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
-	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num) {
+	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num, String spot_user) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		//List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
 		//mv.addObject("user", user);
-		List<TripVO> tripList = tripService.getTripList(user);
+		
+		List<TripVO> tripList = tripService.getTripList(user, spot_user);
 		mv.addObject("tripList", tripList);
 		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
 		mv.setViewName("/myspot/tripList");

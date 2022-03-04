@@ -1,7 +1,5 @@
 package kr.green.mytrip.interceptor;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,6 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import kr.green.mytrip.vo.MemberVO;
 
 
 public class LoginSessionInterceptor extends HandlerInterceptorAdapter {
@@ -20,7 +20,7 @@ public class LoginSessionInterceptor extends HandlerInterceptorAdapter {
 	    ModelAndView modelAndView)
 	    throws Exception {
 	    ModelMap modelMap = modelAndView.getModelMap();
-	    Object user = (Object)modelMap.get("user");
+	    MemberVO user = (MemberVO)modelMap.get("user");
 	    Object menu = (Object)modelMap.get("menu");
 	    
 	    if(user != null) {
