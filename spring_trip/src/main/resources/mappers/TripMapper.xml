@@ -12,8 +12,22 @@
 		SELECT * FROM small_category WHERE sc_mc_num = #{mc_num};
 	</select>
 	
+	<insert id="insertTrip">
+		INSERT INTO trip(
+			tr_me_id, tr_sm_num, tr_ca_num, tr_ca_name, tr_title, tr_start_date, tr_end_date, tr_op_name
+		)
+		VALUES(
+			#{trip.tr_me_id}, #{trip.tr_sm_num}, #{trip.tr_ca_num}, #{trip.tr_ca_name}, #{trip.tr_title}, #{trip.tr_start_date}, #{trip.tr_end_date}, #{trip.tr_op_name}
+		);
+	</insert>
+	
 	<insert id="insertFile">
 		INSERT INTO file(fi_ori_name, fi_name, fi_tr_num)
 		VALUES (#{file.fi_ori_name}, #{file.fi_name}, #{file.fi_tr_num});
 	</insert>
+	
+	<select id="selectCategoryCount" resultType="int">
+		SELECT COUNT(*) FROM ${tableName} WHERE ${col_name} = #{num};
+	</select>
+	
 </mapper>

@@ -117,9 +117,10 @@
 							<div class="content">
 								<header>
 									<h1>Trip Register</h1>
-									<p>여행 등록 ${menu }</p>
+									<p>여행 등록</p>
 								</header>
 								<form action="<%=request.getContextPath()%>/myspot/tripReg" method="post">
+									<input type="hidden" value="${reg_sm_num}" name="tr_sm_num">
 									<div class="trip-reg-box period-select-container">
 										<div class="period">
 											<label class="period-label" for="from">period</label>
@@ -210,7 +211,7 @@
 										<span class="opener">trip</span>
 										<ul>
 										<c:forEach items="${menu}" var="menu">
-											<li><a href="<%=request.getContextPath()%>/myspot/tripList?menu=${menu}">${menu}</a></li>
+											<li><a href="<%=request.getContextPath()%>/myspot/tripList?sm_num=${menu.sm_num}">${menu.sm_name}</a></li>
 										</c:forEach>
 										</ul>
 									</li>

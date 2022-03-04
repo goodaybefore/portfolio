@@ -8,8 +8,9 @@ $(function() {
 		let middle_ca_str = '<input type="hidden" name="mc_num" value="'+mc_num+'">'; 
 		setSmallCategory(mc_num);
 		$('.area-select-mcnum').html(middle_ca_str);
-		
 	})
+	
+	
 	$('.small-category').change(function(){
 		let sc_num = $(this).val();
 		let small_ca_str = '<input type="hidden" name="sc_num" value="'+sc_num+'">'; 

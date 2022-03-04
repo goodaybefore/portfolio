@@ -26,6 +26,7 @@ import kr.green.mytrip.service.TripService;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
+import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 
@@ -46,9 +47,10 @@ public class MyspotController {
 	
 	//여행지 등록(tripReg)
 	@RequestMapping(value = "/tripReg", method = RequestMethod.GET)
-	public ModelAndView tripRegGet(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView tripRegGet(ModelAndView mv, HttpServletRequest request, Integer reg_sm_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		mv.addObject("user", user); 
+		//List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
+		mv.addObject("reg_sm_num", reg_sm_num);
 		mv.setViewName("/myspot/tripRegister");
 		
 		return mv;
@@ -81,20 +83,22 @@ public class MyspotController {
 		String tr_dates[] = from.split(" ~ ");
 		try {
 			trip.setTr_start_date_str(tr_dates[0]);
-			System.out.println("tr_dates.length : "+tr_dates.length);
 			//*****잘못입력되었을때 alert 출력하는거 넣고싶음 *****
 			if(tr_dates.length < 1) mv.setViewName("redirect:/tripRegister");
 			if(tr_dates.length == 1) trip.setTr_end_date_str(tr_dates[0]);
 			if(tr_dates.length == 2) trip.setTr_end_date_str(tr_dates[1]);
 			if(tr_dates.length>2) mv.setViewName("redirect:/tripRegister");
 			
-			
 		} catch (ParseException e) {
 			System.out.println("tripReg에서의 period 변환 문제");
 			e.printStackTrace();
 		}
-		
-		boolean isRegSuccess = tripService.insertTrip(user, trip, file);
+		if(tripService.insertTrip(user, trip, file, mc_num, sc_num)) {
+			mv.setViewName("/myspot/tripList");
+		}else {
+			//***** 비정상적인 접근입니다 하는 alert 경고창 넣을 수 없나? *****
+			mv.setViewName("redirect:/myspot/tripRegister");
+		}
 		mv.setViewName("/myspot/tripRegister");
 		return mv;
 	}
@@ -132,9 +136,11 @@ public class MyspotController {
 	
 	//여행지(trip) 출력
 	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
-	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		mv.addObject("user", user);
+		//List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
+		//mv.addObject("user", user);
+		mv.addObject("thisSmNum", sm_num);
 		mv.setViewName("/myspot/tripList");
 		return mv;
 	}

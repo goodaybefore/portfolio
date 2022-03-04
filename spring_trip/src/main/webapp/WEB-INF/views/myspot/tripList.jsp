@@ -37,7 +37,7 @@
 									<div class="content">
 										<header>
 											<h1>TRIP LIST</h1>
-											<p>여행지 목록을 등록해보세요${sm_name}</p>
+											<p>여행지 목록을 등록해보세요 ${thisSmNum }</p>
 										</header>
 										<table class="table table-hover" style="table-layout: fixed;">
 										  <thead>
@@ -60,11 +60,10 @@
 										  		<td>홍길동 외 2</td>
 										  		<td>전체공개</td>
 										  		<td class="text-center">*</td>
-										  		
 										  	</tr>
 										  </tbody>
 										</table>
-										<a href="<%=request.getContextPath()%>/myspot/tripReg?sm_name=${menu}"><button class="btn-trip-write">add</button></a>
+										<a href="<%=request.getContextPath()%>/myspot/tripReg?reg_sm_num=${thisSmNum}"><button class="btn-trip-write">add</button></a>
 									</div>
 									
 								</section>
@@ -92,7 +91,7 @@
 										<span class="opener">trip</span>
 										<ul>
 										<c:forEach items="${menu }" var="menu">
-											<li><a href="<%=request.getContextPath()%>/myspot/tripList?menu=${menu}">${menu}</a></li>
+											<li><a href="<%=request.getContextPath()%>/myspot/tripList?menu=${menu.sm_num}">${menu.sm_name}</a></li>
 										</c:forEach>
 										</ul>
 									</li>

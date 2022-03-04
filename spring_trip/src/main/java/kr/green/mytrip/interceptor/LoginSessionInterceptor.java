@@ -27,8 +27,6 @@ public class LoginSessionInterceptor extends HandlerInterceptorAdapter {
 	        HttpSession session = request.getSession();
 	        session.setAttribute("user", user);
 	        session.setAttribute("menu", menu);
-	        System.out.println("user :" +user);
-	        System.out.println("menu :" +menu);
 	    }
 	}
 }
