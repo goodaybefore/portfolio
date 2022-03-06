@@ -18,7 +18,10 @@
 								<header id="header">
 									<a href="/" class="logo"><strong>MY SPOT</strong></a>
 									<ul class="icons">
-										<c:if test="${user==null}"><li><a href="<%=request.getContextPath()%>/" class=""><span class="label">login</span></a></li></c:if>
+										<c:if test="${user==null}">
+											<li><a href="<%=request.getContextPath()%>/" class=""><span class="label">login</span></a></li>
+											<li><a href="<%=request.getContextPath()%>/signup" class=""><span class="label">signup</span></a></li>
+										</c:if>
 										<c:if test="${user!=null}"><li><a href="<%=request.getContextPath()%>/logout" class=""><span class="label">logout</span></a></li></c:if>
 										<li><a href="#" class=""><span class="label">tripmate</span></a></li>
 										<li><a href="#" class=""><span class="label">notice</span></a></li>
@@ -32,7 +35,10 @@
 									<div class="content">
 										<header>
 											<h1>My Spot Home</h1>
-											<p>${menu }</p>
+											<p>${menu}</p>
+											<c:if test="${user == null}">
+												<p>로그인하면 더 많은 기능을 사용할 수 있습니다!</p>
+											</c:if>
 										</header>
 										<p>${user.me_id }</p>
 										<ul class="actions">

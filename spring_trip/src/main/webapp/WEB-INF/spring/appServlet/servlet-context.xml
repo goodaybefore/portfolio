@@ -52,6 +52,10 @@
 	<beans:bean id="guestInterceptor" 
 	class="kr.green.mytrip.interceptor.GuestInterceptor"></beans:bean>
 	
+	<!-- member Interceptor -->
+	<beans:bean id="memberInterceptor" 
+	class="kr.green.mytrip.interceptor.MemberInterceptor"></beans:bean>
+	
 	<!-- 세션유지 -->
 	<interceptors>
 	    <interceptor>
@@ -63,14 +67,25 @@
 	<!-- guest가 접근 가능한 곳 -->
 	<interceptors>
 	    <interceptor>
-	        <mapping path="/"/>
-	        <mapping path="/myspot/home"/>
-	        <mapping path="/myspot/tripList"/>
-	        <mapping path="/board/list"/>
+	        <mapping path="/signup"/>
 	        <beans:ref bean="guestInterceptor"/>
 	    </interceptor>
 	</interceptors>
 	
+	<!-- member가 접근 가능한 곳 -->
+	<!-- 
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/"/>
+	        <mapping path="/myspot/home"/>
+	        <mapping path="/myspot/*"/>
+	        <mapping path="/board/list"/>
+	        <beans:ref bean="memberInterceptor"/>
+	    </interceptor>
+	</interceptors>
+	 -->
+	
+	<!-- member가 접근 가능한 곳 -->
 	
 	<!-- 파일업로드 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
