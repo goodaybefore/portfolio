@@ -1,6 +1,8 @@
 <HomeController>
 Guest login
  - 게스트로 로그인 했을 경우 임시 id를 주고 세션에 저장시키기
+- 게스트가 할 수 있는 것 : spot 공개가 전체공개인 회원이 전체공개로 등록해놓은 trip spot 구경
+- borad 게시판에 notice, event 게시글 열람
 
 
 <MyspotController>
