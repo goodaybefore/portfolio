@@ -25,7 +25,7 @@ public class HomeController {
 	public ModelAndView home(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		mv.addObject("user", user);
-		mv.setViewName("/main/main");
+		mv.setViewName("main/main");
 		return mv;
 	}
 	
@@ -59,7 +59,7 @@ public class HomeController {
 	//회원가입
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signupGet(ModelAndView mv) {
-		mv.setViewName("/member/signup");
+		mv.setViewName("member/signup");
 		return mv;
 	}
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
