@@ -119,7 +119,7 @@
 									<h1>Trip Register</h1>
 									<p>여행 등록</p>
 								</header>
-								<form action="<%=request.getContextPath()%>/myspot/tripReg" method="post">
+								<form action="<%=request.getContextPath()%>/myspot/tripReg" method="post" enctype="multipart/form-data">
 									<input type="hidden" value="${reg_sm_num}" name="tr_sm_num">
 									<div class="trip-reg-box period-select-container">
 										<div class="period">

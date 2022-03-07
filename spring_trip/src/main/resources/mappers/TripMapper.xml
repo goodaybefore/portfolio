@@ -12,7 +12,9 @@
 		SELECT * FROM small_category WHERE sc_mc_num = #{mc_num};
 	</select>
 	
-	<insert id="insertTrip">
+	<insert id="insertTrip"
+	useGeneratedKeys="true" keyProperty="trip.tr_num"
+		parameterType="kr.green.mytrip.vo.TripVO">
 		INSERT INTO trip(
 			tr_me_id, tr_sm_num, tr_ca_name, tr_ca_sort_name, tr_title, tr_start_date, tr_end_date, tr_op_name
 		)

@@ -64,7 +64,7 @@
 	    </interceptor>
 	</interceptors>
 	
-	<!-- guest가 접근 가능한 곳 -->
+	<!-- guest만 접근 가능한 곳 -->
 	<interceptors>
 	    <interceptor>
 	        <mapping path="/signup"/>
@@ -72,18 +72,13 @@
 	    </interceptor>
 	</interceptors>
 	
-	<!-- member가 접근 가능한 곳 -->
-	<!-- 
+	<!-- member만 접근 가능한 곳 -->
 	<interceptors>
 	    <interceptor>
-	        <mapping path="/"/>
-	        <mapping path="/myspot/home"/>
-	        <mapping path="/myspot/*"/>
-	        <mapping path="/board/list"/>
+	        <mapping path="/myspot/tripReg"/>
 	        <beans:ref bean="memberInterceptor"/>
 	    </interceptor>
 	</interceptors>
-	 -->
 	
 	<!-- member가 접근 가능한 곳 -->
 	

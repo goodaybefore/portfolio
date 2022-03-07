@@ -24,7 +24,8 @@ public class TripServiceImp implements TripService{
 	@Override
 	public boolean insertTrip(MemberVO user, TripVO trip, List<MultipartFile> file, Integer mc_num, Integer sc_num) {
 		//필수로 들어가있어야 하는 항목 : tr_me_id, tr_ca_name, tr_ca_num(사용자메뉴번호), tr_sc_num(소분류), tr_op_name
-		if(user == null || trip== null || user.getMe_id()==null) return false;
+		if(user == null || trip== null || user.getMe_id()==null || trip.getTr_me_id()==null ||
+				trip.getTr_title()==null) return false;
 		//세션의 ID와 trip의 ID가 같지 않은 경우
 		if(!user.getMe_id().equals(trip.getTr_me_id())) return false;
 		//endDate가 없을경우 ==> 당일여행인 경우
@@ -35,8 +36,8 @@ public class TripServiceImp implements TripService{
 		
 		//trip insert
 		tripDao.insertTrip(trip);
-		
-		
+		System.out.println("file : "+file);
+		System.out.println("tr_num : "+trip.getTr_num());
 		//file insert
 		uploadFile(file, trip.getTr_num());
 		
