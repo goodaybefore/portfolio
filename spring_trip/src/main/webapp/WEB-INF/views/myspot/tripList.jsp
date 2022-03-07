@@ -37,7 +37,7 @@
 									<div class="content">
 										<header>
 											<h1>TRIP LIST</h1>
-											<p>여행지 목록을 등록해보세요</p>
+											<p>여행지 목록을 등록해보세요<br>${pm }</p>
 										</header>
 										<table class="table table-hover" style="table-layout: fixed;">
 										  <thead>
@@ -65,6 +65,17 @@
 										  	</c:forEach>
 										  </tbody>
 										</table>
+										
+										<!-- pagination -->
+										<ul class="pagination justify-content-center">
+											<li><a href="<%=request.getContextPath()%>/myspot/tripList?sm_num=${thisSmNum}&spot_user=${user.me_id}&page=${pm.startPage-1}" class="<c:if test="${!pm.prev}">disabled</c:if>">Prev</a></li>
+											<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+												<li class="">
+													<a href="<%=request.getContextPath()%>/myspot/tripList?sm_num=${thisSmNum}&spot_user=${user.me_id}&page=${i}" class="page <c:if test="${pm.criteria.page==i}">active</c:if>">${i}</a>
+												</li>
+											</c:forEach>
+											<li><a href="<%=request.getContextPath()%>/myspot/tripList?sm_num=${thisSmNum}&spot_user=${user.me_id}&page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
+										</ul>
 										<a href="<%=request.getContextPath()%>/myspot/tripReg?reg_sm_num=${thisSmNum}"><button class="btn-trip-write">add</button></a>
 									</div>
 									

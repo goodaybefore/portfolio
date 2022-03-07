@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.mytrip.dao.TripDAO;
+import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.utills.UploadFileUtills;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
@@ -36,8 +37,6 @@ public class TripServiceImp implements TripService{
 		
 		//trip insert
 		tripDao.insertTrip(trip);
-		System.out.println("file : "+file);
-		System.out.println("tr_num : "+trip.getTr_num());
 		//file insert
 		uploadFile(file, trip.getTr_num());
 		
@@ -121,6 +120,10 @@ public class TripServiceImp implements TripService{
 		if(user.getMe_id().equals(spot_user)) //본인이면 모든 게시글 보여주기
 			return tripDao.selectTripListAll();
 		return null;
+	}
+	@Override
+	public int getTotalTripCount(Criteria cri) {
+		return tripDao.selectTotalTripCount();
 	}
 
 }

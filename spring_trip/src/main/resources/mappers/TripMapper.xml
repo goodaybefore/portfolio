@@ -45,4 +45,8 @@
 		WHERE ${colName1} = #{colVal1}
 		AND ${colName2} = #{colVal2};
 	</select>
+	
+	<select id="selectTotalTripCount" resultType="int">
+		SELECT COUNT(*) FROM trip WHERE tr_del = 'N';
+	</select>
 </mapper>

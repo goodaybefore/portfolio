@@ -22,11 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.green.mytrip.pagination.Criteria;
+import kr.green.mytrip.pagination.PageMaker;
 import kr.green.mytrip.service.TripService;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
-import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 
@@ -135,12 +136,17 @@ public class TripController {
 	
 	//여행지(trip) 출력
 	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
-	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num, String spot_user) {
+	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num, String spot_user,
+			Criteria cri) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		//List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
-		//mv.addObject("user", user);
 		
 		List<TripVO> tripList = tripService.getTripList(user, spot_user);
+		cri.setPerPageNum(5);
+		int totalCount = tripService.getTotalTripCount(cri);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		System.out.println("cri : "+cri);
+		mv.addObject("pm", pm);
+		
 		mv.addObject("tripList", tripList);
 		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
 		mv.setViewName("/myspot/tripList");

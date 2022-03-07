@@ -38,7 +38,7 @@ public class BoardController {
 	//등록
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView boardRegisteGetr(ModelAndView mv, HttpServletRequest request) {
-		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		
 		//if(user ==null || !user.getMe_gr_name().equals("트립매니저") || !user.getMe_gr_name().equals("트립파트너"))
 			//mv.setViewName("redirect:/board/notice");
 		mv.setViewName("/board/register");

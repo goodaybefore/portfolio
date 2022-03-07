@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
@@ -19,5 +20,7 @@ public interface TripService {
 	
 	//등록한 여행지 목록 출력
 	List<TripVO> getTripList(MemberVO user, String spot_user);
+	//여행지 pagination
+	int getTotalTripCount(Criteria cri);
 
 }
