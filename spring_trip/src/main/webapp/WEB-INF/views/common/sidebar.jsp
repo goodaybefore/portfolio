@@ -22,12 +22,13 @@
 					</section>
 					</header>
 					<ul>
-						<li><a href="<%=request.getContextPath()%>/myspot/home">my spot home</a></li>
+						<p> 현재 로그인 유저 : ${user.me_id}<br> 현재 spot 주인 :  ${spot_user}</p>
+						<li><a href="<%=request.getContextPath()%>/spot/home">my spot home</a></li>
 						<li>
 							<span class="opener">trip</span>
 							<ul>
 							<c:forEach items="${menu }" var="menu">
-								<li><a href="<%=request.getContextPath()%>/myspot/tripList?spot_user=${user.me_id}&menu=${menu.sm_num}">${menu.sm_name}</a></li>
+								<li><a href="<%=request.getContextPath()%>/spot/tripList?spot_user=${user.me_id}&sm_num=${menu.sm_num}">${menu.sm_name}</a></li>
 							</c:forEach>
 							</ul>
 						</li>

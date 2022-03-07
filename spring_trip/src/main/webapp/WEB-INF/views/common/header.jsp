@@ -18,7 +18,7 @@
 	<body>
 		<!-- Header -->
 		<header id="header">
-			<a href="/" class="logo"><strong>My Trip List</strong> ${user.me_id}</a>
+			<a href="/" class="logo"><strong>My Trip List</strong> ${spot_user}</a>
 			<ul class="icons">
 				<c:if test="${user==null}"><li><a href="<%=request.getContextPath()%>/" class=""><span class="label">login</span></a></li></c:if>
 				<c:if test="${user!=null}"><li><a href="<%=request.getContextPath()%>/logout" class=""><span class="label">logout</span></a></li></c:if>
