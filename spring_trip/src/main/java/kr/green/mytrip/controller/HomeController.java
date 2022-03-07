@@ -40,7 +40,7 @@ public class HomeController {
 			//회원의 사용자메뉴리스트 불러오기
 			List<SpotMenuVO> menu = memberService.getMenuList(user);
 			System.out.println("menu : "+menu);
-			mv.setViewName("redirect:/spot/home");
+			mv.setViewName("redirect:/spot/"+input.getMe_id()+"/home");
 			mv.addObject("user", user);
 			mv.addObject("menu", menu);
 		}

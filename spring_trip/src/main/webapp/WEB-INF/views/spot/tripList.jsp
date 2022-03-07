@@ -44,7 +44,7 @@
 										  		<td>${tripList.tr_num}</td>
 										  		<td>${tripList.tr_ca_name}</td>
 										  		<td style="text-overflow: ellipsis; overflow:hidden">
-										  			<a href="<%=request.getContextPath()%>/spot/tripDetail?tr_num=${tr_num}">${tripList.tr_title}</a>
+										  			<a href="<%=request.getContextPath()%>/spot/tripDetail?tr_num=${tripList.tr_num}">${tripList.tr_title}</a>
 										  		</td>
 										  		<td>${tripList.tr_start_date_str} ~ ${tripList.tr_end_date_str }</td>
 										  		<td>아직안함</td>
@@ -57,15 +57,15 @@
 										
 										<!-- pagination -->
 										<ul class="pagination justify-content-center">
-											<li><a href="<%=request.getContextPath()%>/myspot/tripList?sm_num=${thisSmNum}&spot_user=${user.me_id}&page=${pm.startPage-1}" class="<c:if test="${!pm.prev}">disabled</c:if>">Prev</a></li>
+											<li><a href="<%=request.getContextPath()%>/spot/tripList?sm_num=${thisSmNum}&page=${pm.startPage-1}" class="<c:if test="${!pm.prev}">disabled</c:if>">Prev</a></li>
 											<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
 												<li class="">
-													<a href="<%=request.getContextPath()%>/myspot/tripList?sm_num=${thisSmNum}&spot_user=${user.me_id}&page=${i}" class="page <c:if test="${pm.criteria.page==i}">active</c:if>">${i}</a>
+													<a href="<%=request.getContextPath()%>/spot/tripList?sm_num=${thisSmNum}&page=${i}" class="page <c:if test="${pm.criteria.page==i}">active</c:if>">${i}</a>
 												</li>
 											</c:forEach>
-											<li><a href="<%=request.getContextPath()%>/myspot/tripList?sm_num=${thisSmNum}&spot_user=${user.me_id}&page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
+											<li><a href="<%=request.getContextPath()%>/spot/tripList?sm_num=${thisSmNum}&page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
 										</ul>
-										<a href="<%=request.getContextPath()%>/myspot/tripReg?reg_sm_num=${thisSmNum}"><button class="btn-trip-write">add</button></a>
+										<a href="<%=request.getContextPath()%>/spot/tripReg?reg_sm_num=${thisSmNum}"><button class="btn-trip-write">add</button></a>
 									</div>
 									
 								</section>

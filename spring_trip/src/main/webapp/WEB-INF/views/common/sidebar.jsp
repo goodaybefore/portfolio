@@ -28,7 +28,7 @@
 							<span class="opener">trip</span>
 							<ul>
 							<c:forEach items="${menu }" var="menu">
-								<li><a href="<%=request.getContextPath()%>/spot/tripList?spot_user=${user.me_id}&sm_num=${menu.sm_num}">${menu.sm_name}</a></li>
+								<li><a href="<%=request.getContextPath()%>/spot/${spot_user}/tripList/${menu.sm_num}">${menu.sm_name}</a></li>
 							</c:forEach>
 							</ul>
 						</li>

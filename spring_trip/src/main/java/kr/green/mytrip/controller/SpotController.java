@@ -39,8 +39,8 @@ public class SpotController {
 	@Autowired
 	TripService tripService;
 	
-	@GetMapping("{spot_user}/home")
-	public ModelAndView spotUserHome(@PathVariable("spot_user")String spot_user, ModelAndView mv,
+	@GetMapping({"{spot_user}/home", "/home"})
+	public ModelAndView spotUserHome(@PathVariable(required=false, value="spot_user")String spot_user, ModelAndView mv,
 			HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		//해당 유저의 trip 정보 가져오기 - spot user의 공개범위에 따라 현재 로그인한 user에게 보여줄 범위를 가져옴
@@ -51,23 +51,16 @@ public class SpotController {
 		return mv;
 	}
 	
-	
-	
-	
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public ModelAndView spotHome(ModelAndView mv, HttpServletRequest request, @PathVariable(required=false) String me_id) {
-		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		mv.addObject("user", user);
-		mv.setViewName("/spot/home");
-		return mv;
-	}
-	
-	//여행지(trip) 출력
-	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
-	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num, String spot_user,
+	//여행지 목록(trip List) 출력
+	@GetMapping(value = "/{spot_user}/tripList/{sm_num}")
+	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request,
+			@PathVariable(required=false, value="sm_num")Integer sm_num,
+			@PathVariable(required=false, value="spot_user")String spot_user,
 			Criteria cri) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num);
+		System.out.println("sm_num"+sm_num);
+		
 		cri.setPerPageNum(5);
 		int totalCount = tripService.getTotalTripCount(cri, sm_num);
 		PageMaker pm = new PageMaker(totalCount, 2, cri);
@@ -172,6 +165,7 @@ public class SpotController {
 	public ModelAndView tripDetail(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
+		mv.addObject("trip", trip);
 		mv.setViewName("/spot/tripDetail");
 		return mv;
 	}
