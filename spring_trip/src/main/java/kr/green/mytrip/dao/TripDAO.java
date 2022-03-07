@@ -27,10 +27,13 @@ public interface TripDAO {
 			@Param("colName2")String colName2,  @Param("colVal2")Integer calVal2);
 	
 	//여행지 목록 불러오기 tripList
-	List<TripVO> selectTripListAll();//모두 불러오기
-	List<TripVO> selectTripList(@Param("openRange")String openRange);//특정 범위만 불러오기
+	List<TripVO> selectTripListAll(@Param("sm_num")Integer sm_num);//모두 불러오기
+	List<TripVO> selectTripList(@Param("openRange")String openRange, Integer sm_num);//특정 범위만 불러오기
 	//여행지 목록 페이지네이션
-	int selectTotalTripCount();
+	int selectTotalTripCount(@Param("sm_num")Integer sm_num);
+	
+	//여행지 detail
+	TripVO selectTripDetail(@Param("open_range")String open_range, @Param("tr_num") Integer tr_num);
 	
 	
 	

@@ -56,8 +56,8 @@
 					</c:if>
 					<c:if test="${user != null}">
 						<a class="login-menu" href="<%=request.getContextPath()%>/logout">logout</a><br>
-						<a class="login-menu" href="<%=request.getContextPath()%>/myspot/home">myspot</a><br>
-						<a class="login-menu" href="<%=request.getContextPath()%>/myspot/tripmate_list">tripmate</a><br>
+						<a class="login-menu" href="<%=request.getContextPath()%>/spot/${user.me_id}/home">myspot</a><br>
+						<a class="login-menu" href="<%=request.getContextPath()%>/spot/tripmate_list">tripmate</a><br>
 						<a class="login-menu" href="<%=request.getContextPath()%>/board/list">notice</a><br>
 						<a class="login-menu" href="<%=request.getContextPath()%>/board/list">event</a><br>
 						<a class="login-menu" href="<%=request.getContextPath()%>/board/special_trip">special trip</a><br>

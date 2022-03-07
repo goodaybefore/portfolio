@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,16 +34,41 @@ import kr.green.mytrip.vo.TripVO;
 
 
 @Controller
-@RequestMapping(value = "/myspot")
-public class TripController {
+@RequestMapping(value = "/spot")
+public class SpotController {
 	@Autowired
 	TripService tripService;
 	
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public ModelAndView myspotHome(ModelAndView mv, HttpServletRequest request) {
+	@GetMapping({"{spot_user}/home", "/home"})
+	public ModelAndView spotUserHome(@PathVariable(required=false, value="spot_user")String spot_user, ModelAndView mv,
+			HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		mv.addObject("user", user);
-		mv.setViewName("/myspot/home");
+		//해당 유저의 trip 정보 가져오기 - spot user의 공개범위에 따라 현재 로그인한 user에게 보여줄 범위를 가져옴
+		//tripService.getTripList(spot_user, user);
+		
+		mv.addObject("spot_user", spot_user);
+		mv.setViewName("/spot/home");
+		return mv;
+	}
+	
+	//여행지 목록(trip List) 출력
+	@GetMapping(value = "/{spot_user}/tripList/{sm_num}")
+	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request,
+			@PathVariable(required=false, value="sm_num")Integer sm_num,
+			@PathVariable(required=false, value="spot_user")String spot_user,
+			Criteria cri) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num);
+		System.out.println("sm_num"+sm_num);
+		
+		cri.setPerPageNum(5);
+		int totalCount = tripService.getTotalTripCount(cri, sm_num);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		mv.addObject("pm", pm);
+		
+		mv.addObject("tripList", tripList);
+		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
+		mv.setViewName("/spot/tripList");
 		return mv;
 	}
 	
@@ -52,7 +79,7 @@ public class TripController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		//List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
 		mv.addObject("reg_sm_num", reg_sm_num);
-		mv.setViewName("/myspot/tripRegister");
+		mv.setViewName("/spot/tripRegister");
 		
 		return mv;
 	}
@@ -95,10 +122,10 @@ public class TripController {
 			e.printStackTrace();
 		}
 		if(tripService.insertTrip(user, trip, file, mc_num, sc_num)) {
-			mv.setViewName("redirect:/myspot/tripList");
+			mv.setViewName("redirect:/spot/tripList");
 		}else {
 			//***** 비정상적인 접근입니다 하는 alert 경고창 넣을 수 없나? *****
-			mv.setViewName("redirect:/myspot/tripRegister");
+			mv.setViewName("redirect:/spot/tripRegister");
 		}
 		return mv;
 	}
@@ -133,26 +160,26 @@ public class TripController {
 	    return entity;
 	}
 	
-	
-	//여행지(trip) 출력
-	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
-	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num, String spot_user,
-			Criteria cri) {
+	//여행지(trip) 상세(detail)
+	@RequestMapping(value = "/tripDetail", method = RequestMethod.GET)
+	public ModelAndView tripDetail(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		
-		List<TripVO> tripList = tripService.getTripList(user, spot_user);
-		cri.setPerPageNum(5);
-		int totalCount = tripService.getTotalTripCount(cri);
-		PageMaker pm = new PageMaker(totalCount, 2, cri);
-		System.out.println("cri : "+cri);
-		mv.addObject("pm", pm);
-		
-		mv.addObject("tripList", tripList);
-		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
-		mv.setViewName("/myspot/tripList");
+		TripVO trip = tripService.getTripDetail(tr_num);
+		mv.addObject("trip", trip);
+		mv.setViewName("/spot/tripDetail");
 		return mv;
 	}
 	
+	//여행지(trip) 수정(modify)
+	@RequestMapping(value = "/tripModify", method = RequestMethod.GET)
+	public ModelAndView tripModify(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		TripVO trip = tripService.getTripDetail(tr_num);
+		mv.addObject("trip", trip);
+		mv.setViewName("/spot/tripModify");
+		return mv;
+	}
+		
 	
 	
 	
