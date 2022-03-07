@@ -172,8 +172,10 @@ public class SpotController {
 	
 	//여행지(trip) 수정(modify)
 	@RequestMapping(value = "/tripModify", method = RequestMethod.GET)
-	public ModelAndView tripModify(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView tripModify(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		TripVO trip = tripService.getTripDetail(tr_num);
+		mv.addObject("trip", trip);
 		mv.setViewName("/spot/tripModify");
 		return mv;
 	}

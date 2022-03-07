@@ -15,9 +15,9 @@
     <tiles:insertAttribute name="sidebar" />
     <tiles:insertAttribute name="footer" />
 	</body>
-	<script src="/resources/assets/js/myspot/jquery.min.js"></script>
-	<script src="/resources/assets/js/myspot/browser.min.js"></script>
-	<script src="/resources/assets/js/myspot/breakpoints.min.js"></script>
-	<script src="/resources/assets/js/myspot/util.js"></script>
-	<script src="/resources/assets/js/myspot/main.js"></script>
+	<script src="/resources/assets/js/spot/jquery.min.js"></script>
+	<script src="/resources/assets/js/spot/browser.min.js"></script>
+	<script src="/resources/assets/js/spot/breakpoints.min.js"></script>
+	<script src="/resources/assets/js/spot/util.js"></script>
+	<script src="/resources/assets/js/spot/main.js"></script>
 </html>

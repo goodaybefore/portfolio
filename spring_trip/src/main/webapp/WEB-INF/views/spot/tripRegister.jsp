@@ -159,7 +159,7 @@
 									</div>
 									<div class="trip-reg-box with-container">
 										<label>with</label>
-										<input type="text" class="form-control" name="tc_name" placeholder="누구와 함께였나요?"/>
+										<input type="text" class="form-control" name="tr_with" placeholder="누구와 함께였나요?"/>
 									</div>
 									<div class="trip-reg-box file-container">
 										<label>첨부파일</label>
@@ -178,16 +178,6 @@
 					</div>
 				</div>
 			</div>
-			<script>
-
-			
-			
-			</script>
-			<!-- <script src="/resources/assets/js/myspot/jquery.min.js"></script> -->
-			<script src="/resources/assets/js/myspot/browser.min.js"></script>
-			<script src="/resources/assets/js/myspot/breakpoints.min.js"></script>
-			<script src="/resources/assets/js/myspot/util.js"></script>
-			<script src="/resources/assets/js/myspot/main.js"></script>
 			<script src="/resources/assets/js/myspot/tripRegister.js"></script>
 			
 			
