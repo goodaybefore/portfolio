@@ -56,4 +56,10 @@
 	<select id="selectTotalTripCount" resultType="int">
 		SELECT COUNT(*) FROM trip WHERE tr_del = 'N' AND tr_sm_num = #{sm_num};
 	</select>
+	
+	<select id="selectTripDetail" resultType="kr.green.mytrip.vo.TripVO">
+		SELECT * FROM trip
+		WHERE tr_num = #{tr_num}
+		AND tr_op_name= #{open_range};
+	</select>
 </mapper>

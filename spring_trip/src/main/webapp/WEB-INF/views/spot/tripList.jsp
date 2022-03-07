@@ -43,7 +43,9 @@
 										  	<tr>
 										  		<td>${tripList.tr_num}</td>
 										  		<td>${tripList.tr_ca_name}</td>
-										  		<td style="text-overflow: ellipsis; overflow:hidden">${tripList.tr_title}</td>
+										  		<td style="text-overflow: ellipsis; overflow:hidden">
+										  			<a href="<%=request.getContextPath()%>/spot/tripDetail?tr_num=${tr_num}">${tripList.tr_title}</a>
+										  		</td>
 										  		<td>${tripList.tr_start_date_str} ~ ${tripList.tr_end_date_str }</td>
 										  		<td>아직안함</td>
 										  		<td>${tripList.tr_op_name }</td>

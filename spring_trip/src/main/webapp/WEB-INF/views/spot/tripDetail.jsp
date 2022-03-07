@@ -36,31 +36,22 @@
 								<div class="content">
 									<header>
 										<h1>Detail</h1>
-										<p>게시글 상세</p>
-										<div class="board bd_title">
-											<p><strong>${board.bd_title}</strong></p>
-										</div>
-										
-										<div class="board bd_contents">
-											<textarea class="bd_contents" rows="10" readonly>${board.bd_contents}</textarea>
+										<p>여행 정보 상세
+										<br>${trip }
+										</p>
+										<div class="trip tr_title">
+											<p><strong>${trip.tr_title}</strong></p>
 										</div>
 									</header>
 								</div>
 								<span>span 태그 테스트</span>
-								ㅗㅑ
 							</section>
-					<c:if test="${user.me_gr_name == '트립매니저' || user.me_id == board.bd_me_id}">
+					<c:if test="${trip.tr_me_id == user.me_id}">
 						<a href="<%=request.getContextPath()%>/board/register" style="border-bottom : none;"><button>modify</button></a>
 						<a href="<%=request.getContextPath()%>/board/register" style="border-bottom : none;"><button>delete</button></a>
 					</c:if>
 					</div>
 				</div>
 			</div>
-			<script src="/resources/assets/js/myspot/jquery.min.js"></script>
-			<script src="/resources/assets/js/myspot/browser.min.js"></script>
-			<script src="/resources/assets/js/myspot/breakpoints.min.js"></script>
-			<script src="/resources/assets/js/myspot/util.js"></script>
-			<script src="/resources/assets/js/myspot/main.js"></script>
-			
 	</body>
 </html>

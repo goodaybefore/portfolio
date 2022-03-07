@@ -32,6 +32,9 @@ public interface TripDAO {
 	//여행지 목록 페이지네이션
 	int selectTotalTripCount(@Param("sm_num")Integer sm_num);
 	
+	//여행지 detail
+	TripVO selectTripDetail(@Param("open_range")String open_range, @Param("tr_num") Integer tr_num);
+	
 	
 	
 	

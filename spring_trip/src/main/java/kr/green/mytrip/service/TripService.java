@@ -22,5 +22,7 @@ public interface TripService {
 	List<TripVO> getTripList(MemberVO user, String spot_user, Integer sm_num);
 	//여행지 pagination
 	int getTotalTripCount(Criteria cri, Integer sm_num);
+	//여행지 detail
+	TripVO getTripDetail(Integer tr_num);
 
 }

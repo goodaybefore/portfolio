@@ -121,9 +121,17 @@ public class TripServiceImp implements TripService{
 			return tripDao.selectTripListAll(sm_num);
 		return null;
 	}
+	//여행지리스트(tripList) 페이지네이션
 	@Override
 	public int getTotalTripCount(Criteria cri, Integer sm_num) {
 		return tripDao.selectTotalTripCount(sm_num);
+	}
+	
+	//여행지 1개의 detail 불러오기
+	@Override
+	public TripVO getTripDetail(Integer tr_num) {
+		//일단 전체공개 select
+		return tripDao.selectTripDetail("전체공개", tr_num);
 	}
 
 }

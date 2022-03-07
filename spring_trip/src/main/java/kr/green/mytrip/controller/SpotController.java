@@ -51,11 +51,31 @@ public class SpotController {
 		return mv;
 	}
 	
+	
+	
+	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView spotHome(ModelAndView mv, HttpServletRequest request, @PathVariable(required=false) String me_id) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		mv.addObject("user", user);
 		mv.setViewName("/spot/home");
+		return mv;
+	}
+	
+	//여행지(trip) 출력
+	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
+	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num, String spot_user,
+			Criteria cri) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num);
+		cri.setPerPageNum(5);
+		int totalCount = tripService.getTotalTripCount(cri, sm_num);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		mv.addObject("pm", pm);
+		
+		mv.addObject("tripList", tripList);
+		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
+		mv.setViewName("/spot/tripList");
 		return mv;
 	}
 	
@@ -147,24 +167,23 @@ public class SpotController {
 	    return entity;
 	}
 	
-	
-	//여행지(trip) 출력
-	@RequestMapping(value = "/tripList", method = RequestMethod.GET)
-	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request, Integer sm_num, String spot_user,
-			Criteria cri) {
+	//여행지(trip) 상세(detail)
+	@RequestMapping(value = "/tripDetail", method = RequestMethod.GET)
+	public ModelAndView tripDetail(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num);
-		cri.setPerPageNum(5);
-		int totalCount = tripService.getTotalTripCount(cri, sm_num);
-		PageMaker pm = new PageMaker(totalCount, 2, cri);
-		mv.addObject("pm", pm);
-		
-		mv.addObject("tripList", tripList);
-		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
-		mv.setViewName("/spot/tripList");
+		TripVO trip = tripService.getTripDetail(tr_num);
+		mv.setViewName("/spot/tripDetail");
 		return mv;
 	}
 	
+	//여행지(trip) 수정(modify)
+	@RequestMapping(value = "/tripModify", method = RequestMethod.GET)
+	public ModelAndView tripModify(ModelAndView mv, HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		mv.setViewName("/spot/tripModify");
+		return mv;
+	}
+		
 	
 	
 	
