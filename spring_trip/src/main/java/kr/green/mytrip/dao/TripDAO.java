@@ -34,6 +34,7 @@ public interface TripDAO {
 	
 	//여행지 detail
 	TripVO selectTripDetail(@Param("open_range")String open_range, @Param("tr_num") Integer tr_num);
+	List<FileVO> selectFileList(@Param("tr_num")Integer tr_num);
 	
 	
 	

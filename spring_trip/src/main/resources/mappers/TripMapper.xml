@@ -62,4 +62,9 @@
 		WHERE tr_num = #{tr_num}
 		AND tr_op_name= #{open_range};
 	</select>
+	
+	<select id="selectFileList" resultType="kr.green.mytrip.vo.FileVO">
+		SELECT * FROM file WHERE fi_tr_num=#{tr_num} AND fi_del='N';
+	
+	</select>
 </mapper>

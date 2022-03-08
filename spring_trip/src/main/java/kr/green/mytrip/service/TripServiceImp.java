@@ -133,5 +133,9 @@ public class TripServiceImp implements TripService{
 		//일단 전체공개 select
 		return tripDao.selectTripDetail("전체공개", tr_num);
 	}
+	@Override
+	public List<FileVO> getFileList(Integer tr_num) {
+		return tripDao.selectFileList(tr_num);
+	}
 
 }

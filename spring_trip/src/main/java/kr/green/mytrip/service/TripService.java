@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.mytrip.pagination.Criteria;
+import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
@@ -24,5 +25,6 @@ public interface TripService {
 	int getTotalTripCount(Criteria cri, Integer sm_num);
 	//여행지 detail
 	TripVO getTripDetail(Integer tr_num);
+	List<FileVO> getFileList(Integer tr_num);
 
 }

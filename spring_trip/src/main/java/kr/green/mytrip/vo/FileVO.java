@@ -1,8 +1,10 @@
 package kr.green.mytrip.vo;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class FileVO {
 	private int fi_num;
 	private int fi_tr_num;

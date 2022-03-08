@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.pagination.PageMaker;
 import kr.green.mytrip.service.TripService;
+import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
@@ -161,11 +162,38 @@ public class SpotController {
 	}
 	
 	//여행지(trip) 상세(detail)
-	@RequestMapping(value = "/tripDetail", method = RequestMethod.GET)
-	public ModelAndView tripDetail(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
+	/*
+	 * //여행지 목록(trip List) 출력
+	@GetMapping(value = "/{spot_user}/tripList/{sm_num}")
+	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request,
+			@PathVariable(required=false, value="sm_num")Integer sm_num,
+			@PathVariable(required=false, value="spot_user")String spot_user,
+			Criteria cri) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num);
+		System.out.println("sm_num"+sm_num);
+		
+		cri.setPerPageNum(5);
+		int totalCount = tripService.getTotalTripCount(cri, sm_num);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		mv.addObject("pm", pm);
+		
+		mv.addObject("tripList", tripList);
+		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
+		mv.setViewName("/spot/tripList");
+		return mv;
+	}
+	 * */
+	@GetMapping("/{spot_user}/tripDetail/{sm_num}/{tr_num}")
+	public ModelAndView tripDetail(ModelAndView mv, HttpServletRequest request,
+			@PathVariable(required=false, value="sm_num")Integer sm_num,
+			@PathVariable(required=false, value="spot_user")String spot_user,
+			@PathVariable(required=false, value="tr_num")Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
+		List<FileVO> fileList = tripService.getFileList(tr_num);
 		mv.addObject("trip", trip);
+		mv.addObject("fileList", fileList);
 		mv.setViewName("/spot/tripDetail");
 		return mv;
 	}
