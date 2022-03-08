@@ -224,7 +224,6 @@
 						// Calculate heights.
 							wh = $window.height();
 							sh = $sidebar_inner.outerHeight() + 30;
-
 						// Trigger scroll.
 							$window.trigger('scroll.sidebar-lock');
 

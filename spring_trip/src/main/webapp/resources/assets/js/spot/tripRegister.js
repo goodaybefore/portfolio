@@ -23,7 +23,7 @@ $(function() {
 		$.ajax({
 				async :false,
 		    type:'get',
-		    url : '/myspot/middlecategory',
+		    url : '/spot/middlecategory',
 		    dataType:"json",
 		    success : function(res){
 		    	for(middle of res.list){
@@ -43,7 +43,7 @@ $(function() {
 		$.ajax({
 				async :false,
 		    type:'get',
-		    url : '/myspot/smallcategory?sc_mc_num='+mc_num,
+		    url : '/spot/smallcategory?sc_mc_num='+mc_num,
 		    dataType:"json",
 		    success : function(res){
 		    	for(small of res.list){

@@ -6,24 +6,20 @@
 		<title>my spot home</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<!-- jQuery library -->
-		<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-		<!-- 부트스트랩 -->
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-		<!-- Popper JS -->
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-		<!-- Latest compiled JavaScript -->
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 		
-		<!-- 이 템플릿의 원래 css -->
-		<link rel="stylesheet" href="/resources/assets/css/myspot/main.css" />
+		<!-- 부트스트랩 -->
+		<!-- Latest compiled and minified CSS  
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">-->
+		<!-- Popper JS 
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>-->
+		<!-- Latest compiled JavaScript 
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>-->
+		
 		
 		<!-- date range picker -->
 		<!-- css -->
 		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />		 
 		<!-- js -->
-		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 		
@@ -106,7 +102,7 @@
 									<h1>Trip Register</h1>
 									<p>여행 등록</p>
 								</header>
-								<form action="<%=request.getContextPath()%>/myspot/tripReg" method="post" enctype="multipart/form-data">
+								<form action="<%=request.getContextPath()%>/spot/tripReg" method="post" enctype="multipart/form-data">
 									<input type="hidden" value="${reg_sm_num}" name="tr_sm_num">
 									<div class="trip-reg-box period-select-container">
 										<div class="period">
@@ -178,9 +174,7 @@
 					</div>
 				</div>
 			</div>
-			<script src="/resources/assets/js/myspot/tripRegister.js"></script>
 			
-			
-			
+			<script src="/resources/assets/js/spot/tripRegister.js"></script>
 	</body>
 </html>
