@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
@@ -27,7 +28,7 @@ public interface TripDAO {
 			@Param("colName2")String colName2,  @Param("colVal2")Integer calVal2);
 	
 	//여행지 목록 불러오기 tripList
-	List<TripVO> selectTripListAll(@Param("sm_num")Integer sm_num);//모두 불러오기
+	List<TripVO> selectTripListAll(@Param("sm_num")Integer sm_num, @Param("cri")Criteria cri);//모두 불러오기
 	List<TripVO> selectTripList(@Param("openRange")String openRange, Integer sm_num);//특정 범위만 불러오기
 	//여행지 목록 페이지네이션
 	int selectTotalTripCount(@Param("sm_num")Integer sm_num);

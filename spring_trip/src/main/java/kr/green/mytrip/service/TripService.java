@@ -20,7 +20,7 @@ public interface TripService {
 	List<SmallCategoryVO> selectSmallCategory(Integer mc_num);
 	
 	//등록한 여행지 목록 출력
-	List<TripVO> getTripList(MemberVO user, String spot_user, Integer sm_num);
+	List<TripVO> getTripList(MemberVO user, String spot_user, Integer sm_num, Criteria cri);
 	//여행지 pagination
 	int getTotalTripCount(Criteria cri, Integer sm_num);
 	//여행지 detail

@@ -46,7 +46,15 @@
 										  		<td style="text-overflow: ellipsis; overflow:hidden">
 										  			<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDetail/${sm_num}/${tripList.tr_num}">${tripList.tr_title}</a>
 										  		</td>
-										  		<td>${tripList.tr_start_date_str} ~ ${tripList.tr_end_date_str }</td>
+										  		<td>
+										  			<c:if test="${tripList.tr_start_date_str == tripList.tr_end_date_str}">
+										  				${tripList.tr_start_date_str}
+										  			</c:if>
+										  			<c:if test="${tripList.tr_start_date_str != tripList.tr_end_date_str}">
+										  				${tripList.tr_start_date_str} ~ ${tripList.tr_end_date_str }
+										  			</c:if>
+										  		
+										  		</td>
 										  		<td>아직안함</td>
 										  		<td>${tripList.tr_op_name }</td>
 										  		<td class="text-center">*</td>
@@ -55,17 +63,21 @@
 										  </tbody>
 										</table>
 										
-										<!-- pagination -->
-										<ul class="pagination justify-content-center">
-											<li><a href="<%=request.getContextPath()%>/spot/tripList?sm_num=${thisSmNum}&page=${pm.startPage-1}" class="<c:if test="${!pm.prev}">disabled</c:if>">Prev</a></li>
-											<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-												<li class="">
-													<a href="<%=request.getContextPath()%>/spot/tripList?sm_num=${thisSmNum}&page=${i}" class="page <c:if test="${pm.criteria.page==i}">active</c:if>">${i}</a>
+										<div style="display : flex; justify-content : center;">
+											<!-- pagination -->
+											<ul class="pagination" style="">
+												<li>
+													<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripList/${sm_num}?page=${pm.startPage-1}" class="<c:if test="${!pm.prev}">disabled</c:if>">Prev</a>
 												</li>
-											</c:forEach>
-											<li><a href="<%=request.getContextPath()%>/spot/tripList?sm_num=${thisSmNum}&page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
-										</ul>
-										<a href="<%=request.getContextPath()%>/spot/tripReg?reg_sm_num=${thisSmNum}"><button class="btn-trip-write">add</button></a>
+												<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+													<li>
+														<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripList/${sm_num}?page=${i}" class="page <c:if test="${pm.criteria.page==i}">active</c:if>">${i}</a>
+													</li>
+												</c:forEach>
+													<li><a href="<%=request.getContextPath()%>/spot/${spot_user}/tripList/${sm_num}?page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
+											</ul>
+										</div>
+										<a href="<%=request.getContextPath()%>/spot/tripReg?reg_sm_num=${sm_num}"><button class="btn-trip-write">add</button></a>
 									</div>
 									
 								</section>

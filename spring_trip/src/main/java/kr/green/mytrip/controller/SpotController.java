@@ -58,18 +58,19 @@ public class SpotController {
 			@PathVariable(required=false, value="sm_num")Integer sm_num,
 			@PathVariable(required=false, value="spot_user")String spot_user,
 			Criteria cri) {
-		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num);
-		System.out.println("sm_num"+sm_num);
 		
 		cri.setPerPageNum(5);
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num, cri);
+		
 		int totalCount = tripService.getTotalTripCount(cri, sm_num);
 		PageMaker pm = new PageMaker(totalCount, 2, cri);
-		mv.addObject("pm", pm);
 		
+		mv.addObject("pm", pm);
 		mv.addObject("tripList", tripList);
-		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
-		mv.setViewName("/spot/tripList");
+		mv.addObject("sm_num", sm_num);//사용자메뉴번호
+		
+		mv.setViewName("/spot/tripList"); 
 		return mv;
 	}
 	
