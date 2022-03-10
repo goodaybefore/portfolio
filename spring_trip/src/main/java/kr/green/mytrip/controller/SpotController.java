@@ -185,17 +185,44 @@ public class SpotController {
 	public ModelAndView tripModifyGet(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
-		SpotMenuVO spotMenu = tripService.selectMenu(trip, user);
+		Integer sc_num = 0;
+		Integer mc_num = 0;
 		
-		mv.addObject("trip", trip);
-		mv.setViewName("/spot/tripModify");
+		//SpotMenuVO spotMenu = tripService.selectMenu(trip, user);
+		if(trip == null) {
+			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripList/"+trip.getTr_sm_num());
+			if(trip.getTr_sca_name()!=null) {
+				//sca_name의 sc_num을 찾기
+				//SELECT sc_num FROM small_category WHERE sc_num = #{tr_sca_name};
+				sc_num = tripService.getTripScaNum(trip.getTr_sca_name());
+				mc_num = tripService.getTripMcaNum(trip.getTr_mca_name());
+			}else {
+				mc_num = tripService.getTripMcaNum(trip.getTr_mca_name());
+			}
+			
+		}else {
+			List<FileVO> fileList = tripService.getFileList(tr_num);
+			mv.addObject("fileList", fileList);
+			mv.addObject("trip", trip);
+			mv.setViewName("/spot/tripModify");
+		}
+		
+		
 		return mv;
 	}
-	@ResponseBody
 	@RequestMapping(value = "/tripModify", method = RequestMethod.POST)
-	public ModelAndView tripModifyPost(ModelAndView mv, HttpServletRequest request, TripVO trip) {
+	public ModelAndView tripModifyPost(ModelAndView mv, HttpServletRequest request, TripVO trip,
+			List<MultipartFile> file, Integer[] fileNums) {
+		if(fileNums != null) {
+			for(Integer tmp : fileNums)
+				System.out.println(tmp);
+		}
+		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		System.out.println(trip);
+		if(tripService.modifyTrip(trip, file, fileNums)) {
+			mv.setViewName("/spot/"+user.getMe_id()+"/tripList/"+trip.getTr_sm_num());
+		}
 		mv.setViewName("/spot/tripModify");
 		return mv;
 	}

@@ -59,7 +59,7 @@
 	<select id="selectTripDetail" resultType="kr.green.mytrip.vo.TripVO">
 		SELECT * FROM trip
 		WHERE tr_num = #{tr_num}
-		AND tr_op_name= #{open_range};
+		AND (tr_op_name= "전체공개" OR tr_op_name="트립메이트공개" OR tr_op_name= "회원공개" OR tr_op_name= "비공개");
 	</select>
 	
 	<select id="selectFileList" resultType="kr.green.mytrip.vo.FileVO">
@@ -71,9 +71,16 @@
 	</select>
 	
 	<update id="deleteTrip">
-	UPDATE trip
-	SET tr_del = 'Y'
-	WHERE tr_num = #{tr_num};
+		UPDATE trip
+		SET tr_del = 'Y'
+		WHERE tr_num = #{tr_num};
+	</update>
 	
+	<update id="updateTrip">
+		UPDATE trip
+		SET tr_mca_name=#{trip.tr_mca_name}, tr_sca_name=#{trip.tr_sca_name},
+		tr_title=#{trip.tr_title}, tr_start_date=#{trip.tr_start_date}, tr_end_date =#{trip.tr_end_date}, tr_op_name =#{trip.tr_op_name}
+		WHERE tr_num = #{trip.tr_num};
+		
 	</update>
 </mapper>

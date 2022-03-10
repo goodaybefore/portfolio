@@ -33,5 +33,10 @@ public interface TripService {
 	TripVO selectTrip(Integer tr_num);
 	//여행지의 Menu Category 불러오기
 	SpotMenuVO selectMenu(TripVO trip, MemberVO user);
+	
+	//여행지 수정
+	boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums);
+	Integer getTripScaNum(String tr_sca_name);
+	Integer getTripMcaNum(String tr_mca_name);
 
 }

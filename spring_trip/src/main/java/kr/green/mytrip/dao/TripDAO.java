@@ -31,12 +31,17 @@ public interface TripDAO {
 	int selectTotalTripCount(@Param("sm_num")Integer sm_num);
 	
 	//여행지 detail
-	TripVO selectTripDetail(@Param("open_range")String open_range, @Param("tr_num") Integer tr_num);
+	TripVO selectTripDetail(@Param("tr_num") Integer tr_num);
 	List<FileVO> selectFileList(@Param("tr_num")Integer tr_num);
 	
 	//여행지 delete
 	void deleteTrip(@Param("tr_num")Integer tr_num);
 	TripVO selectTrip(@Param("tr_num")Integer tr_num);
+	
+	//여행지 modify
+	void updateTrip(@Param("trip")TripVO trip);
+	Integer selectSmallcategoryNum(String tr_sca_name);
+	Integer selectMiddlecategoryNum(String tr_mca_name);
 	
 	
 	

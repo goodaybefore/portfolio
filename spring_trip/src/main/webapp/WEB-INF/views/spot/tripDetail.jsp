@@ -74,6 +74,8 @@
 									<header>
 										<h1>Detail</h1>
 										<p>여행 정보 상세 + 활동정보 관리</p>
+										${trip }<br>
+										${user }
 									</header>
 									<div class="trip-detail">
 											<c:if test="${trip.tr_me_id == user.me_id}">

@@ -101,8 +101,10 @@ public class TripServiceImp implements TripService{
 	@Override
 	public TripVO getTripDetail(Integer tr_num) {
 		if(tr_num <= 0 || tr_num == null) return null;
-		//일단 전체공개 select
-		return tripDao.selectTripDetail("전체공개", tr_num);
+		TripVO trip = tripDao.selectTripDetail(tr_num);
+		
+		if(trip == null) return null;
+		return trip;
 	}
 	@Override
 	public List<FileVO> getFileList(Integer tr_num) {
@@ -127,6 +129,28 @@ public class TripServiceImp implements TripService{
 		if(trip==null || user == null) return null;
 		if(!trip.getTr_me_id().equals(user.getMe_id())) return null;
 		return null;
+	}
+	@Override
+	
+	//여행지 수정
+	public boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums) {
+		if(trip==null || trip.getTr_mca_name()== null || trip.getTr_title()==null || trip.getTr_op_name() == null)
+			return false;
+		System.out.println(trip);
+		System.out.println(file);
+		System.out.println(fileNums);
+		//tripDao.updateTrip(trip);
+		return false;
+	}
+	//여행지 이름으로 각 카테고리의 primary key 구하기
+	@Override
+	public Integer getTripScaNum(String tr_sca_name) {
+		return tripDao.selectSmallcategoryNum(tr_sca_name);
+	}
+	@Override
+	public Integer getTripMcaNum(String tr_mca_name) {
+		// TODO Auto-generated method stub
+		return tripDao.selectMiddlecategoryNum(tr_mca_name);
 	}
 
 }

@@ -19,6 +19,14 @@ $(function() {
 		//setSmallCategory(sc_num);
 	})
 	
+	$('.attachment .btn-close').click(function(e){
+		e.preventDefault();
+		console.log($(this).parent());
+		$(this).parent().remove();
+		var str = '<input type="file" class="form-control" name="file">';
+		$('.attachment').append(str);
+	});
+	
 	function setMiddleCategory(){
 		let str = '';
 		$.ajax({
@@ -124,6 +132,7 @@ $(function() {
 	    $(".cancelBtn").css("float", "right");
 	});	
 	}
+	
 	
 	
 	

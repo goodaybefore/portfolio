@@ -21,6 +21,7 @@ public class TripVO {
 	private String tr_op_name;
 	private String tr_del;
 	private int tr_charge;
+	private String tr_with;
 	
 	public String getTr_start_date_str() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");

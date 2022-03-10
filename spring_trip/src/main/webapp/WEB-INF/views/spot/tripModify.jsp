@@ -104,17 +104,24 @@
 							<div class="content">
 								<header>
 									<h1>Trip Modify</h1>
-									<p>여행 수정 ${trip }<br>${trip.tr_start_date_str}</p>
+									<p>여행 수정 ${trip }<br>${trip.tr_start_date_str}<br>${trip.tr_end_date_str}</p>
 								</header>
-								<form action="<%=request.getContextPath()%>/myspot/tripReg" method="post" enctype="multipart/form-data">
+								<form action="<%=request.getContextPath()%>/spot/tripModify" method="post" enctype="multipart/form-data">
 									<input type="hidden" value="${reg_sm_num}" name="tr_sm_num">
 									<div class="trip-reg-box period-select-container">
 										<div class="period">
 											<label class="period-label" for="from">period</label>
-											<input type="text" class="day-input" id="from" name="from">
-										</div>
+											
+											<c:if test="${trip.tr_start_date_str != trip.tr_end_date_str }">
+												<input type="text" class="day-input" id="from" name="from" value="${trip.tr_start_date_str} ~ ${trip.tr_end_date_str}" readonly>
+											</c:if>
+											<c:if test="${trip.tr_start_date_str == trip.tr_end_date_str }">
+												<input type="text" class="day-input" id="from" name="from" value="${trip.tr_start_date_str} ~ ${trip.tr_start_date_str}" readonly>
+											</c:if>
+										</div>`
 										<div class="period">
-											<label class="period-label">당일여행인가요?</label><input type="checkbox" id="isOneday">
+											<label class="period-label">당일여행인가요?</label>
+											<input type="checkbox" id="isOneday" <c:if test="${trip.tr_start_date_str == trip.tr_end_date_str }">checked</c:if>>
 										</div>
 										
 									</div>
@@ -122,25 +129,17 @@
 										<label style="flex:1;">지역선택박스</label>
 										<div class="area-select-box col-6">
 											<select class="middle-category">
-												<c:if test="${trip.tr_ca_sort_name == 'middle_category'}">
-													<p>dfasfsdfasdfads</p>
-													<option value="">${trip.tr_ca_name}</option>
-												</c:if>
-												<c:if test="${trip.tr_ca_sort_name == 'small_category'}">
-													<option value=""></option>
-												</c:if>
-												
+												<option value="0">${trip.tr_mca_name}</option>
 											</select>
 										</div>
 										<div class="area-select-box col-6">
 											<select class="small-category">
-												<c:if test="${trip.tr_ca_sort_name == 'middle_category'}">
+												<c:if test="${trip.tr_sca_name != null}">
+													<option value="0">${trip.tr_sca_name}</option>
+												</c:if>
+												<c:if test="${trip.tr_sca_name ==null }">
 													<option value="0">세부선택</option>
 												</c:if>
-												<c:if test="${trip.tr_ca_sort_name == 'small_category'}">
-													<option value="">${trip.tr_ca_name}</option>
-												</c:if>
-												
 											</select>
 										</div>
 										<div class="area-select-mcnum"></div>
@@ -148,34 +147,38 @@
 									</div>
 									<div class="trip-reg-box box-open-range">
 										<label class="open-range-label">
-											<input type="radio" class="open-range" name="tr_op_name" value="전체공개"/>전체공개
+											<input type="radio" class="open-range" name="tr_op_name" value="전체공개" <c:if test="${trip.tr_op_name=='전체공개'}">checked</c:if> />전체공개
 										</label>
 										<label class="open-range-label">
-											<input type="radio" class="open-range" name="tr_op_name" value="트립메이트공개" />트립메이트공개
+											<input type="radio" class="open-range" name="tr_op_name" value="트립메이트공개" <c:if test="${trip.tr_op_name=='트립메이트공개'}">checked</c:if> />트립메이트공개
 										</label>
 										<label class="open-range-label">
-											<input type="radio" class="open-range" name="tr_op_name" value="회원공개" />회원공개
+											<input type="radio" class="open-range" name="tr_op_name" value="회원공개" <c:if test="${trip.tr_op_name=='회원공개'}">checked</c:if> />회원공개
 										</label>
 										<label class="open-range-label">
-											<input type="radio" class="open-range" name="tr_op_name" value="비공개" /> 비공개
+											<input type="radio" class="open-range" name="tr_op_name" value="비공개" <c:if test="${trip.tr_op_name=='비공개'}">checked</c:if> /> 비공개
 										</label>
 									</div>
 									<div class="trip-reg-box title-container">
-										<label>title</label><input type="text" class="form-control" name="tr_title"/>
+										<label>title</label><input type="text" class="form-control" name="tr_title" value="${trip.tr_title}"/>
 									</div>
-									<div>
-										<input type="hidden" name="tr_me_id" value="${user.me_id}"/>
-									</div>
+									<input type="hidden" name="tr_me_id" value="${user.me_id}"/>
 									<div class="trip-reg-box with-container">
 										<label>with</label>
-										<input type="text" class="form-control" name="tc_name" placeholder="누구와 함께였나요?"/>
+										<input type="text" class="form-control" name="tr_with" placeholder="누구와 함께였나요?" value="${trip.tr_with}"/>
 									</div>
-									<div class="trip-reg-box file-container">
+									<div class="trip-reg-box file-container attachment">
 										<label>첨부파일</label>
-										<div class="">
-							        <input type="file" class="form-control" name="file"/>
-							        <input type="file" class="form-control" name="file"/>
-							    	</div>
+										<c:forEach items="${fileList}" var="file">
+											<div class="">
+								        <input type="hidden" class="form-control" name="fileNums" value="${file.fi_num}"/>
+								        <span>${file.fi_ori_name }</span>
+								        <a class="btn-close" href="#">X</a>
+								    	</div>
+										</c:forEach>
+										<c:forEach begin="1" end="${2-fileList.size()}">
+											<input type="file" class="form-control" name="file">
+										</c:forEach>
 									</div>
 									<div>
 										<input type="submit" class="btn-write" value="write">
