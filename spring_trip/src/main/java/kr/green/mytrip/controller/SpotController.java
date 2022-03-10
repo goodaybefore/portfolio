@@ -59,8 +59,13 @@ public class SpotController {
 			@PathVariable(required=false, value="spot_user")String spot_user,
 			Criteria cri) {
 		
-		cri.setPerPageNum(5);
+		
+		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+//		if(spot_user == user.getMe_id()) {
+//			
+//		}
+		cri.setPerPageNum(5);
 		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num, cri);
 		
 		int totalCount = tripService.getTotalTripCount(cri, sm_num);

@@ -1,4 +1,4 @@
-package kr.green.mytrip.controller;
+ package kr.green.mytrip.controller;
 
 
 import java.util.List;
