@@ -42,7 +42,7 @@
 										  	<c:forEach items="${tripList}" var="tripList">
 										  	<tr>
 										  		<td>${tripList.tr_num}</td>
-										  		<td>${tripList.tr_ca_name}</td>
+										  		<td>${tripList.tr_mca_name}</td>
 										  		<td style="text-overflow: ellipsis; overflow:hidden">
 										  			<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDetail/${sm_num}/${tripList.tr_num}">${tripList.tr_title}</a>
 										  		</td>
@@ -77,7 +77,7 @@
 													<li><a href="<%=request.getContextPath()%>/spot/${spot_user}/tripList/${sm_num}?page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
 											</ul>
 										</div>
-										<a href="<%=request.getContextPath()%>/spot/tripReg?reg_sm_num=${sm_num}"><button class="btn-trip-write">add</button></a>
+										<a href="<%=request.getContextPath()%>/spot/tripRegister?reg_sm_num=${sm_num}"><button class="btn-trip-write">add</button></a>
 									</div>
 									
 								</section>

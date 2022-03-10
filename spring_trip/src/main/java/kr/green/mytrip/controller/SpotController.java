@@ -31,6 +31,7 @@ import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
+import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 
@@ -59,8 +60,6 @@ public class SpotController {
 			@PathVariable(required=false, value="spot_user")String spot_user,
 			Criteria cri) {
 		
-		
-		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 //		if(spot_user == user.getMe_id()) {
 //			
@@ -81,7 +80,7 @@ public class SpotController {
 	
 	
 	//여행지 등록(tripReg)
-	@RequestMapping(value = "/tripReg", method = RequestMethod.GET)
+	@RequestMapping(value = "/tripRegister", method = RequestMethod.GET)
 	public ModelAndView tripRegGet(ModelAndView mv, HttpServletRequest request, Integer reg_sm_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		//List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
@@ -110,7 +109,7 @@ public class SpotController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/tripReg", method = RequestMethod.POST)
+	@RequestMapping(value = "/tripRegister", method = RequestMethod.POST)
 	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, TripVO trip, String from,
 			Integer sc_num, Integer mc_num, List<MultipartFile> file) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
@@ -129,7 +128,7 @@ public class SpotController {
 			e.printStackTrace();
 		}
 		if(tripService.insertTrip(user, trip, file, mc_num, sc_num)) {
-			mv.setViewName("redirect:/spot/tripList");
+			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripList/1");
 		}else {
 			//***** 비정상적인 접근입니다 하는 alert 경고창 넣을 수 없나? *****
 			mv.setViewName("redirect:/spot/tripRegister");
@@ -167,29 +166,6 @@ public class SpotController {
 	    return entity;
 	}
 	
-	//여행지(trip) 상세(detail)
-	/*
-	 * //여행지 목록(trip List) 출력
-	@GetMapping(value = "/{spot_user}/tripList/{sm_num}")
-	public ModelAndView tripList(ModelAndView mv, HttpServletRequest request,
-			@PathVariable(required=false, value="sm_num")Integer sm_num,
-			@PathVariable(required=false, value="spot_user")String spot_user,
-			Criteria cri) {
-		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num);
-		System.out.println("sm_num"+sm_num);
-		
-		cri.setPerPageNum(5);
-		int totalCount = tripService.getTotalTripCount(cri, sm_num);
-		PageMaker pm = new PageMaker(totalCount, 2, cri);
-		mv.addObject("pm", pm);
-		
-		mv.addObject("tripList", tripList);
-		mv.addObject("thisSmNum", sm_num);//사용자메뉴번호
-		mv.setViewName("/spot/tripList");
-		return mv;
-	}
-	 * */
 	@GetMapping("/{spot_user}/tripDetail/{sm_num}/{tr_num}")
 	public ModelAndView tripDetail(ModelAndView mv, HttpServletRequest request,
 			@PathVariable(required=false, value="sm_num")Integer sm_num,
@@ -206,15 +182,43 @@ public class SpotController {
 	
 	//여행지(trip) 수정(modify)
 	@RequestMapping(value = "/tripModify", method = RequestMethod.GET)
-	public ModelAndView tripModify(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
+	public ModelAndView tripModifyGet(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
+		SpotMenuVO spotMenu = tripService.selectMenu(trip, user);
+		
 		mv.addObject("trip", trip);
 		mv.setViewName("/spot/tripModify");
 		return mv;
 	}
-		
+	@ResponseBody
+	@RequestMapping(value = "/tripModify", method = RequestMethod.POST)
+	public ModelAndView tripModifyPost(ModelAndView mv, HttpServletRequest request, TripVO trip) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println(trip);
+		mv.setViewName("/spot/tripModify");
+		return mv;
+	}
 	
+	//여행지 삭제(delete)
+	@RequestMapping(value = "/tripDelete", method = RequestMethod.GET)
+	public ModelAndView tripDelete(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println();
+		TripVO dbTrip = tripService.selectTrip(tr_num);
+
+		if(tripService.deleteTrip(user, dbTrip)){
+			System.out.println("삭제성공");
+			mv.setViewName("redirect:/"+user.getMe_id()+"/tripList/"+dbTrip.getTr_sm_num());
+		}else if(dbTrip == null) {
+			 System.out.println("삭제실패");
+			 mv.setViewName("redirect:/spot/"+user.getMe_id()+"/home");
+		}else {
+			mv.setViewName("redirect:/"+user.getMe_id()+"/tripDetail/"+dbTrip.getTr_sm_num()+"/"+dbTrip.getTr_num());
+		}
+		
+		return mv;
+	}
 	
 	
 	

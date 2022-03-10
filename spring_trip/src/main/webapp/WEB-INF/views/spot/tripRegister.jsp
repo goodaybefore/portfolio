@@ -102,7 +102,7 @@
 									<h1>Trip Register</h1>
 									<p>여행 등록</p>
 								</header>
-								<form action="<%=request.getContextPath()%>/spot/tripReg" method="post" enctype="multipart/form-data">
+								<form action="<%=request.getContextPath()%>/spot/tripRegister" method="post" enctype="multipart/form-data">
 									<input type="hidden" value="${reg_sm_num}" name="tr_sm_num">
 									<div class="trip-reg-box period-select-container">
 										<div class="period">
@@ -122,12 +122,12 @@
 										<label style="flex:1;">지역선택박스</label>
 										<div class="area-select-box col-6">
 											<select class="middle-category">
-												<option value="0">시/도선택</option>
+												<option value="none">시/도선택</option>
 											</select>
 										</div>
 										<div class="area-select-box col-6">
 											<select class="small-category">
-												<option value="0">세부선택</option>
+												<option value="none">세부선택</option>
 											</select>
 										</div>
 										<div class="area-select-mcnum"></div>

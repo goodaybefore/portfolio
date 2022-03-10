@@ -103,8 +103,8 @@
 						<section id="banner">
 							<div class="content">
 								<header>
-									<h1>Trip Register</h1>
-									<p>여행 등록</p>
+									<h1>Trip Modify</h1>
+									<p>여행 수정 ${trip }<br>${trip.tr_start_date_str}</p>
 								</header>
 								<form action="<%=request.getContextPath()%>/myspot/tripReg" method="post" enctype="multipart/form-data">
 									<input type="hidden" value="${reg_sm_num}" name="tr_sm_num">
@@ -113,10 +113,6 @@
 											<label class="period-label" for="from">period</label>
 											<input type="text" class="day-input" id="from" name="from">
 										</div>
-										<!-- <div class="period">
-											<label class="period-label" for="to">last</label>
-											<input type="text" class="day-input" id="to" name="to">
-										</div> -->
 										<div class="period">
 											<label class="period-label">당일여행인가요?</label><input type="checkbox" id="isOneday">
 										</div>
@@ -126,12 +122,25 @@
 										<label style="flex:1;">지역선택박스</label>
 										<div class="area-select-box col-6">
 											<select class="middle-category">
-												<option value="0">시/도선택</option>
+												<c:if test="${trip.tr_ca_sort_name == 'middle_category'}">
+													<p>dfasfsdfasdfads</p>
+													<option value="">${trip.tr_ca_name}</option>
+												</c:if>
+												<c:if test="${trip.tr_ca_sort_name == 'small_category'}">
+													<option value=""></option>
+												</c:if>
+												
 											</select>
 										</div>
 										<div class="area-select-box col-6">
 											<select class="small-category">
-												<option value="0">세부선택</option>
+												<c:if test="${trip.tr_ca_sort_name == 'middle_category'}">
+													<option value="0">세부선택</option>
+												</c:if>
+												<c:if test="${trip.tr_ca_sort_name == 'small_category'}">
+													<option value="">${trip.tr_ca_name}</option>
+												</c:if>
+												
 											</select>
 										</div>
 										<div class="area-select-mcnum"></div>
@@ -178,19 +187,6 @@
 					</div>
 				</div>
 			</div>
-			<script>
-
-			
-			
-			</script>
-			<!-- <script src="/resources/assets/js/myspot/jquery.min.js"></script> -->
-			<script src="/resources/assets/js/myspot/browser.min.js"></script>
-			<script src="/resources/assets/js/myspot/breakpoints.min.js"></script>
-			<script src="/resources/assets/js/myspot/util.js"></script>
-			<script src="/resources/assets/js/myspot/main.js"></script>
-			<script src="/resources/assets/js/myspot/tripRegister.js"></script>
-			
-			
-			
+			<script src="/resources/assets/js/spot/tripModify.js"></script>
 	</body>
 </html>

@@ -75,12 +75,12 @@
 	<!-- member만 접근 가능한 곳 -->
 	<interceptors>
 	    <interceptor>
-	        <mapping path="/myspot/tripReg"/>
+	        <mapping path="/spot/tripRegister"/>
+	        <mapping path="/spot/tripDelete"/>
+	        <mapping path="/spot/tripModify"/>
 	        <beans:ref bean="memberInterceptor"/>
 	    </interceptor>
 	</interceptors>
-	
-	<!-- member가 접근 가능한 곳 -->
 	
 	<!-- 파일업로드 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

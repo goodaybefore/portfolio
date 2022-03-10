@@ -76,11 +76,10 @@
 										<p>여행 정보 상세 + 활동정보 관리</p>
 									</header>
 									<div class="trip-detail">
-										<c:if test="${trip.tr_me_id == user.me_id}">
-											<a href="<%=request.getContextPath()%>/spot/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
-											<a href="<%=request.getContextPath()%>/spot/tripDelete" style="border-bottom : none;"><button>delete</button></a>
-										</c:if>
-										<input type="hidden" value="${reg_sm_num}" name="tr_sm_num">
+											<c:if test="${trip.tr_me_id == user.me_id}">
+												<a href="<%=request.getContextPath()%>/spot/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
+												<a href="<%=request.getContextPath()%>/spot/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
+											</c:if>
 										<div class="trip-reg-box detail-container">
 											<!-- 여행기간 -->
 											<div class="period-container">
@@ -94,7 +93,8 @@
 												</div>
 											<div class="area-container">
 												<label class="detail-label">지역</label>
-												<p>${trip.tr_ca_name }</p>
+												<p>${trip.tr_mca_name }</p>
+												<p>${trip.tr_sca_name }</p>
 											</div>
 											<div class="open-range-container">
 												<label class="detail-label">공개범위</label>

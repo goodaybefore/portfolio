@@ -13,6 +13,7 @@ import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
+import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 @Service
@@ -31,53 +32,22 @@ public class TripServiceImp implements TripService{
 		if(!user.getMe_id().equals(trip.getTr_me_id())) return false;
 		//endDate가 없을경우 ==> 당일여행인 경우
 		if(trip.getTr_end_date() ==null) trip.setTr_end_date(trip.getTr_start_date());
-		//tr_ca_num(카테고리 번호)가 해당 분류(middle or small)안에 있는 카테고리 개수범위에 들어가지 않을 경우 false를 리턴
-		if(!CategoryInput(trip, sc_num, mc_num)) return false;
+		
+		
+		String mca_name = tripDao.selectMiddleCategoryName(mc_num);
+		String sca_name = null;
+		if(sc_num != null) sca_name = tripDao.selectSmallCategoryName(sc_num);
+		
+		if(mca_name == null) return false;
+		
+		trip.setTr_mca_name(mca_name);
+		trip.setTr_sca_name(sca_name);
 		
 		
 		//trip insert
 		tripDao.insertTrip(trip);
 		//file insert
 		uploadFile(file, trip.getTr_num());
-		
-		return true;
-	}
-	public boolean CategoryInput(TripVO trip, Integer sc_num, Integer mc_num) {
-		//카테고리 분류(1차) => 중분류/소분류 나누기
-		if(sc_num == null && mc_num != null) {
-			//중분류까지 입력되어있을 경우
-			trip.setTr_ca_sort_name("middle_category");
-		}else if(sc_num != null && mc_num != null) {
-			//중분류와 소분류가 모두 입력되어 있을 경우
-			trip.setTr_ca_sort_name("small_category");
-		}else {
-			return false;
-		}
-		
-		//카테고리 분류 (2차) => 소분류or중분류에 입력된 숫자가 해당 분류의 개수범위에 들어가지 않을 때 return false;
-		//tripDao.selectCategoryCount(개수가져올테이블이름, 상위카테고리행이름, 상위카테고리번호);
-		int exist;
-		if(trip.getTr_ca_sort_name().equals("small_category")) {//소분류일때
-			exist = tripDao.selectCategoryCount(trip.getTr_ca_sort_name(), "sc_mc_num", mc_num, "sc_num", sc_num);
-		}else if(trip.getTr_ca_sort_name().equals("middle_category")) {//중분류일때
-			exist = tripDao.selectCategoryCount(trip.getTr_ca_sort_name(), "mc_lc_num",1, "mc_num", mc_num);
-		}else {	return false; }
-		//만약 결과값(exist)이 1이 아니면 return false(해당조건에 맞는 결과는 1개만 나와야함)
-		String ca_name;
-		if(trip.getTr_ca_sort_name() == null || exist != 1) return false;
-		else {//분류칸이 null이 아니고 exist가 1이면
-			//tr_ca_name에 지역명을 넣어줌
-			//tripDao.selectCategoryName(테이블이름, 범위이름, 이전범위이름, 이전범위번호, 지금범위이름, 지금범위번호);
-			if(trip.getTr_ca_sort_name().equals("middle_category")) {
-				ca_name = tripDao.selectCategoryName(trip.getTr_ca_sort_name(), "mc_name", "mc_lc_num", 1, "mc_num", mc_num);
-				trip.setTr_ca_name(ca_name);
-			}
-			else if(trip.getTr_ca_sort_name().equals("small_category")) {
-				ca_name = tripDao.selectCategoryName(trip.getTr_ca_sort_name(), "sc_name", "sc_mc_num", mc_num, "sc_num", sc_num);
-				trip.setTr_ca_name(ca_name);
-			}else return false;
-		}
-		
 		
 		return true;
 	}
@@ -130,12 +100,33 @@ public class TripServiceImp implements TripService{
 	//여행지 1개의 detail 불러오기
 	@Override
 	public TripVO getTripDetail(Integer tr_num) {
+		if(tr_num <= 0 || tr_num == null) return null;
 		//일단 전체공개 select
 		return tripDao.selectTripDetail("전체공개", tr_num);
 	}
 	@Override
 	public List<FileVO> getFileList(Integer tr_num) {
 		return tripDao.selectFileList(tr_num);
+	}
+	
+	//여행지 삭제
+	@Override
+	public boolean deleteTrip(MemberVO user, TripVO dbTrip) {
+		if(user == null  || dbTrip == null || dbTrip.getTr_num() <=0) return false;
+		//tripDao.deleteTrip(tr_num);
+		return true;
+	}
+	@Override
+	public TripVO selectTrip(Integer tr_num) {
+		return tripDao.selectTrip(tr_num);
+	}
+	
+	//선택된 여행지의 menu Category 불러오기
+	@Override
+	public SpotMenuVO selectMenu(TripVO trip, MemberVO user) {
+		if(trip==null || user == null) return null;
+		if(!trip.getTr_me_id().equals(user.getMe_id())) return null;
+		return null;
 	}
 
 }

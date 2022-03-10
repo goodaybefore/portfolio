@@ -16,10 +16,10 @@
 	useGeneratedKeys="true" keyProperty="trip.tr_num"
 		parameterType="kr.green.mytrip.vo.TripVO">
 		INSERT INTO trip(
-			tr_me_id, tr_sm_num, tr_ca_name, tr_ca_sort_name, tr_title, tr_start_date, tr_end_date, tr_op_name
+			tr_me_id, tr_sm_num, tr_mca_name, tr_sca_name, tr_title, tr_start_date, tr_end_date, tr_op_name
 		)
 		VALUES(
-			#{trip.tr_me_id}, #{trip.tr_sm_num}, #{trip.tr_ca_name}, #{trip.tr_ca_sort_name}, #{trip.tr_title}, #{trip.tr_start_date}, #{trip.tr_end_date}, #{trip.tr_op_name}
+			#{trip.tr_me_id}, #{trip.tr_sm_num}, #{trip.tr_mca_name}, #{trip.tr_sca_name}, #{trip.tr_title}, #{trip.tr_start_date}, #{trip.tr_end_date}, #{trip.tr_op_name}
 		);
 	</insert>
 	
@@ -27,10 +27,6 @@
 		INSERT INTO file(fi_ori_name, fi_name, fi_tr_num)
 		VALUES (#{file.fi_ori_name}, #{file.fi_name}, #{file.fi_tr_num});
 	</insert>
-	
-	<select id="selectCategoryCount" resultType="int">
-		SELECT COUNT(*) FROM ${tableName} WHERE ${col_name} = #{num} AND ${col_name2} = #{num2};
-	</select>
 	
 	<select id="selectTripListAll" resultType="kr.green.mytrip.vo.TripVO">
 		SELECT * FROM trip
@@ -48,10 +44,12 @@
 		ORDER BY tr_num DESC;
 	</select>
 	
-	<select id="selectCategoryName" resultType="String">
-		SELECT ${selectName} from ${tableName}
-		WHERE ${colName1} = #{colVal1}
-		AND ${colName2} = #{colVal2};
+	<select id="selectMiddleCategoryName" resultType="string">
+		SELECT mc_name FROM middle_category WHERE mc_num = #{mc_num};
+	</select>
+	
+	<select id="selectSmallCategoryName" resultType="string">
+		SELECT sc_name FROM small_category WHERE sc_num = #{sc_num};
 	</select>
 	
 	<select id="selectTotalTripCount" resultType="int">
@@ -66,6 +64,16 @@
 	
 	<select id="selectFileList" resultType="kr.green.mytrip.vo.FileVO">
 		SELECT * FROM file WHERE fi_tr_num=#{tr_num} AND fi_del='N';
-	
 	</select>
+	
+	<select id="selectTrip" resultType="kr.green.mytrip.vo.TripVO">
+	SELECT * FROM trip WHERE tr_num=#{tr_num};
+	</select>
+	
+	<update id="deleteTrip">
+	UPDATE trip
+	SET tr_del = 'Y'
+	WHERE tr_num = #{tr_num};
+	
+	</update>
 </mapper>

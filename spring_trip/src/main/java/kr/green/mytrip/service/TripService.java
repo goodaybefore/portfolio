@@ -9,6 +9,7 @@ import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
+import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 public interface TripService {
@@ -26,5 +27,11 @@ public interface TripService {
 	//여행지 detail
 	TripVO getTripDetail(Integer tr_num);
 	List<FileVO> getFileList(Integer tr_num);
+	//여행지 delete
+	boolean deleteTrip(MemberVO user, TripVO dbTrip);
+	//여행지 선택
+	TripVO selectTrip(Integer tr_num);
+	//여행지의 Menu Category 불러오기
+	SpotMenuVO selectMenu(TripVO trip, MemberVO user);
 
 }
