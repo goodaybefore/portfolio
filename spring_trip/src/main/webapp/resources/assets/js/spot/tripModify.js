@@ -3,32 +3,41 @@
  */
 $(function() {
 	
-	setMiddleCategory();
+	let mc_num = $('.middle-category').children().val();
+	let mc_name = $('.middle-category').children().text();
+	let sc_num = $('.small-category').children().val();
+	let sc_name = $('.small-category').children().text();
+	setMiddleCategory(mc_num, mc_name);
+	setSmallCategory(mc_num);
+	
 	$('.middle-category').change(function(){
 		let mc_num = $(this).val();
 		let middle_ca_str = '<input type="hidden" name="mc_num" value="'+mc_num+'">'; 
 		setSmallCategory(mc_num);
+		$('.area-select-mcnum').html('');
 		$('.area-select-mcnum').html(middle_ca_str);
+		
+		$('.area-select-scnum').html('');
 	})
 	
 	
 	$('.small-category').change(function(){
-		let sc_num = $(this).val();
-		let small_ca_str = '<input type="hidden" name="sc_num" value="'+sc_num+'">'; 
+		let new_sc_num = $(this).val();
+		let small_ca_str = '<input type="hidden" name="sc_num" value="'+new_sc_num+'">'; 
+		$('.area-select-scnum').html('');
 		$('.area-select-scnum').html(small_ca_str);
-		//setSmallCategory(sc_num);
+		
 	})
 	
 	$('.attachment .btn-close').click(function(e){
 		e.preventDefault();
-		console.log($(this).parent());
 		$(this).parent().remove();
 		var str = '<input type="file" class="form-control" name="file">';
 		$('.attachment').append(str);
 	});
 	
-	function setMiddleCategory(){
-		let str = '';
+	function setMiddleCategory(mc_num, mc_name){
+		let str = '<option value="'+mc_num+'">'+mc_name+'</option>';
 		$.ajax({
 				async :false,
 		    type:'get',
@@ -44,7 +53,7 @@ $(function() {
 	}
 	
 	function setSmallCategory(mc_num){
-		let str = '';
+		let str = '<option value="'+sc_num+'">'+sc_name+'</option>';		
 		if(mc_num<=0){
 			$('.middle-category').html(str);
 			return;
@@ -132,8 +141,6 @@ $(function() {
 	    $(".cancelBtn").css("float", "right");
 	});	
 	}
-	
-	
 	
 	
 });

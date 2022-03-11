@@ -185,47 +185,49 @@ public class SpotController {
 	public ModelAndView tripModifyGet(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
-		Integer sc_num = 0;
-		Integer mc_num = 0;
 		
 		//SpotMenuVO spotMenu = tripService.selectMenu(trip, user);
 		if(trip == null) {
-			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripList/"+trip.getTr_sm_num());
-			if(trip.getTr_sca_name()!=null) {
+			
+			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripList/home");
+			
+		}else {
+			//file modify
+			List<FileVO> fileList = tripService.getFileList(tr_num);
+			
+			//중분류, 소분류의 primary key 찾기
+			Integer sc_num = 0;
+			Integer mc_num = 0;
+			if(trip.getTr_sca_name()!=null) 
 				//sca_name의 sc_num을 찾기
 				//SELECT sc_num FROM small_category WHERE sc_num = #{tr_sca_name};
 				sc_num = tripService.getTripScaNum(trip.getTr_sca_name());
-				mc_num = tripService.getTripMcaNum(trip.getTr_mca_name());
-			}else {
-				mc_num = tripService.getTripMcaNum(trip.getTr_mca_name());
-			}
+			mc_num = tripService.getTripMcaNum(trip.getTr_mca_name());
 			
-		}else {
-			List<FileVO> fileList = tripService.getFileList(tr_num);
+			mv.addObject("sc_num", sc_num);
+			mv.addObject("mc_num", mc_num);
 			mv.addObject("fileList", fileList);
 			mv.addObject("trip", trip);
 			mv.setViewName("/spot/tripModify");
 		}
-		
-		
 		return mv;
 	}
 	@RequestMapping(value = "/tripModify", method = RequestMethod.POST)
 	public ModelAndView tripModifyPost(ModelAndView mv, HttpServletRequest request, TripVO trip,
-			List<MultipartFile> file, Integer[] fileNums) {
+			List<MultipartFile> file, Integer[] fileNums, Integer mc_num, Integer sc_num, String from) {
 		if(fileNums != null) {
 			for(Integer tmp : fileNums)
 				System.out.println(tmp);
 		}
-		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		System.out.println(trip);
-		if(tripService.modifyTrip(trip, file, fileNums)) {
+		System.out.println("from : "+from);
+		if(tripService.modifyTrip(trip, file, fileNums, mc_num, sc_num)) {
 			mv.setViewName("/spot/"+user.getMe_id()+"/tripList/"+trip.getTr_sm_num());
 		}
 		mv.setViewName("/spot/tripModify");
 		return mv;
 	}
+	
 	
 	//여행지 삭제(delete)
 	@RequestMapping(value = "/tripDelete", method = RequestMethod.GET)

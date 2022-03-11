@@ -104,19 +104,19 @@
 							<div class="content">
 								<header>
 									<h1>Trip Modify</h1>
-									<p>여행 수정 ${trip }<br>${trip.tr_start_date_str}<br>${trip.tr_end_date_str}</p>
+									<p>여행 수정 ${trip }<br>${trip.tr_start_date_str}<br>${trip.tr_end_date_str}<br>
+									mc_num : ${mc_num }<br>
+									sc_num : ${sc_num }</p>
 								</header>
 								<form action="<%=request.getContextPath()%>/spot/tripModify" method="post" enctype="multipart/form-data">
-									<input type="hidden" value="${reg_sm_num}" name="tr_sm_num">
 									<div class="trip-reg-box period-select-container">
 										<div class="period">
 											<label class="period-label" for="from">period</label>
-											
-											<c:if test="${trip.tr_start_date_str != trip.tr_end_date_str }">
+											<c:if test="${trip.tr_start_date_str != trip.tr_end_date_str}">
 												<input type="text" class="day-input" id="from" name="from" value="${trip.tr_start_date_str} ~ ${trip.tr_end_date_str}" readonly>
 											</c:if>
-											<c:if test="${trip.tr_start_date_str == trip.tr_end_date_str }">
-												<input type="text" class="day-input" id="from" name="from" value="${trip.tr_start_date_str} ~ ${trip.tr_start_date_str}" readonly>
+											<c:if test="${trip.tr_start_date_str == trip.tr_end_date_str}">
+												<input type="text" class="day-input" id="from" name="from" value="${trip.tr_start_date_str}" readonly>
 											</c:if>
 										</div>`
 										<div class="period">
@@ -129,21 +129,25 @@
 										<label style="flex:1;">지역선택박스</label>
 										<div class="area-select-box col-6">
 											<select class="middle-category">
-												<option value="0">${trip.tr_mca_name}</option>
+												<option value="${mc_num}">${trip.tr_mca_name}</option>
 											</select>
 										</div>
 										<div class="area-select-box col-6">
 											<select class="small-category">
 												<c:if test="${trip.tr_sca_name != null}">
-													<option value="0">${trip.tr_sca_name}</option>
+													<option value="${sc_num}">${tritp.tr_sca_name}</option>
 												</c:if>
 												<c:if test="${trip.tr_sca_name ==null }">
 													<option value="0">세부선택</option>
 												</c:if>
 											</select>
 										</div>
-										<div class="area-select-mcnum"></div>
-										<div class="area-select-scnum"></div>
+										<div class="area-select-mcnum">
+											<input type="hidden" name="mc_num" value="${mc_num}">
+										</div>
+										<div class="area-select-scnum">
+											<input type="text" name="sc_num" value="${sc_num}">
+										</div>
 									</div>
 									<div class="trip-reg-box box-open-range">
 										<label class="open-range-label">
@@ -180,6 +184,10 @@
 											<input type="file" class="form-control" name="file">
 										</c:forEach>
 									</div>
+									<input type="hidden" name="tr_num" value="${trip.tr_num}"/>
+									<input type="hidden" name="tr_sm_num" value="${trip.tr_sm_num}"/>
+									
+									
 									<div>
 										<input type="submit" class="btn-write" value="write">
 									</div>
@@ -191,5 +199,19 @@
 				</div>
 			</div>
 			<script src="/resources/assets/js/spot/tripModify.js"></script>
+			<script type="text/javascript">
+
+			$(function(){
+				
+			
+			var from = '${trip.tr_start_date_str}';
+			var to = '${trip.tr_end_date_str}'
+			console.log(from == to)
+			$('#from').val(123);
+			if(from == to){
+				$('#from').val(from);
+			}
+			})
+			</script>
 	</body>
 </html>

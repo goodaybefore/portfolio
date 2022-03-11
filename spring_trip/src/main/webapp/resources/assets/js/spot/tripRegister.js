@@ -114,7 +114,7 @@ $(function() {
 		}
 		showDateRangePickerr();
 	});
-	
+	$('#form').val('${trip.tr_start_date}');
 	function showDateRangePickerr(){
 		$("#from").on('show.daterangepicker', function (ev, picker) {
 	    $(".yearselect").css(("float", "left"));

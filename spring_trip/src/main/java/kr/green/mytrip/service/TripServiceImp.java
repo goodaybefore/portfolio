@@ -133,14 +133,21 @@ public class TripServiceImp implements TripService{
 	@Override
 	
 	//여행지 수정
-	public boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums) {
-		if(trip==null || trip.getTr_mca_name()== null || trip.getTr_title()==null || trip.getTr_op_name() == null)
+	public boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums,
+			Integer mc_num, Integer sc_num) {
+		if(trip==null || trip.getTr_title()==null || trip.getTr_op_name() == null)
 			return false;
+		//mca_name과 sca_name을 mc_num, sc_num을 통해 set하기
+		trip.setTr_mca_name(tripDao.selectMiddleCategoryName(mc_num));
+		trip.setTr_sca_name(tripDao.selectSmallCategoryName(sc_num));
+		
+		if(trip.getTr_mca_name()== null) return false;
+		
 		System.out.println(trip);
 		System.out.println(file);
 		System.out.println(fileNums);
 		//tripDao.updateTrip(trip);
-		return false;
+		return true;
 	}
 	//여행지 이름으로 각 카테고리의 primary key 구하기
 	@Override

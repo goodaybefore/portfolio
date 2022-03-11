@@ -35,7 +35,7 @@ public interface TripService {
 	SpotMenuVO selectMenu(TripVO trip, MemberVO user);
 	
 	//여행지 수정
-	boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums);
+	boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums, Integer mc_num, Integer sc_num);
 	Integer getTripScaNum(String tr_sca_name);
 	Integer getTripMcaNum(String tr_mca_name);
 
