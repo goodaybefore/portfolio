@@ -3,77 +3,14 @@
  */
 $(function() {
 	
-	let mc_num = $('.middle-category').children().val();
-	let mc_name = $('.middle-category').children().text();
-	let sc_num = $('.small-category').children().val();
-	let sc_name = $('.small-category').children().text();
-	setMiddleCategory(mc_num, mc_name);
-	setSmallCategory(mc_num);
 	
-	$('.middle-category').change(function(){
-		let mc_num = $(this).val();
-		let middle_ca_str = '<input type="hidden" name="mc_num" value="'+mc_num+'">'; 
-		setSmallCategory(mc_num);
-		$('.area-select-mcnum').html('');
-		$('.area-select-mcnum').html(middle_ca_str);
-		
-		$('.area-select-scnum').html('');
-	})
-	
-	
-	$('.small-category').change(function(){
-		let new_sc_num = $(this).val();
-		let small_ca_str = '<input type="hidden" name="sc_num" value="'+new_sc_num+'">'; 
-		$('.area-select-scnum').html('');
-		$('.area-select-scnum').html(small_ca_str);
-		
-	})
 	
 	$('.attachment .btn-close').click(function(e){
 		e.preventDefault();
 		$(this).parent().remove();
 		var str = '<input type="file" class="form-control" name="file">';
 		$('.attachment').append(str);
-	});
-	
-	function setMiddleCategory(mc_num, mc_name){
-		let str = '<option value="'+mc_num+'">'+mc_name+'</option>';
-		$.ajax({
-				async :false,
-		    type:'get',
-		    url : '/spot/middlecategory',
-		    dataType:"json",
-		    success : function(res){
-		    	for(middle of res.list){
-		    		str += '<option value="'+middle.mc_num+'">'+middle.mc_name+'</option>';
-		    	}
-		    	$('.middle-category').html(str);
-		    	}
-		})
-	}
-	
-	function setSmallCategory(mc_num){
-		let str = '<option value="'+sc_num+'">'+sc_name+'</option>';		
-		if(mc_num<=0){
-			$('.middle-category').html(str);
-			return;
-		}
-		$.ajax({
-				async :false,
-		    type:'get',
-		    url : '/spot/smallcategory?sc_mc_num='+mc_num,
-		    dataType:"json",
-		    success : function(res){
-					//세부선택 항목 만들어주기
-		    	for(small of res.list){
-		    		str += '<option value="'+small.sc_num+'">'+small.sc_name+'</option>';
-		    	}
-		    	$('.small-category').html(str);
-		    	}
-		})
-	}
-	
-			
+	});		
 			
 	$('#from').daterangepicker({
 	    "locale": {

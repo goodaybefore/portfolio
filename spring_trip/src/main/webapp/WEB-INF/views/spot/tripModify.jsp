@@ -146,7 +146,7 @@
 											<input type="hidden" name="mc_num" value="${mc_num}">
 										</div>
 										<div class="area-select-scnum">
-											<input type="text" name="sc_num" value="${sc_num}">
+											<input type="hidden" name="sc_num" value="${sc_num}">
 										</div>
 									</div>
 									<div class="trip-reg-box box-open-range">
@@ -202,15 +202,101 @@
 			<script type="text/javascript">
 
 			$(function(){
-				
+				console.log('hi');
 			
-			var from = '${trip.tr_start_date_str}';
-			var to = '${trip.tr_end_date_str}'
-			console.log(from == to)
-			$('#from').val(123);
-			if(from == to){
-				$('#from').val(from);
-			}
+				//여행 기간이 하루이면 start_date_str만 출력하도록 하기
+				var from = '${trip.tr_start_date_str}';
+				var to = '${trip.tr_end_date_str}'
+				console.log(from == to)
+				$('#from').val(123);
+				if(from == to){
+					$('#from').val(from);
+				}
+				
+				let mc_num = $('.middle-category').children().val();
+				//let mc_name = $('.middle-category').children().text();
+				let mc_name = '${trip.tr_mca_name}';
+				
+				let sc_num = $('.small-category').children().val();
+				//let sc_name = $('.small-category').children().text();
+				let sc_name = '${trip.tr_sca_name}';
+				let isChanged = false;
+				
+				if(sc_name)
+				setMiddleCategory(mc_num, mc_name);
+				setSmallCategory(mc_num);
+				//middle-category's change
+				
+				$('.middle-category').change(function(){
+					let mc_num = $(this).val();
+					let middle_ca_str = '<input type="hidden" name="mc_num" value="'+mc_num+'">';
+					isChanged = true;
+					setSmallCategory(mc_num, isChanged);
+					isChanged = false;
+					$('.area-select-mcnum').html('');
+					$('.area-select-mcnum').html(middle_ca_str);
+					$('.area-select-scnum').html('');
+					//console.log('changed middle-category');
+				});
+				
+				function setMiddleCategory(mc_num, mc_name){
+					let str = '<option value="'+mc_num+'">'+mc_name+'</option>';
+					$.ajax({
+							async :false,
+					    type:'get',
+					    url : '/spot/middlecategory',
+					    dataType:"json",
+					    success : function(res){
+					    	for(middle of res.list){
+					    		str += '<option value="'+middle.mc_num+'">'+middle.mc_name+'</option>';
+					    	}
+					    	$('.middle-category').html(str);
+					    	}
+					})
+				}
+				
+				
+				
+				//small-category's change
+				$('.small-category').change(function(){
+					let new_sc_num = $(this).val();
+					let small_ca_str = '<input type="hidden" name="sc_num" value="'+new_sc_num+'">'; 
+					//$('.area-select-scnum').html('');
+					$('.area-select-scnum').html(small_ca_str);
+				});
+				
+				function setSmallCategory(mc_num, isChanged){
+					console.log('setSmallcategory');
+					let str = '';
+					if(isChanged == true){
+						str = '<option value="0">세부선택</option>'
+					}
+					
+					if(mc_num<=0){
+						$('.middle-category').html(str);
+						return;
+					}
+					$.ajax({
+							async :false,
+					    type:'get',
+					    url : '/spot/smallcategory?sc_mc_num='+mc_num,
+					    dataType:"json",
+					    success : function(res){
+								//세부선택 항목 만들어주기
+					    	for(small of res.list){
+					    		str += '<option value="'+small.sc_num+'">'+small.sc_name+'</option>';
+					    	}
+					    	$('.small-category').html(str);
+					    	}
+					})
+				}
+				
+				
+				
+				
+				
+				
+				
 			})
 			</script>
 	</body>

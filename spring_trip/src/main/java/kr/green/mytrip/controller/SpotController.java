@@ -108,7 +108,10 @@ public class SpotController {
 		map.put("list", list);
 		return map;
 	}
-	
+	public String[] dividePeroid(String period, String url) {
+		String tr_dates[] = period.split(" ~ ");
+		return tr_dates;
+	}
 	@RequestMapping(value = "/tripRegister", method = RequestMethod.POST)
 	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, TripVO trip, String from,
 			Integer sc_num, Integer mc_num, List<MultipartFile> file) {
