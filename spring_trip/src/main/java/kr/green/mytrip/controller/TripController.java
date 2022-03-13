@@ -37,7 +37,7 @@ import kr.green.mytrip.vo.TripVO;
 
 @Controller
 @RequestMapping(value = "/spot")
-public class SpotController {
+public class TripController {
 	@Autowired
 	TripService tripService;
 	

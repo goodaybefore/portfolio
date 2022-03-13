@@ -26,7 +26,7 @@
 		.detail-container{
 			margin-bottom : 10px;
 		}
-		.period-container, .area-container, .open-range-container, .file-container{
+		.period-container, .area-container, .open-range-container, .file-container, .with-container{
 			display : flex;
 			margin-bottom : 0px !important;
 			padding : 0px !important;
@@ -101,6 +101,10 @@
 											<div class="open-range-container">
 												<label class="detail-label">공개범위</label>
 												<p>${trip.tr_op_name}</p>
+											</div>
+											<div class="with-container">
+												<label class="detail-label">함께한 사람들</label>
+												<p>${trip.tr_with}</p>
 											</div>
 											<div class="file-container">
 												<label class="detail-label">첨부파일</label>

@@ -16,10 +16,10 @@
 	useGeneratedKeys="true" keyProperty="trip.tr_num"
 		parameterType="kr.green.mytrip.vo.TripVO">
 		INSERT INTO trip(
-			tr_me_id, tr_sm_num, tr_mca_name, tr_sca_name, tr_title, tr_start_date, tr_end_date, tr_op_name
+			tr_me_id, tr_sm_num, tr_mca_name, tr_sca_name, tr_title, tr_start_date, tr_end_date, tr_op_name, tr_with
 		)
 		VALUES(
-			#{trip.tr_me_id}, #{trip.tr_sm_num}, #{trip.tr_mca_name}, #{trip.tr_sca_name}, #{trip.tr_title}, #{trip.tr_start_date}, #{trip.tr_end_date}, #{trip.tr_op_name}
+			#{trip.tr_me_id}, #{trip.tr_sm_num}, #{trip.tr_mca_name}, #{trip.tr_sca_name}, #{trip.tr_title}, #{trip.tr_start_date}, #{trip.tr_end_date}, #{trip.tr_op_name}, #{trip.tr_with}
 		);
 	</insert>
 	
@@ -79,7 +79,8 @@
 	<update id="updateTrip">
 		UPDATE trip
 		SET tr_mca_name=#{trip.tr_mca_name}, tr_sca_name=#{trip.tr_sca_name},
-		tr_title=#{trip.tr_title}, tr_start_date=#{trip.tr_start_date}, tr_end_date =#{trip.tr_end_date}, tr_op_name =#{trip.tr_op_name}
+			tr_title=#{trip.tr_title}, tr_start_date=#{trip.tr_start_date}, tr_end_date =#{trip.tr_end_date},
+			tr_op_name =#{trip.tr_op_name}, tr_with = #{trip.tr_with}
 		WHERE tr_num = #{trip.tr_num};
 	</update>
 	
