@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.green.mytrip.dao.TripDAO;
 import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.utills.UploadFileUtills;
+import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
@@ -158,6 +159,13 @@ public class TripServiceImp implements TripService{
 	public Integer getTripMcaNum(String tr_mca_name) {
 		// TODO Auto-generated method stub
 		return tripDao.selectMiddlecategoryNum(tr_mca_name);
+	}
+	
+	//활동 리스트 불러오기
+	@Override
+	public List<ActivityVO> getActList(Integer tr_num) {
+		if(tr_num <=0 || tr_num == null) return null;
+		return tripDao.selectActivityList(tr_num);
 	}
 
 }

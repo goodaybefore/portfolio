@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.mytrip.pagination.Criteria;
+import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
@@ -38,5 +39,8 @@ public interface TripService {
 	boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums, Integer mc_num, Integer sc_num);
 	Integer getTripScaNum(String tr_sca_name);
 	Integer getTripMcaNum(String tr_mca_name);
+	
+	//활동 목록 출력
+	List<ActivityVO> getActList(Integer tr_num);
 
 }

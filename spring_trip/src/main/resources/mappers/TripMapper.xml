@@ -92,5 +92,7 @@
 		SELECT sc_num FROM small_category WHERE sc_name = #{tr_sca_name};
 	</select>
 	
-	
+	<select id="selectActivityList" resultType="kr.green.mytrip.vo.ActivityVO">
+		SELECT * FROM activity WHERE ac_tr_num = #{tr_num};
+	</select>
 </mapper>

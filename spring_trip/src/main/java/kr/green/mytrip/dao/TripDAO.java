@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.green.mytrip.pagination.Criteria;
+import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
@@ -33,6 +34,7 @@ public interface TripDAO {
 	//여행지 detail
 	TripVO selectTripDetail(@Param("tr_num") Integer tr_num);
 	List<FileVO> selectFileList(@Param("tr_num")Integer tr_num);
+	List<ActivityVO> selectActivityList(Integer tr_num);//활동 리스트 출력
 	
 	//여행지 delete
 	void deleteTrip(@Param("tr_num")Integer tr_num);
@@ -42,6 +44,8 @@ public interface TripDAO {
 	void updateTrip(@Param("trip")TripVO trip);
 	Integer selectSmallcategoryNum(String tr_sca_name);
 	Integer selectMiddlecategoryNum(String tr_mca_name);
+	
+	
 	
 	
 	

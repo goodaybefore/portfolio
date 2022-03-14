@@ -27,11 +27,11 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.pagination.PageMaker;
 import kr.green.mytrip.service.TripService;
+import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
-import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 
@@ -169,6 +169,7 @@ public class TripController {
 	    return entity;
 	}
 	
+	//여행지(trip) 상세(detail)
 	@GetMapping("/{spot_user}/tripDetail/{sm_num}/{tr_num}")
 	public ModelAndView tripDetail(ModelAndView mv, HttpServletRequest request,
 			@PathVariable(required=false, value="sm_num")Integer sm_num,
@@ -177,6 +178,11 @@ public class TripController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
 		List<FileVO> fileList = tripService.getFileList(tr_num);
+		
+		//활동 (activity) 불러오기 및 출력
+		List<ActivityVO> actList = tripService.getActList(tr_num);
+		
+		mv.addObject("actList", actList);
 		mv.addObject("trip", trip);
 		mv.addObject("fileList", fileList);
 		mv.setViewName("/spot/tripDetail");
