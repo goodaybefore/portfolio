@@ -26,12 +26,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.pagination.PageMaker;
+import kr.green.mytrip.service.MemberService;
 import kr.green.mytrip.service.TripService;
 import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
+import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 
@@ -40,8 +42,10 @@ import kr.green.mytrip.vo.TripVO;
 public class TripController {
 	@Autowired
 	TripService tripService;
+	@Autowired
+	MemberService memberService;
 	
-	@GetMapping({"{spot_user}/home", "/home"})
+	@GetMapping({"{spot_user}/home", "/home", "/{spot_user}"})
 	public ModelAndView spotUserHome(@PathVariable(required=false, value="spot_user")String spot_user, ModelAndView mv,
 			HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");

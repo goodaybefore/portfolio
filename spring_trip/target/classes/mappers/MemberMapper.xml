@@ -26,6 +26,6 @@
 	</insert>
 	
 	<select id="selectMenuList" resultType="kr.green.mytrip.vo.SpotMenuVO">
-		SELECT * FROM spot_menu WHERE sm_me_id = #{user.me_id};
+		SELECT * FROM spot_menu WHERE sm_me_id = #{userId};
 	</select>
 </mapper>

@@ -38,8 +38,7 @@ public class HomeController {
 			mv.setViewName("redirect:/board/list");
 		}else{
 			//회원의 사용자메뉴리스트 불러오기
-			List<SpotMenuVO> menu = memberService.getMenuList(user);
-			System.out.println("menu : "+menu);
+			List<SpotMenuVO> menu = memberService.getMenuList(user.getMe_id());
 			mv.setViewName("redirect:/spot/"+input.getMe_id()+"/home");
 			mv.addObject("user", user);
 			mv.addObject("menu", menu);

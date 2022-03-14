@@ -11,7 +11,7 @@ public interface MemberService {
 	boolean insertMember(MemberVO member);
 	//로그인 + 사용자메뉴리스트 불러오기
 	MemberVO loginMember(MemberVO input);
-	List<SpotMenuVO> getMenuList(MemberVO user);
+	List<SpotMenuVO> getMenuList(String userId);
 
 
 

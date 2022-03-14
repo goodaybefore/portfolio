@@ -56,6 +56,10 @@
 	<beans:bean id="memberInterceptor" 
 	class="kr.green.mytrip.interceptor.MemberInterceptor"></beans:bean>
 	
+	<!-- menu Interceptor -->
+	<beans:bean id="menuSessionInterceptor" 
+	class="kr.green.mytrip.interceptor.MenuSessionInterceptor"></beans:bean>
+	
 	<!-- 세션유지 -->
 	<interceptors>
 	    <interceptor>
@@ -63,6 +67,15 @@
 	        <beans:ref bean="loginSessionInterceptor"/>
 	    </interceptor>
 	</interceptors>
+	<!-- 세션유지 -->
+	<interceptors>
+	    <interceptor>
+	        <mapping path="/spot/**"/>
+	        <mapping path="/board/**"/>
+	        <beans:ref bean="menuSessionInterceptor"/>
+	    </interceptor>
+	</interceptors>
+	
 	
 	<!-- guest만 접근 가능한 곳 -->
 	<interceptors>
@@ -78,6 +91,10 @@
 	        <mapping path="/spot/tripRegister"/>
 	        <mapping path="/spot/tripDelete"/>
 	        <mapping path="/spot/tripModify"/>
+	        <mapping path="/spot/tripDel"/>
+	        <mapping path="/activity/activityReg"/>
+	        <mapping path="/activity/activityMod"/>
+	        <mapping path="/activity/activityDel"/>
 	        <beans:ref bean="memberInterceptor"/>
 	    </interceptor>
 	</interceptors>
