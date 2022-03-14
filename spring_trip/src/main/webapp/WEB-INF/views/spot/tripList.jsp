@@ -77,7 +77,9 @@
 													<li><a href="<%=request.getContextPath()%>/spot/${spot_user}/tripList/${sm_num}?page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
 											</ul>
 										</div>
+										<c:if test="${user.me_id == spot_user}">
 										<a href="<%=request.getContextPath()%>/spot/tripRegister?reg_sm_num=${sm_num}"><button class="btn-trip-write">add</button></a>
+										</c:if>
 									</div>
 									
 								</section>
