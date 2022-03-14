@@ -65,9 +65,6 @@ public class TripController {
 			Criteria cri) {
 		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-//		if(spot_user == user.getMe_id()) {
-//			
-//		}
 		cri.setPerPageNum(5);
 		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num, cri);
 		
@@ -84,10 +81,11 @@ public class TripController {
 	
 	
 	//여행지 등록(tripReg)
-	@RequestMapping(value = "/tripRegister", method = RequestMethod.GET)
+	@RequestMapping(value = "{spot_user}/tripRegister", method = RequestMethod.GET)
 	public ModelAndView tripRegGet(ModelAndView mv, HttpServletRequest request, Integer reg_sm_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		//List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
+		List<SpotMenuVO> menu = (List<SpotMenuVO>)request.getSession().getAttribute("menu");
+		System.out.println("Reg menuList : "+menu);
 		mv.addObject("reg_sm_num", reg_sm_num);
 		mv.setViewName("/spot/tripRegister");
 		
@@ -116,7 +114,8 @@ public class TripController {
 		String tr_dates[] = period.split(" ~ ");
 		return tr_dates;
 	}
-	@RequestMapping(value = "/tripRegister", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "{spot_user}/tripRegister", method = RequestMethod.POST)
 	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, TripVO trip, String from,
 			Integer sc_num, Integer mc_num, List<MultipartFile> file) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
@@ -201,7 +200,6 @@ public class TripController {
 		
 		//SpotMenuVO spotMenu = tripService.selectMenu(trip, user);
 		if(trip == null) {
-			
 			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripList/home");
 			
 		}else {

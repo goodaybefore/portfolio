@@ -78,7 +78,7 @@
 											</ul>
 										</div>
 										<c:if test="${user.me_id == spot_user}">
-										<a href="<%=request.getContextPath()%>/spot/tripRegister?reg_sm_num=${sm_num}"><button class="btn-trip-write">add</button></a>
+										<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripRegister?reg_sm_num=${sm_num}"><button class="btn-trip-write">add</button></a>
 										</c:if>
 									</div>
 									

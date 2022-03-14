@@ -88,10 +88,9 @@
 	<!-- member만 접근 가능한 곳 -->
 	<interceptors>
 	    <interceptor>
-	        <mapping path="/spot/tripRegister"/>
-	        <mapping path="/spot/tripDelete"/>
-	        <mapping path="/spot/tripModify"/>
-	        <mapping path="/spot/tripDel"/>
+	        <mapping path="/spot/*/tripRegister"/>
+	        <mapping path="/spot/*/tripDelete"/>
+	        <mapping path="/spot/*/tripModify"/>
 	        <mapping path="/activity/activityReg"/>
 	        <mapping path="/activity/activityMod"/>
 	        <mapping path="/activity/activityDel"/>
