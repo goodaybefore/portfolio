@@ -149,7 +149,7 @@
 											  	</c:forEach> -->
 											  </tbody>
 											</table>
-										<a href="<%=request.getContextPath()%>/spot/activityReg?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>add activity</button></a>
+										<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityReg?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>add activity</button></a>
 									</div>
 								</div>
 								<span>span 태그 테스트</span>

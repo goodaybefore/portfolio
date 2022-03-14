@@ -95,8 +95,8 @@ public class TripController {
 	//여행지 select box
 	@ResponseBody
 	@RequestMapping(value="/middlecategory", method = RequestMethod.GET)
-	public Map<String, Object> middleCategoryGet(){
-		Integer lc_num = 1;//large-category = '지역'
+	public Map<String, Object> middleCategoryGet(Integer lc_num){
+		//Integer lc_num = 1;//large-category = '지역'
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		List<MiddleCategoryVO> list = tripService.selectMiddleCategory(lc_num);
 		map.put("list", list);

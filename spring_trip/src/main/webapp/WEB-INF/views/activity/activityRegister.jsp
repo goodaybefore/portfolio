@@ -25,6 +25,11 @@
 				display : inline-block !important;
 				margin-right : 0px !important;
 			}
+			.activity-select-container{
+				margin-bottom : 10px;
+				display : flex;
+				border : 1px solid red;
+			}
 			.box-open-range{
 				display : flex;
 			}
@@ -40,10 +45,12 @@
 			}
 			.date-label{
 				display : inline;
+				margin-left : 10px;
 			}
 			.day-input{
 				display : inline !important;
 				width : 200px !important;
+				margin-left : 10px;
 			}
 			.address-container{
 				margin-bottom : 10px;
@@ -73,7 +80,7 @@
 				background-color : #f56a6a !important;
 			}
 			
-			.area-select-box{
+			.activity-select-box{
 				flex : 2;
 				min-width : 200px;
 				width : 200px !important;
@@ -91,28 +98,10 @@
 						<section id="banner">
 							<div class="content">
 								<header>
-									<h1>Trip Register</h1>
-									<p>여행 등록</p>
+									<h1>Activity Register</h1>
+									<p>활동 등록</p>
 								</header>
-								<form action="<%=request.getContextPath()%>/spot/activityReg" method="post" enctype="multipart/form-data">
-									<div class="trip-reg-box date-select-container">
-										<div class="date">
-											<label class="date-label" for="from">date</label>
-											<input type="text" class="day-input" id="from" name="from">
-										</div>
-										
-									</div>
-									<div class="activity-reg-box address-container">
-										<label>주소등록</label>
-										<!-- 주소 -->
-										<div class="">
-											<input type="text" id="postcode" placeholder="우편번호" class="col-6 address-box"> 
-											<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" class="col-12 address-box">
-										</div>
-										<input type="text" id="address" placeholder="주소" class="mb-2 address-box">
-										<input type="text" id="detailAddress" placeholder="상세주소" class="mn-2 address-box">
-										<input type="text" name="me_address" style="">
-									</div>
+								<form action="<%=request.getContextPath()%>/spot/{${spot_user}/activityReg" method="post" enctype="multipart/form-data">
 									<div class="activity-reg-box box-open-range">
 										<label class="open-range-label">
 											<input type="radio" class="open-range" name="tr_op_name" value="전체공개"/>전체공개
@@ -127,14 +116,49 @@
 											<input type="radio" class="open-range" name="tr_op_name" value="비공개" /> 비공개
 										</label>
 									</div>
+									<div class="activity-reg-box date-select-container">
+										<div class="date">
+											<label class="date-label act-label" for="from">date</label>
+											<input type="text" class="day-input" id="from" name="from">
+										</div>
+									</div>
+									
+									<div class="activity-reg-box activity-select-container">
+										<label style="flex:1;">활동선택박스</label>
+										<div class="activity-select-box col-6">
+											<select class="middle-category">
+												<option value="none">활동종류</option>
+											</select>
+										</div>
+										<div class="activity-select-box col-6">
+											<select class="small-category">
+												<option value="none">세부선택</option>
+											</select>
+										</div>
+										<div class="activity-select-mcnum"></div>
+										<div class="activity-select-scnum"></div>
+									</div>
+									
+									<div class="activity-reg-box address-container">
+										<label class="act-label">address</label>
+										<!-- 주소 -->
+										<div class="">
+											<input type="text" id="postcode" placeholder="우편번호" class="col-6 address-box"> 
+											<input type="button" onclick="execDaumPostcode()" value="우편번호 찾기" class="col-12 address-box">
+										</div>
+										<input type="text" id="address" placeholder="주소" class="mb-2 address-box">
+										<input type="text" id="detailAddress" placeholder="상세주소" class="mn-2 address-box">
+										<input type="text" name="me_address" style="">
+									</div>
+									
 									<div class="activity-reg-box title-container">
-										<label>title</label><input type="text" class="form-control" name="tr_title"/>
+										<label class="act-label">title</label><input type="text" class="form-control" name="tr_title"/>
 									</div>
 									<div>
 										<input type="hidden" name="tr_me_id" value="${user.me_id}"/>
 									</div>
 									<div class="activity-reg-box with-container">
-										<label>with</label>
+										<label class="act-label">with</label>
 										<input type="text" class="form-control" name="tr_with" placeholder="누구와 함께였나요?"/>
 									</div>
 									<div class="activity-reg-box file-container">

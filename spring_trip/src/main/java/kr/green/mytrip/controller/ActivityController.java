@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.green.mytrip.vo.MemberVO;
 
 @Controller
-@RequestMapping(value = "/spot")
+@RequestMapping(value = "/spot/{spot_user}")
 public class ActivityController {
 	//활동 등록(activity Reg)
 	@RequestMapping(value = "/activityReg", method = RequestMethod.GET)

@@ -29,7 +29,7 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 		List<SpotMenuVO> menuList = memberService.getMenuList(thisUser);
 		if(menuList.isEmpty()) {//menuList에 아무것도 없을 때(등록되지 않은 회원 id인 경우)
 			
-			System.out.println("menu list가 empty랍니다 : "+menuList);
+			System.out.println("menu list가 empty : "+menuList);
 			
 			if(user == null) {//접근을 시도하는 사용자가 guest login인 경우
 				response.sendRedirect(request.getContextPath()+"/");
@@ -42,7 +42,6 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			session.setAttribute("menu", menuList);
 			session.setAttribute("spot_user", user.getMe_id());
 			
-			System.out.println("menuList is empty");
 			
 			//본인 spot home으로 redirect
 			response.sendRedirect(request.getContextPath()+"/spot/"+user.getMe_id());
@@ -52,7 +51,6 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			HttpSession session = request.getSession();
 			session.setAttribute("menu", menuList);
 			session.setAttribute("spot_user", thisUser);
-			System.out.println("여기는 menuList가 잘 출력됩니다.. : "+menuList);
 			
 			return true;
 		}
