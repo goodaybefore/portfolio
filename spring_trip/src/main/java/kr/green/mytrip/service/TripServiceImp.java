@@ -146,10 +146,10 @@ public class TripServiceImp implements TripService{
 		
 		if(trip.getTr_mca_name()== null) return false;
 		
-		System.out.println(trip);
-		System.out.println(file);
-		System.out.println(fileNums);
-		//tripDao.updateTrip(trip);
+		System.out.println("trip : "+trip);
+		System.out.println("file : "+file);
+		System.out.println("fileNums :" + fileNums);
+		tripDao.updateTrip(trip);
 		return true;
 	}
 	//여행지 이름으로 각 카테고리의 primary key 구하기

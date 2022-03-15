@@ -231,11 +231,29 @@ public class TripController {
 				System.out.println(tmp);
 		}
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		System.out.println("from : "+from);
-		if(tripService.modifyTrip(trip, file, fileNums, mc_num, sc_num)) {
-			mv.setViewName("/spot/"+user.getMe_id()+"/tripList/"+trip.getTr_sm_num());
+		
+		//날짜
+		String tr_dates[] = from.split(" ~ ");
+		try {
+			trip.setTr_start_date_str(tr_dates[0]);
+			//*****잘못입력되었을때 alert 출력하는거 넣고싶음 *****
+			if(tr_dates.length < 1) mv.setViewName("redirect:/tripRegister");
+			if(tr_dates.length == 1) trip.setTr_end_date_str(tr_dates[0]);
+			if(tr_dates.length == 2) trip.setTr_end_date_str(tr_dates[1]);
+			if(tr_dates.length>2) mv.setViewName("redirect:/tripRegister");
+			
+		} catch (ParseException e) {
+			System.out.println("tripReg에서의 period 변환 문제");
+			e.printStackTrace();
 		}
-		mv.setViewName("/spot/tripModify");
+		
+		if(tripService.modifyTrip(trip, file, fileNums, mc_num, sc_num)) {
+			System.out.println("modify success");
+			mv.setViewName("/spot/"+user.getMe_id()+"/tripList/"+trip.getTr_sm_num());
+		}else {
+			mv.setViewName("/spot/tripModify");
+		}
+		
 		return mv;
 	}
 	
