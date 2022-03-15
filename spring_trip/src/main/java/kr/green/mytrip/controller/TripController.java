@@ -94,7 +94,7 @@ public class TripController {
 	
 	//여행지 select box
 	@ResponseBody
-	@RequestMapping(value="/middlecategory", method = RequestMethod.GET)
+	@RequestMapping(value="{spot_user}/middlecategory", method = RequestMethod.GET)
 	public Map<String, Object> middleCategoryGet(Integer lc_num){
 		//Integer lc_num = 1;//large-category = '지역'
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -103,7 +103,7 @@ public class TripController {
 		return map;
 	}
 	@ResponseBody
-	@RequestMapping(value="/smallcategory", method = RequestMethod.GET)
+	@RequestMapping(value="{spot_user}/smallcategory", method = RequestMethod.GET)
 	public Map<String, Object> smallCategoryGet(Integer sc_mc_num){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		List<SmallCategoryVO> list = tripService.selectSmallCategory(sc_mc_num);
@@ -193,7 +193,7 @@ public class TripController {
 	}
 	
 	//여행지(trip) 수정(modify)
-	@RequestMapping(value = "/tripModify", method = RequestMethod.GET)
+	@RequestMapping(value = "/{spot_user}/tripModify", method = RequestMethod.GET)
 	public ModelAndView tripModifyGet(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
@@ -223,7 +223,7 @@ public class TripController {
 		}
 		return mv;
 	}
-	@RequestMapping(value = "/tripModify", method = RequestMethod.POST)
+	@RequestMapping(value = "{spot_user}/tripModify", method = RequestMethod.POST)
 	public ModelAndView tripModifyPost(ModelAndView mv, HttpServletRequest request, TripVO trip,
 			List<MultipartFile> file, Integer[] fileNums, Integer mc_num, Integer sc_num, String from) {
 		if(fileNums != null) {

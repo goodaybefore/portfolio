@@ -108,7 +108,7 @@
 									mc_num : ${mc_num }<br>
 									sc_num : ${sc_num }</p>
 								</header>
-								<form action="<%=request.getContextPath()%>/spot/tripModify" method="post" enctype="multipart/form-data">
+								<form action="<%=request.getContextPath()%>/spot/${spot_user}/tripModify" method="post" enctype="multipart/form-data">
 									<div class="trip-reg-box period-select-container">
 										<div class="period">
 											<label class="period-label" for="from">period</label>
@@ -207,6 +207,8 @@
 				//여행 기간이 하루이면 start_date_str만 출력하도록 하기
 				var from = '${trip.tr_start_date_str}';
 				var to = '${trip.tr_end_date_str}'
+				var spot_user = "${spot_user}";
+				console.log(spot_user);
 				console.log(from == to)
 				$('#from').val(123);
 				if(from == to){
@@ -244,9 +246,10 @@
 					$.ajax({
 							async :false,
 					    type:'get',
-					    url : '/spot/middlecategory',
+					    url : '/spot/'+spot_user+'/middlecategory?lc_num=1',
 					    dataType:"json",
 					    success : function(res){
+					    	console.log(res);
 					    	for(middle of res.list){
 					    		str += '<option value="'+middle.mc_num+'">'+middle.mc_name+'</option>';
 					    	}
@@ -279,7 +282,7 @@
 					$.ajax({
 							async :false,
 					    type:'get',
-					    url : '/spot/smallcategory?sc_mc_num='+mc_num,
+					    url : '/spot/'+spot_user+'/smallcategory?sc_mc_num='+mc_num,
 					    dataType:"json",
 					    success : function(res){
 								//세부선택 항목 만들어주기

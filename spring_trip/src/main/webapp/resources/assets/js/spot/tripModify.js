@@ -3,8 +3,6 @@
  */
 $(function() {
 	
-	
-	
 	$('.attachment .btn-close').click(function(e){
 		e.preventDefault();
 		$(this).parent().remove();
