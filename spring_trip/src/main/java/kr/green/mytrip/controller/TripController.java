@@ -134,7 +134,7 @@ public class TripController {
 			e.printStackTrace();
 		}
 		if(tripService.insertTrip(user, trip, file, mc_num, sc_num)) {
-			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripList/1");
+			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripList/"+trip.getTr_sm_num());
 		}else {
 			//***** 비정상적인 접근입니다 하는 alert 경고창 넣을 수 없나? *****
 			mv.setViewName("redirect:/spot/tripRegister");
@@ -196,11 +196,11 @@ public class TripController {
 	@RequestMapping(value = "/{spot_user}/tripModify", method = RequestMethod.GET)
 	public ModelAndView tripModifyGet(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		String spot_user =  (String)request.getSession().getAttribute("spot_user");
 		TripVO trip = tripService.getTripDetail(tr_num);
 		
-		//SpotMenuVO spotMenu = tripService.selectMenu(trip, user);
 		if(trip == null) {
-			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripList/home");
+			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripModify");
 			
 		}else {
 			//file modify
@@ -231,7 +231,7 @@ public class TripController {
 				System.out.println(tmp);
 		}
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		
+		String spot_user =  (String)request.getSession().getAttribute("spot_user");
 		//날짜
 		String tr_dates[] = from.split(" ~ ");
 		try {
@@ -249,9 +249,11 @@ public class TripController {
 		
 		if(tripService.modifyTrip(trip, file, fileNums, mc_num, sc_num)) {
 			System.out.println("modify success");
-			mv.setViewName("/spot/"+user.getMe_id()+"/tripList/"+trip.getTr_sm_num());
+			mv.setViewName("redirect:/spot/"+spot_user+"/tripList/"+trip.getTr_sm_num());
 		}else {
 			mv.setViewName("/spot/tripModify");
+			
+			
 		}
 		
 		return mv;

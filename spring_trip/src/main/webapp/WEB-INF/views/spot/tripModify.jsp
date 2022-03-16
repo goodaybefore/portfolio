@@ -210,7 +210,6 @@
 				var spot_user = "${spot_user}";
 				console.log(spot_user);
 				console.log(from == to)
-				$('#from').val(123);
 				if(from == to){
 					$('#from').val(from);
 				}
@@ -224,11 +223,12 @@
 				let sc_name = '${trip.tr_sca_name}';
 				let isChanged = false;
 				
-				if(sc_name)
-				setMiddleCategory(mc_num, mc_name);
-				setSmallCategory(mc_num);
-				//middle-category's change
+				if(sc_name){
+					setMiddleCategory(mc_num, mc_name);
+					setSmallCategory(mc_num);
+				}
 				
+				//middle-category's change
 				$('.middle-category').change(function(){
 					let mc_num = $(this).val();
 					let middle_ca_str = '<input type="hidden" name="mc_num" value="'+mc_num+'">';
