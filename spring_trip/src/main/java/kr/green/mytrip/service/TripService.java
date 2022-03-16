@@ -42,5 +42,8 @@ public interface TripService {
 	
 	//활동 목록 출력
 	List<ActivityVO> getActList(Integer tr_num);
+	
+	//활동 등록
+	boolean insertActivity(ActivityVO activity, Integer mc_num, Integer sc_num);
 
 }

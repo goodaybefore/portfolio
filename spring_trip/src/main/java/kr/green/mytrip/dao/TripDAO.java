@@ -46,6 +46,10 @@ public interface TripDAO {
 	Integer selectMiddlecategoryNum(String tr_mca_name);
 	
 	
+	//활동 Reg(insert)
+	void insertActivity(@Param("activity")ActivityVO activity);
+	
+	
 	
 	
 	

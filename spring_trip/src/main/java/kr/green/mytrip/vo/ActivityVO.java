@@ -11,6 +11,7 @@ public class ActivityVO {
 	private int ac_num;
 	private int ac_tr_num;
 	private String ac_title;
+	private String ac_me_id;
 	private String ac_mca_name;//활동 중분류(숙박, 먹부림, 활동)
 	private String ac_sca_name;//활동 소분류
 	private String ac_address;

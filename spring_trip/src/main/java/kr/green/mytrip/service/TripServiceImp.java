@@ -169,5 +169,18 @@ public class TripServiceImp implements TripService{
 		if(tr_num <=0 || tr_num == null) return null;
 		return tripDao.selectActivityList(tr_num);
 	}
+	
+	//활동 등록
+	@Override
+	public boolean insertActivity(ActivityVO activity, Integer mc_num, Integer sc_num) {
+		if(activity==null || activity.getAc_title()==null || activity.getAc_op_name() == null)
+			return false;
+		//mca_name과 sca_name을 mc_num, sc_num을 통해 set하기
+		activity.setAc_mca_name(tripDao.selectMiddleCategoryName(mc_num));
+		activity.setAc_sca_name(tripDao.selectSmallCategoryName(sc_num));
+		System.out.println("activity : "+activity);
+		tripDao.insertActivity(activity);
+		return true;
+	}
 
 }

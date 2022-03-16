@@ -40,6 +40,7 @@
 				display : flex;
 			}
 			.open-range-label{
+				display:inline-block;
 				margin-right : 10px;
 			}
 			.date-select-container{
@@ -51,7 +52,7 @@
 			}
 			.date-label{
 				display : inline;
-				margin-left : 10px;
+				/*margin-left : 10px;*/
 			}
 			.day-input{
 				display : inline !important;
@@ -87,13 +88,14 @@
 				flex : 2;
 				min-width : 200px;
 				width : 200px !important;
+				margin-right:5px;
 			}
 			#map{
-				width:300px;
+				width:auto;
 				height:300px;
 				margin-top:10px;
 				display:none;
-				
+				margin : 0 auto;
 			}
 			.map-container{
 				display : felx;
@@ -119,18 +121,20 @@
 									<p>활동 등록</p>
 								</header>
 								<form action="<%=request.getContextPath()%>/spot/${spot_user}/activityReg" method="post" enctype="multipart/form-data">
+									<input type="hidden" name="ac_tr_num" value="">
+									<input type="hidden" name="reg_sm_num" value="">
 									<div class="activity-reg-box box-open-range">
 										<label class="open-range-label">
-											<input type="radio" class="open-range" name="tr_op_name" value="전체공개"/>전체공개
+											<input type="radio" class="open-range" name="ac_op_name" value="전체공개"/>전체공개
 										</label>
 										<label class="open-range-label">
-											<input type="radio" class="open-range" name="tr_op_name" value="트립메이트공개" />트립메이트공개
+											<input type="radio" class="open-range" name="ac_op_name" value="트립메이트공개" />트립메이트공개
 										</label>
 										<label class="open-range-label">
-											<input type="radio" class="open-range" name="tr_op_name" value="회원공개" />회원공개
+											<input type="radio" class="open-range" name="ac_op_name" value="회원공개" />회원공개
 										</label>
 										<label class="open-range-label">
-											<input type="radio" class="open-range" name="tr_op_name" value="비공개" /> 비공개
+											<input type="radio" class="open-range" name="ac_op_name" value="비공개" /> 비공개
 										</label>
 									</div>
 									
@@ -153,13 +157,13 @@
 									<div class="activity-reg-box date-select-container">
 										<div class="date">
 											<label class="date-label act-label" for="from">date</label>
-											<input type="text" class="day-input" id="from" name="from">
+											<input type="text" class="day-input" id="from" name="from" style="text-align : center; width:auto;" readonly>
 										</div>
 									</div>
 
 									<div class="activity-reg-box title-container">
 										<label class="act-label">title</label>
-										<input type="text" class="form-control" name="tr_title" placeholder="장소 이름을 입력해주세요!">
+										<input type="text" class="form-control" name="ac_title" placeholder="장소 이름을 입력해주세요!">
 									</div>
 									
 									<div class="activity-reg-box contents-container">
@@ -175,7 +179,7 @@
 												<input type="text" id="sample5_address" placeholder="주소" class="col-6 address-input" readonly>
 											</div>
 											<div class="address-input-container">
-												<input type="button" onclick="sample5_execDaumPostcode()" value="search address" class="button primary fit address-input"><br>
+												<input type="button" onclick="sample5_execDaumPostcode()" value="search address" class="button fit address-input"><br>
 											</div>
 											<div class="address-input-container">
 												<input type="text" id="detailAddress" placeholder="상세주소" class="mn-2 address-input">
@@ -183,19 +187,19 @@
 											<div class="map-container">
 												<div id="map"></div>
 											</div>
-											<input type="text" name="me_address">
+											<input type="text" name="ac_address">
 										</div>
 									</div>
 									
 									<div>
-										<input type="hidden" name="tr_me_id" value="${user.me_id}"/>
+										<input type="hidden" name="ac_me_id" value="${user.me_id}"/>
 									</div>
 									<div class="activity-reg-box with-container">
 										<label class="act-label">with</label>
-										<input type="text" class="form-control" name="tr_with" placeholder="누구와 함께였나요?"/>
+										<input type="text" class="form-control" name="ac_with" placeholder="누구와 함께였나요?"/>
 									</div>
 									<div>
-										<input type="submit" class="btn-write" value="write">
+										<input type="submit" class="btn-write primary fit" value="write">
 									</div>
 								</form>
 							</div>
@@ -208,11 +212,16 @@
 			
 			<script>
 			var spot_user = '${spot_user}';
-			
 			$('form').submit(function(){
 				
-				let address = $('#address').val() + ' ' +$('#detailAddress').val();
-				$('[name=me_address]').val(address);
+				let address = $('#sample5_address').val() + ' ' +$('#detailAddress').val();
+				$('[name=ac_address]').val(address);
+				
+				let ac_tr_num = '${trip.tr_num}';
+				$('[name=ac_tr_num]').val(ac_tr_num);
+				
+				let reg_sm_num= '${trip.tr_sm_num}';
+				$('[name=reg_sm_num]').val(reg_sm_num);
 				
 			});
 			
@@ -252,9 +261,13 @@
 					singleDatePicker();
 					showDateRangePickerr();
 				}
-					
-				
-				
+			});
+			
+			$('.small-category').change(function(){
+				let sc_num = $(this).val();
+				let small_ca_str = '<input type="hidden" name="sc_num" value="'+sc_num+'">'; 
+				$('.activity-select-scnum').html(small_ca_str);
+				//setSmallCategory(sc_num);
 			})
 			
 			function singleDatePicker(){
