@@ -105,4 +105,10 @@
 			#{activity.ac_address}, #{activity.ac_start_date}, #{activity.ac_end_date}, #{activity.ac_contents}, #{activity.ac_with}, #{activity.ac_op_name}
 		);
 	</insert>
+	
+	<select id="selectActivity" resultType="kr.green.mytrip.vo.ActivityVO">
+		SELECT * FROM activity WHERE ac_num = #{ac_num};
+	</select>
+	
+	
 </mapper>

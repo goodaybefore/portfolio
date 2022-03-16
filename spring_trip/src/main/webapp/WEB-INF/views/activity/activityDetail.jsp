@@ -72,20 +72,19 @@
 							<section id="banner">
 								<div class="content">
 									<header>
-										<h1>Detail</h1>
-										<p>여행 정보 상세 + 활동정보 관리</p>
-										${trip }<br>
-										${user }
+										<h1>Activity Detail</h1>
+										<p>활동정보 열람</p>
+										${activity}
 									</header>
 									<div class="trip-detail">
 											<c:if test="${trip.tr_me_id == user.me_id}">
-												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
-												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
+												<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityModify?ac_num=${activity.tr_num}" style="border-bottom : none;"><button>modify</button></a>
+												<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityDelete?ac_num=${activity.tr_num}" style="border-bottom : none;"><button>delete</button></a>
 											</c:if>
 										<div class="trip-reg-box detail-container">
-											<!-- 여행기간 -->
+											<!-- 활동기간 -->
 											<div class="period-container">
-												<label class="detail-label">여행기간</label>
+												<label class="detail-label">활동기간</label>
 												<c:if test="${trip.tr_start_date_str == trip.tr_end_date_str}">
 													<p class="start-date">${trip.tr_start_date_str}</p><p class="oneday-str" style="">(당일치기)</p>
 												</c:if>
@@ -133,7 +132,7 @@
 											  	<tr>
 											  		<td>${actList.ac_num}</td>
 											  		<td style="text-overflow: ellipsis; overflow:hidden">
-											  			<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityDetail/${trip.tr_sm_num}/${trip.tr_num}/${actList.ac_num}">${actList.ac_title}</a>
+											  			<a href="#">${actList.ac_title}</a>
 											  		</td>
 											  		<td>${actList.ac_start_date_str} ~ ${actList.ac_end_date_str }</td>
 											  		<td>${actList.ac_mca_name}</td>

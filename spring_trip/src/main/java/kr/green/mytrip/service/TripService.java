@@ -45,5 +45,7 @@ public interface TripService {
 	
 	//활동 등록
 	boolean insertActivity(ActivityVO activity, Integer mc_num, Integer sc_num);
+	//활동 상세(detail)
+	ActivityVO selectActivity(Integer ac_num);
 
 }

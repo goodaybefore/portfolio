@@ -48,6 +48,8 @@ public interface TripDAO {
 	
 	//활동 Reg(insert)
 	void insertActivity(@Param("activity")ActivityVO activity);
+	//활동 Detail
+	ActivityVO selectActivity(@Param("ac_num")Integer ac_num);
 	
 	
 	

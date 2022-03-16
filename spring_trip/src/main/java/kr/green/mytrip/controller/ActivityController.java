@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,7 +25,7 @@ public class ActivityController {
 	
 	//활동 등록(activity Reg)
 	@RequestMapping(value = "/activityReg", method = RequestMethod.GET)
-	public ModelAndView tripRegGet(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
+	public ModelAndView activityRegGet(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
 		if(user == null || !user.getMe_id().equals(spot_user)) mv.setViewName("redirect:/");
@@ -33,11 +34,10 @@ public class ActivityController {
 			mv.addObject("trip", trip);
 			mv.setViewName("/activity/activityRegister");
 		}
-		
 		return mv;
 	}
 	@RequestMapping(value = "/activityReg", method = RequestMethod.POST)
-	public ModelAndView tripRegPost(ModelAndView mv, HttpServletRequest request, ActivityVO activity, String from,
+	public ModelAndView activityRegPost(ModelAndView mv, HttpServletRequest request, ActivityVO activity, String from,
 			Integer mc_num, Integer sc_num, Integer reg_sm_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
@@ -63,8 +63,26 @@ public class ActivityController {
 			System.out.println("insert 실패");
 			mv.setViewName("/activity/activityRegister");
 		}
+		return mv;
+	}
+	
+	//활동 상세(activity Detail)
+	@RequestMapping(value = "/activityDetail/{sm_num}/{reg_tr_num}/{ac_num}", method = RequestMethod.GET)
+	public ModelAndView activityDetailGet(ModelAndView mv, HttpServletRequest request, Integer tr_num,
+			@PathVariable(required=false, value="ac_num")Integer ac_num,
+			@PathVariable(required=false, value="reg_tr_num")Integer reg_tr_num,
+			@PathVariable(required=false, value="sm_num")Integer sm_num) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		String spot_user = (String)request.getSession().getAttribute("spot_user");
 		
-		
+		ActivityVO active = tripService.selectActivity(ac_num);
+		if(active == null) {
+			System.out.println("activity load fail");
+			mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+sm_num+"/"+reg_tr_num);
+		}else {
+			mv.addObject("activity", active);
+			mv.setViewName("/activity/activityDetail");
+		}
 		
 		return mv;
 	}

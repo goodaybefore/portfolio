@@ -182,5 +182,11 @@ public class TripServiceImp implements TripService{
 		tripDao.insertActivity(activity);
 		return true;
 	}
+	
+	//활동 상세(detail)
+	@Override
+	public ActivityVO selectActivity(Integer ac_num) {
+		return tripDao.selectActivity(ac_num);
+	}
 
 }
