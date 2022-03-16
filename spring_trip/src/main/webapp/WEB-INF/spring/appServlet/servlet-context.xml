@@ -91,9 +91,9 @@
 	        <mapping path="/spot/*/tripRegister"/>
 	        <mapping path="/spot/*/tripDelete"/>
 	        <mapping path="/spot/*/tripModify"/>
-	        <mapping path="/activity/activityReg"/>
-	        <mapping path="/activity/activityMod"/>
-	        <mapping path="/activity/activityDel"/>
+	        <mapping path="/spot/*/activity/activityReg"/>
+	        <mapping path="/spot/*/activity/activityMod"/>
+	        <mapping path="/spot/*/activity/activityDel"/>
 	        <beans:ref bean="memberInterceptor"/>
 	    </interceptor>
 	</interceptors>

@@ -232,5 +232,6 @@
 				}
 			})
 			</script>
+			<script src="/resources/assets/js/spot/tripRegister.js"></script>
 	</body>
 </html>
