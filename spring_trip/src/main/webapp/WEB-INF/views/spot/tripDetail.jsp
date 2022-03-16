@@ -124,29 +124,22 @@
 											      <th scope="col" style="width:50px;">num</th>
 											      <th scope="col" class="col-12 " style="min-width:200px;">activity title</th>
 											      <th scope="col" class="text-center" style="width:150px;">date</th>
+											      <th scope="col" class="text-center" style="width:100px;">sort</th>
 											      <th scope="col" class="text-center" style="width:120px;">공개범위</th>
 											    </tr>
 											  </thead>
 											  <tbody>
+											  	<c:forEach items="${actList}" var="actList">
 											  	<tr>
-											  		<td>활동번호</td>
-											  		<td>활동제목</td>
-											  		<td>활동날짜</td>
-											  		<td>공개범위</td>
-											  	</tr>
-											  	<!-- <c:forEach items="${tripList}" var="tripList">
-											  	<tr>
-											  		<td>${tripList.tr_num}</td>
-											  		<td>${tripList.tr_ca_name}</td>
+											  		<td>${actList.ac_num}</td>
 											  		<td style="text-overflow: ellipsis; overflow:hidden">
-											  			<a href="/spot/${spot_user}/tripDetail/${sm_num}/${tripList.tr_num}">${tripList.tr_title}</a>
+											  			<a href="#">${actList.ac_title}</a>
 											  		</td>
-											  		<td>${tripList.tr_start_date_str} ~ ${tripList.tr_end_date_str }</td>
-											  		<td>아직안함</td>
-											  		<td>${tripList.tr_op_name }</td>
-											  		<td class="text-center">*</td>
+											  		<td>${actList.ac_start_date_str} ~ ${actList.ac_end_date_str }</td>
+											  		<td>${actList.ac_mca_name}</td>
+											  		<td>${actList.ac_op_name }</td>
 											  	</tr>
-											  	</c:forEach> -->
+											  	</c:forEach>
 											  </tbody>
 											</table>
 										<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityReg?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>add activity</button></a>
