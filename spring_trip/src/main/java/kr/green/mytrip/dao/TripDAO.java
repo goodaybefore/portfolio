@@ -25,6 +25,7 @@ public interface TripDAO {
 	String selectMiddleCategoryName(@Param("mc_num")Integer mc_num);
 	String selectSmallCategoryName(@Param("sc_num")Integer sc_num);
 	
+	
 	//여행지 목록 불러오기 tripList
 	List<TripVO> selectTripListAll(@Param("sm_num")Integer sm_num, @Param("cri")Criteria cri);//모두 불러오기
 	List<TripVO> selectTripList(@Param("openRange")String openRange, Integer sm_num);//특정 범위만 불러오기
@@ -50,6 +51,12 @@ public interface TripDAO {
 	void insertActivity(@Param("activity")ActivityVO activity);
 	//활동 Detail
 	ActivityVO selectActivity(@Param("ac_num")Integer ac_num);
+	
+	//reg_sm_num
+	Integer selectSmNum(@Param("tr_num")int ac_tr_num);
+	
+	//활동 Modify(update)
+	void updateActivity(@Param("activity")ActivityVO activity);
 	
 	
 	

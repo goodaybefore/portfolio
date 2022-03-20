@@ -212,8 +212,8 @@ public class TripController {
 			if(trip.getTr_sca_name()!=null) 
 				//sca_name의 sc_num을 찾기
 				//SELECT sc_num FROM small_category WHERE sc_num = #{tr_sca_name};
-				sc_num = tripService.getTripScaNum(trip.getTr_sca_name());
-			mc_num = tripService.getTripMcaNum(trip.getTr_mca_name());
+				sc_num = tripService.getScaNum(trip.getTr_sca_name());
+			mc_num = tripService.getMcaNum(trip.getTr_mca_name());
 			
 			mv.addObject("sc_num", sc_num);
 			mv.addObject("mc_num", mc_num);

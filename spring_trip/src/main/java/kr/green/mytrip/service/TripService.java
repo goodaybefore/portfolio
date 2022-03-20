@@ -37,8 +37,8 @@ public interface TripService {
 	
 	//여행지 수정
 	boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums, Integer mc_num, Integer sc_num);
-	Integer getTripScaNum(String tr_sca_name);
-	Integer getTripMcaNum(String tr_mca_name);
+	Integer getScaNum(String tr_sca_name);
+	Integer getMcaNum(String tr_mca_name);
 	
 	//활동 목록 출력
 	List<ActivityVO> getActList(Integer tr_num);
@@ -47,5 +47,12 @@ public interface TripService {
 	boolean insertActivity(ActivityVO activity, Integer mc_num, Integer sc_num);
 	//활동 상세(detail)
 	ActivityVO selectActivity(Integer ac_num);
+	//reg_sm_num 가져오기
+	Integer getSmNum(int ac_tr_num);
+	
+	//활동 수정(modify)
+	boolean modifyActivity(ActivityVO activity, Integer mc_num, Integer sc_num, MemberVO user);
+
+	
 
 }
