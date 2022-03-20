@@ -154,13 +154,13 @@ public class TripServiceImp implements TripService{
 	}
 	//여행지 이름으로 각 카테고리의 primary key 구하기
 	@Override
-	public Integer getTripScaNum(String tr_sca_name) {
-		return tripDao.selectSmallcategoryNum(tr_sca_name);
+	public Integer getScaNum(String sca_name) {
+		return tripDao.selectSmallcategoryNum(sca_name);
 	}
 	@Override
-	public Integer getTripMcaNum(String tr_mca_name) {
+	public Integer getMcaNum(String mca_name) {
 		// TODO Auto-generated method stub
-		return tripDao.selectMiddlecategoryNum(tr_mca_name);
+		return tripDao.selectMiddlecategoryNum(mca_name);
 	}
 	
 	//활동 리스트 불러오기
@@ -187,6 +187,25 @@ public class TripServiceImp implements TripService{
 	@Override
 	public ActivityVO selectActivity(Integer ac_num) {
 		return tripDao.selectActivity(ac_num);
+	}
+	
+	//reg_sm_num 가져오기
+	@Override
+	public Integer getSmNum(int ac_tr_num) {
+		return tripDao.selectSmNum(ac_tr_num);
+	}
+	@Override
+	public boolean modifyActivity(ActivityVO activity, Integer mc_num, Integer sc_num, MemberVO user) {
+		if(activity == null || activity.getAc_title()== null || !activity.getAc_me_id().equals(user.getMe_id())||
+				activity.getAc_contents()== null) return false;
+		//ac_tr_num을 jsp단에서 수정해서 일부러 다른 tr_num으로 입력하거나, ac_num을 그렇게 일부러 다르게 입력하거나, ac_mca와 sca를 DB에 없는걸로 입력하면??..
+		
+		
+		activity.setAc_mca_name(tripDao.selectMiddleCategoryName(mc_num));
+		activity.setAc_sca_name(tripDao.selectSmallCategoryName(sc_num));
+		System.out.println("Imp activity : "+activity);
+		tripDao.updateActivity(activity);
+		return true;
 	}
 
 }
