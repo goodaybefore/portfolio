@@ -74,6 +74,15 @@ public class HomeController {
 		return mv;
 	}
 	
+	//mypage 회원정보
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public ModelAndView mypageGet(ModelAndView mv, HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		mv.addObject("user", user);
+		mv.setViewName("/member/mypage");
+		return mv;
+	}
+	
 	
 	
 }
