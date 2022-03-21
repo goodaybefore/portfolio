@@ -45,8 +45,8 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			
 			//본인 spot home으로 redirect
 			response.sendRedirect(request.getContextPath()+"/spot/"+user.getMe_id());
-			return true;
-		}else {
+			return false;
+			}else {
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("menu", menuList);

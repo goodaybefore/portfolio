@@ -88,9 +88,9 @@ public class TripServiceImp implements TripService{
 		if(spot_user == null) return null;
 		//guest로그인시..일단 다 보여주기
 		if(user == null) 
-			return tripDao.selectTripList("전체공개", sm_num);
+			return tripDao.selectTripList("전체공개", sm_num, spot_user);
 		if(user.getMe_id().equals(spot_user)) 
-			return tripDao.selectTripListAll(sm_num, cri);
+			return tripDao.selectTripListAll(sm_num, cri, spot_user);
 			
 		return null;
 	}
