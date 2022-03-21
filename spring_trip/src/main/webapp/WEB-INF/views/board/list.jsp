@@ -92,57 +92,7 @@
 					</div>
 				</div>
 							
-							
-							
-				<!-- Sidebar -->
-				<div id="sidebar">
-					<div class="inner">
-						<!-- Menu -->
-							<nav id="menu">
-								<header class="major">
-									<h2>My Menu</h2>
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-								</header>
-								<ul>
-									<li><a href="<%=request.getContextPath()%>/myspot/home">my spot home</a></li>
-									<li>
-										<span class="opener">trip</span>
-										<ul>
-										<c:forEach items="${menu }" var="menu">
-											<li><a href="<%=request.getContextPath()%>/myspot/tripList?menu=${menu}">${menu}</a></li>
-										</c:forEach>
-										</ul>
-									</li>
-									<li>
-										<span class="opener">Tripmate</span>
-										<ul>
-											<li><a href="#">request</a></li>
-											<li><a href="#">my tripmates</a></li>
-										</ul>
-									</li>
-									<li>
-										<span class="opener">trip info</span>
-										<ul>
-											<li><a href="#">notice</a></li>
-											<li><a href="#">today's trip</a></li>
-										</ul>
-									</li>
-									<li><a href="#">my page</a></li>
-								</ul>
-							</nav>
-						</div>
-					</div>
-
 			</div>
-			<script src="/resources/assets/js/myspot/jquery.min.js"></script>
-			<script src="/resources/assets/js/myspot/browser.min.js"></script>
-			<script src="/resources/assets/js/myspot/breakpoints.min.js"></script>
-			<script src="/resources/assets/js/myspot/util.js"></script>
-			<script src="/resources/assets/js/myspot/main.js"></script>
 			
 	</body>
 </html>
