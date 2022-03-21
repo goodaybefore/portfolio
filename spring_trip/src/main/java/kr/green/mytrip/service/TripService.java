@@ -52,6 +52,9 @@ public interface TripService {
 	
 	//활동 수정(modify)
 	boolean modifyActivity(ActivityVO activity, Integer mc_num, Integer sc_num, MemberVO user);
+	
+	//활동 삭제(delete)
+	boolean deleteActivity(ActivityVO dbActivity);
 
 	
 

@@ -72,7 +72,9 @@
 	
 	<update id="deleteTrip">
 		UPDATE trip
-		SET tr_del = 'Y'
+		SET
+			tr_del = 'Y',
+			del_date = now()
 		WHERE tr_num = #{tr_num};
 	</update>
 	
@@ -93,7 +95,7 @@
 	</select>
 	
 	<select id="selectActivityList" resultType="kr.green.mytrip.vo.ActivityVO">
-		SELECT * FROM activity WHERE ac_tr_num = #{tr_num};
+		SELECT * FROM activity WHERE ac_tr_num = #{tr_num} ORDER BY ac_num DESC;
 	</select>
 	
 	<insert id="insertActivity">
@@ -135,4 +137,11 @@
 		
 	</update>
 	
+	<update id="deleteActivity">
+		UPDATE activity
+		SET
+			ac_del = 'Y',
+			del_date = now()
+		WHERE ac_num = #{ac_num};
+	</update>
 </mapper>

@@ -23,6 +23,7 @@ public class ActivityVO {
 	private String ac_op_name;
 	private String ac_with;
 	private String ac_del;
+	private Date del_date;//삭제리스트에서 삭제날짜로 정렬하기위해 del_date 추가
 	
 	public String getAc_start_date_str() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,4 +46,14 @@ public class ActivityVO {
 		return this.ac_end_date = format.parse(ac_end_date);
 	}
 	
+	
+	public String getDel_date_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+		String str = format.format(del_date);
+		return str;
+	}
+	public Date setDel_date_str(String del_date) throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return this.del_date = format.parse(del_date);
+	}
 }

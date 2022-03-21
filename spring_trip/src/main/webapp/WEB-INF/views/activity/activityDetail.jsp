@@ -77,7 +77,7 @@
 									<div class="activity-detail">
 											<c:if test="${activity.ac_me_id == user.me_id}">
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityMod?ac_num=${activity.ac_num}" style="border-bottom : none;"><button>modify</button></a>
-												<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityDel?ac_num=${activity.ac_num}" style="border-bottom : none;"><button>delete</button></a>
+												<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityDel?ac_num=${activity.ac_num}?tr_num=${activity.ac_tr_num}" style="border-bottom : none;"><button>delete</button></a>
 											</c:if>
 										<div class="activity-reg-box detail-container">
 											<!-- 활동기간 -->

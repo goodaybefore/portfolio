@@ -144,5 +144,27 @@ public class ActivityController {
 			
 			return mv;
 		}
-	
+		
+		
+		//활동 삭제(Delete)
+		@RequestMapping(value = "/activityDel", method = RequestMethod.GET)
+		public ModelAndView activityDelete(ModelAndView mv, HttpServletRequest request,
+				Integer tr_num, Integer reg_sm_num, Integer ac_num) {
+			MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+			String spot_user = (String)request.getSession().getAttribute("spot_user");
+			if(!user.getMe_id().equals(spot_user)) {
+				//userid가 spot_user와 일치하지않으면 activityDetail페이지 유지
+				mv.setViewName("redirect:/spot/"+spot_user+"/activityDetail/"+reg_sm_num+"/"+tr_num+"/"+ac_num);
+			}
+			ActivityVO dbActivity = tripService.selectActivity(ac_num);
+			if(tripService.deleteActivity(dbActivity)) {
+				System.out.println("활동삭제성공");
+				mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+reg_sm_num+"/"+tr_num);
+			}else {
+				mv.setViewName("redirect:/spot/"+spot_user+"/activityDetail/"+reg_sm_num+"/"+tr_num+"/"+ac_num);
+			}
+			
+			
+			return mv;
+		}
 }

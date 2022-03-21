@@ -58,6 +58,9 @@ public interface TripDAO {
 	//활동 Modify(update)
 	void updateActivity(@Param("activity")ActivityVO activity);
 	
+	//활동 Delete
+	void deleteActivity(@Param("ac_num")int ac_num);
+	
 	
 	
 	

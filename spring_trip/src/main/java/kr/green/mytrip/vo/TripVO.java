@@ -20,6 +20,7 @@ public class TripVO {
 	private String tr_favorite;
 	private String tr_op_name;
 	private String tr_del;
+	private Date del_date;//삭제리스트에서 삭제날짜로 정렬하기위해 del_date 추가
 	private int tr_charge;
 	private String tr_with;
 	
@@ -42,4 +43,15 @@ public class TripVO {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		return this.tr_end_date = format.parse(tr_end_date);
 	}
+	
+	public String getDel_date_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+		String str = format.format(del_date);
+		return str;
+	}
+	public Date setDel_date_str(String del_date) throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return this.del_date = format.parse(del_date);
+	}
+	
 }

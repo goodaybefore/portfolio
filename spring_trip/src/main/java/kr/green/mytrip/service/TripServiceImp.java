@@ -203,8 +203,16 @@ public class TripServiceImp implements TripService{
 		
 		activity.setAc_mca_name(tripDao.selectMiddleCategoryName(mc_num));
 		activity.setAc_sca_name(tripDao.selectSmallCategoryName(sc_num));
-		System.out.println("Imp activity : "+activity);
 		tripDao.updateActivity(activity);
+		return true;
+	}
+	
+	//활동 삭제(delete)
+	@Override
+	public boolean deleteActivity(ActivityVO dbActivity) {
+		if(dbActivity == null) return false;
+		//삭제 진행
+		tripDao.deleteActivity(dbActivity.getAc_num());
 		return true;
 	}
 
