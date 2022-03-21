@@ -72,6 +72,7 @@
 	    <interceptor>
 	        <mapping path="/spot/**"/>
 	        <mapping path="/board/**"/>
+	        <mapping path="/mypage"/>
 	        <beans:ref bean="menuSessionInterceptor"/>
 	    </interceptor>
 	</interceptors>
@@ -94,6 +95,7 @@
 	        <mapping path="/spot/*/activityReg"/>
 	        <mapping path="/spot/*/activityMod"/>
 	        <mapping path="/spot/*/activityDel"/>
+	        <mapping path="/mypage"/>
 	        <beans:ref bean="memberInterceptor"/>
 	    </interceptor>
 	</interceptors>

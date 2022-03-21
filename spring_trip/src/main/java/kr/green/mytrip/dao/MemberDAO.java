@@ -16,5 +16,8 @@ public interface MemberDAO {
 	void insertDefaultMenu(@Param("menu")SpotMenuVO menu);
 	//로그인 - 사용자의 메뉴리스트 불러오기
 	List<SpotMenuVO> selectMenuList(@Param("userId")String userId);
+	
+	//mypage 수정
+	void mypageUpdate(@Param("input")MemberVO input);
 
 }

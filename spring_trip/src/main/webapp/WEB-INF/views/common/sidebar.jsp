@@ -46,7 +46,7 @@
 								<li><a href="#">today's trip</a></li>
 							</ul>
 						</li>
-						<li><a href="#">my page</a></li>
+						<li><a href="<%=request.getContextPath()%>/mypage">my page</a></li>
 					</ul>
 				</nav>
 			</div>

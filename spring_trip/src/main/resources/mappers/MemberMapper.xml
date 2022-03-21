@@ -28,4 +28,19 @@
 	<select id="selectMenuList" resultType="kr.green.mytrip.vo.SpotMenuVO">
 		SELECT * FROM spot_menu WHERE sm_me_id = #{userId};
 	</select>
+	
+	
+	<update id="mypageUpdate">
+		UPDATE member
+		SET
+			me_nickname = #{input.me_nickname},
+			me_intro = #{input.me_intro},
+			me_op_name = #{input.me_op_name},
+			me_phone = #{input.me_phone},
+			me_email = #{input.me_email}
+		WHERE
+			me_id = #{input.me_id};
+			
+			
+	</update>
 </mapper>

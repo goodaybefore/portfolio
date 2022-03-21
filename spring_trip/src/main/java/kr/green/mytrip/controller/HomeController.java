@@ -82,6 +82,19 @@ public class HomeController {
 		mv.setViewName("/member/mypage");
 		return mv;
 	}
+	@RequestMapping(value = "/mypage", method = RequestMethod.POST)
+	public ModelAndView mypagePost(ModelAndView mv, HttpServletRequest request, MemberVO input) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println("mypage input : "+input);
+		if(memberService.mypageUpdate(user, input)) {
+			System.out.println("mypage update 성공");
+			mv.setViewName("redirect:/member/mypage");
+		}else {
+			mv.setViewName("/member/mypage");
+		}
+		
+		return mv;
+	}
 	
 	
 	

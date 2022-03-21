@@ -68,6 +68,13 @@ public class MemberServiceImp implements MemberService {
 		return memberDao.selectMenuList(user);
 	}
 
+	@Override
+	public boolean mypageUpdate(MemberVO user, MemberVO input) {
+		if(!user.getMe_id().equals(input.getMe_id())) return false;
+		memberDao.mypageUpdate(input);
+		return true;
+	}
+
 	
 	
 }
