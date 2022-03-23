@@ -24,7 +24,7 @@
 												<p>로그인하면 더 많은 기능을 사용할 수 있습니다!</p>
 											</c:if>
 										</header>
-										<p>${user.me_id }</p>
+										<p>${user}</p>
 										<ul class="actions">
 											<li><a href="#" class="button big">Learn More</a></li>
 										</ul>

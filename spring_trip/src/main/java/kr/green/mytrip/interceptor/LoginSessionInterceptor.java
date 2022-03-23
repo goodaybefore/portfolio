@@ -22,7 +22,7 @@ public class LoginSessionInterceptor extends HandlerInterceptorAdapter {
 	    ModelMap modelMap = modelAndView.getModelMap();
 	    MemberVO user = (MemberVO)modelMap.get("user");
 	    Object menu = (Object)modelMap.get("menu");
-	    
+	    System.out.println("user : "+user);
 	    if(user != null) {
 	        HttpSession session = request.getSession();
 	        session.setAttribute("user", user);

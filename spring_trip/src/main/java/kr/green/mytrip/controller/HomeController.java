@@ -78,7 +78,10 @@ public class HomeController {
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public ModelAndView mypageGet(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		String spot_user = (String)request.getSession().getAttribute("spot_user");
+		System.out.println("user"+user);
 		mv.addObject("user", user);
+		mv.addObject("spot_user", spot_user);
 		mv.setViewName("/member/mypage");
 		return mv;
 	}

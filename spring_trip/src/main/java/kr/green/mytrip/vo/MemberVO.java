@@ -23,8 +23,8 @@ public class MemberVO {
 	private String me_intro;
 	private String me_membership;
 	private String me_op_name;
-	private String me_last_date;
-	private String me_attend_num;
+	private Date me_last_date;
+	private int me_attend_num;
 
 	
 }

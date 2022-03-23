@@ -51,7 +51,8 @@ public class TripController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		//해당 유저의 trip 정보 가져오기 - spot user의 공개범위에 따라 현재 로그인한 user에게 보여줄 범위를 가져옴
 		//tripService.getTripList(spot_user, user);
-		
+
+		mv.addObject("user", user);
 		mv.addObject("spot_user", spot_user);
 		mv.setViewName("/spot/home");
 		return mv;

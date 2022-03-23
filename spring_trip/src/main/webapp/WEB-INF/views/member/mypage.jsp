@@ -142,7 +142,7 @@
 											</div>
 											<div class="mypage-box intro-container">
 												<label class="mypage-label">intro</label>
-												<textarea class="form-control intro-box" name="me_intro" placeholder="다른사람들에게 나를 소개해보세요" rows="3">${user.me_intro}</textarea>
+												<textarea class="form-control intro-box" name="me_intro" placeholder="다른사람들에게 나를 소개해보세요" rows="3"></textarea>
 											</div>
 											<div class="mypage-box phone-container">
 												<label class="mypage-label">phone</label>

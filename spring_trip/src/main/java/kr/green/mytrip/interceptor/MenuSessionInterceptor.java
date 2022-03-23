@@ -1,5 +1,6 @@
 package kr.green.mytrip.interceptor;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +25,31 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String[] url = request.getServletPath().split("/");
-		String thisUser = url[2];
-		//thisUser의 메뉴 불러오기
-		List<SpotMenuVO> menuList = memberService.getMenuList(thisUser);
-		if(menuList.isEmpty()) {//menuList에 아무것도 없을 때(등록되지 않은 회원 id인 경우)
-			
+		
+		System.out.println("현재 url : "+Arrays.toString(url));
+		System.out.println("url[1] : "+url[1]+"\nurl.length : "+url.length);
+		List<SpotMenuVO> menuList = null;
+		String thisUser = null;
+		//mypage
+		if(url[1].equals("mypage") && url.length == 2) {
+			if(user == null) {//접근을 시도하는 사용자가 guest login인 경우
+				response.sendRedirect(request.getContextPath()+"/");
+				return false;
+			}
+			menuList = memberService.getMenuList(user.getMe_id());
+		}
+		//'/spot/(~~)' 형식
+		else if(!url[2].isEmpty() && url[1].equals("spot")) {
+			thisUser = url[2];
+			menuList = memberService.getMenuList(thisUser);
+		}
+		
+		if(thisUser == null) {
+			System.out.println("<MenuSession>\nthisUser == null!");
+		}
+		
+		if(menuList.isEmpty()) {//menuList에 아무것도 없을 때
 			System.out.println("menu list가 empty : "+menuList);
-			
 			if(user == null) {//접근을 시도하는 사용자가 guest login인 경우
 				response.sendRedirect(request.getContextPath()+"/");
 				return false;
@@ -41,7 +60,6 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			HttpSession session = request.getSession();
 			session.setAttribute("menu", menuList);
 			session.setAttribute("spot_user", user.getMe_id());
-			
 			
 			//본인 spot home으로 redirect
 			response.sendRedirect(request.getContextPath()+"/spot/"+user.getMe_id());
