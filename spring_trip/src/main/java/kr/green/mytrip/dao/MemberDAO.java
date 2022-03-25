@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.SpotMenuVO;
 
@@ -19,5 +20,8 @@ public interface MemberDAO {
 	
 	//mypage 수정
 	void mypageUpdate(@Param("input")MemberVO input);
+	//photo(프로필사진
+	void updateProfile(@Param("photo")MemberVO p);
+	void deleteProfile(@Param("me_id")String me_id);
 
 }

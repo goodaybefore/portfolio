@@ -2,6 +2,8 @@ package kr.green.mytrip.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.SpotMenuVO;
 
@@ -13,7 +15,7 @@ public interface MemberService {
 	MemberVO loginMember(MemberVO input);
 	List<SpotMenuVO> getMenuList(String userId);
 	//mypage 수정
-	boolean mypageUpdate(MemberVO user, MemberVO input);
+	boolean mypageUpdate(MemberVO user, MemberVO input, List<MultipartFile> file);
 
 
 

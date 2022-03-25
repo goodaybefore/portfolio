@@ -5,8 +5,10 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class MemberVO {
 	private String me_id;
 	private String me_pw;
@@ -19,6 +21,7 @@ public class MemberVO {
 	private String me_del;
 	private String me_nickname;
 	private String me_photo;
+	private String me_ori_photo_name;
 	private String me_gr_name;
 	private String me_intro;
 	private String me_membership;
@@ -26,5 +29,7 @@ public class MemberVO {
 	private Date me_last_date;
 	private int me_attend_num;
 
-	
+	public MemberVO(String me_photo) {
+		this.me_photo = me_photo;
+	}
 }

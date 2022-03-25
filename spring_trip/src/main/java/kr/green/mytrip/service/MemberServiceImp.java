@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.mytrip.dao.MemberDAO;
+import kr.green.mytrip.utills.UploadFileUtills;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.SpotMenuVO;
 
@@ -18,6 +20,7 @@ public class MemberServiceImp implements MemberService {
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
+	String uploadPath = "E:\\2021\\portfolio\\member_profile";
 	//signup
 	@Override
 	public boolean insertMember(MemberVO member) {
@@ -69,12 +72,45 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public boolean mypageUpdate(MemberVO user, MemberVO input) {
+	public boolean mypageUpdate(MemberVO user, MemberVO input, List<MultipartFile> file) {
 		if(!user.getMe_id().equals(input.getMe_id())) return false;
+		//기존프로필가져오기
+		MemberVO dbUser = memberDao.selectMember(user.getMe_id());
+		
+		//
+		if(dbUser.getMe_photo()!=null) {
+			memberDao.deleteProfile(user.getMe_id());
+		}
+		//프로필 업데이트
 		memberDao.mypageUpdate(input);
+		//기존사진 가져오기
+		
+		
+		//프로필 사진 업데이트
+		uploadFile(file, user.getMe_id());
 		return true;
 	}
-
+	
+	//file upload 함수
+	private void uploadFile(List<MultipartFile> file, String me_id) {
+		if(file == null) return;
+		for(MultipartFile tmpFile : file) {
+			if(tmpFile != null && tmpFile.getOriginalFilename().length()!=0) {
+				String path;
+				try {
+					path = UploadFileUtills.uploadProfile(uploadPath, tmpFile.getOriginalFilename(), tmpFile.getBytes(), me_id);
+					MemberVO p = new MemberVO(path);
+					p.setMe_id(me_id);
+					//FileVO f = new FileVO(tmpFile.getOriginalFilename(), path, tr_num);
+					memberDao.updateProfile(p);
+					
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
 
 	
 	

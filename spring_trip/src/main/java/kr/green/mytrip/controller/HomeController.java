@@ -1,14 +1,23 @@
  package kr.green.mytrip.controller;
 
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.mytrip.service.MemberService;
@@ -80,23 +89,61 @@ public class HomeController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
 		System.out.println("user"+user);
-		mv.addObject("user", user);
-		mv.addObject("spot_user", spot_user);
-		mv.setViewName("/member/mypage");
-		return mv;
-	}
-	@RequestMapping(value = "/mypage", method = RequestMethod.POST)
-	public ModelAndView mypagePost(ModelAndView mv, HttpServletRequest request, MemberVO input) {
-		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		System.out.println("mypage input : "+input);
-		if(memberService.mypageUpdate(user, input)) {
-			System.out.println("mypage update 성공");
-			mv.setViewName("redirect:/member/mypage");
-		}else {
+		if(!user.getMe_id().equals(spot_user))
+			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/home");
+		else {
 			mv.setViewName("/member/mypage");
 		}
 		
+		
 		return mv;
+	}
+	@RequestMapping(value = "/mypage", method = RequestMethod.POST)
+	public ModelAndView mypagePost(ModelAndView mv, HttpServletRequest request, MemberVO input,
+			List<MultipartFile> file) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println("mypage input : "+input);
+		
+		if(memberService.mypageUpdate(user, input, file)) {
+			System.out.println("mypage update 성공");
+			mv.setViewName("redirect:/mypage");
+		}else {
+			mv.setViewName("redirect:/mypage");
+		}
+		
+		return mv;
+	}
+	
+	
+	//file upload
+	@ResponseBody//리턴값이 직접적으로 화면에(요청한곳에) 가도록 해줌 
+	@RequestMapping("/download")
+	public ResponseEntity<byte[]> downloadFile(String fileName)throws Exception{
+		//집
+		String uploadPath = "E:\\2021\\portfolio\\member_profile";
+		//학원
+		//String uploadPath = "E:\\2021\\portfolio\\upload_file";
+		
+	    InputStream in = null;
+	    //byte에 담아서 전송
+	    ResponseEntity<byte[]> entity = null;
+	    try{
+	        String FormatName = fileName.substring(fileName.lastIndexOf(".")+1);
+	        HttpHeaders headers = new HttpHeaders();
+	        in = new FileInputStream(uploadPath+fileName);
+
+	        fileName = fileName.substring(fileName.indexOf("_")+1);
+	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	        headers.add("Content-Disposition",  "attachment; filename=\"" 
+				+ new String(fileName.getBytes("UTF-8"), "ISO-8859-1")+"\"");
+	        entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),headers,HttpStatus.CREATED);
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	        entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+	    }finally {
+	        in.close();
+	    }
+	    return entity;
 	}
 	
 	

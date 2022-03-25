@@ -1,6 +1,8 @@
 package kr.green.mytrip.controller;
 
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.mytrip.service.TripService;
@@ -163,8 +168,7 @@ public class ActivityController {
 			}else {
 				mv.setViewName("redirect:/spot/"+spot_user+"/activityDetail/"+reg_sm_num+"/"+tr_num+"/"+ac_num);
 			}
-			
-			
 			return mv;
 		}
+		
 }

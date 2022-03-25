@@ -26,8 +26,6 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String[] url = request.getServletPath().split("/");
 		
-		System.out.println("현재 url : "+Arrays.toString(url));
-		System.out.println("url[1] : "+url[1]+"\nurl.length : "+url.length);
 		List<SpotMenuVO> menuList = null;
 		String thisUser = null;
 		//mypage
@@ -36,7 +34,10 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 				response.sendRedirect(request.getContextPath()+"/");
 				return false;
 			}
+			thisUser = user.getMe_id();
 			menuList = memberService.getMenuList(user.getMe_id());
+		}else if(url.length == 3 && url[1].equals("board")) {
+			menuList = memberService.getMenuList(thisUser);
 		}
 		//'/spot/(~~)' 형식
 		else if(!url[2].isEmpty() && url[1].equals("spot")) {
@@ -45,7 +46,12 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 		}
 		
 		if(thisUser == null) {
+			System.out.println("==========");
 			System.out.println("<MenuSession>\nthisUser == null!");
+
+			System.out.println("현재 url : "+Arrays.toString(url));
+			System.out.println("url[1] : "+url[1]+"\nurl.length : "+url.length);
+			System.out.println("==========");
 		}
 		
 		if(menuList.isEmpty()) {//menuList에 아무것도 없을 때

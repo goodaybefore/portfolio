@@ -49,6 +49,8 @@
 			height : 200px;
 			width : 200px;
 			border : 1px solid gray;
+			text-align : center;
+			line-height : 200px;
 		}
 		.profile-btn-box{
 			margin-top :5px;
@@ -90,7 +92,13 @@
 		}
 		.tr-dates{
 			display : inline-block !important;
-		} 
+		}
+		
+		.thumb-image, .user-photo-img{
+			width : 200px;
+			height : 200px !important;
+		}
+		
 		</style>
 	</head>
 	<body class="is-preload">
@@ -132,17 +140,24 @@
 											<div class="mypage-box profile-container">
 												<label class="mypage-label">profile</label>
 												<div class="profile-box">
-													<div class="profile-img"></div>
+													<div class="profile-img">
+														<c:if test="${user.me_photo != null }">
+															<img class="user-photo-img" src="/img/portfolio/member_profile${user.me_photo}"/>
+														</c:if>
+														<c:if test="${user.me_photo == null }">no image</c:if>
+													
+													</div>
 													<div class="profile-btn-box">
-														<label class="btn-input-profile-img" for="input-file">upload</label>
-														<input type="file" id="input-file" name="file" style="display:none;" />
+														<input type="file" multiple accept="image/*" id="fileUpload" name="file" style="display: none">
+														<a class="btn-input-profile-img" href="javascript:;">upload</a>
+														<!-- <input type="file" id="fileUpload" name="file" style="display:none;" value="${user.me_photo}" multiple accept="image/*"/> -->
 													</div>
 													
 												</div>
 											</div>
 											<div class="mypage-box intro-container">
 												<label class="mypage-label">intro</label>
-												<textarea class="form-control intro-box" name="me_intro" placeholder="다른사람들에게 나를 소개해보세요" rows="3"></textarea>
+												<textarea class="form-control intro-box" name="me_intro" placeholder="다른사람들에게 나를 소개해보세요" rows="3">${user.me_intro }</textarea>
 											</div>
 											<div class="mypage-box phone-container">
 												<label class="mypage-label">phone</label>
@@ -182,6 +197,49 @@
 		
 	<script src="/resources/assets/js/spot/tripDetail.js"></script>
 	<script>
+	$("#fileUpload").on('change', function () {
+
+	    //Get count of selected files
+	    var countFiles = $(this)[0].files.length;
+
+	    var imgPath = $(this)[0].value;
+	    //확장자 체크
+	    var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+	    //'no image' 글자 제거
+	    $('.profile-img').html('');
+	    var image_holder = $('.profile-img');
+	    image_holder.empty();
+
+	    if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+	        if (typeof (FileReader) != "undefined") {
+
+	            //loop for each file selected for uploaded.
+	            for (var i = 0; i < countFiles; i++) {
+	                var reader = new FileReader();
+	                reader.onload = function (e) {
+	                    $("<img />", {
+	                        "src": e.target.result,
+	                            "class": "thumb-image"
+	                    }).appendTo(image_holder);
+	                }
+
+	                image_holder.show();
+	                reader.readAsDataURL($(this)[0].files[i]);
+	            }
+
+	        } else {
+	            alert("This browser does not support FileReader.");
+	        }
+	    } else {
+	        alert("Pls select only images");
+	    }
+	});
+	$('.btn-input-profile-img').click(function(){
+		$('#fileUpload').click();
+	})
+	
+	
+	
 	$('.phone').keydown(function(event) {
 	    var key = event.charCode || event.keyCode || 0;
 	    $text = $(this);
