@@ -25,12 +25,12 @@
 					<!-- Sidebar -->
 					<tiles:insertAttribute name="sidebar"/>
 			</div>
-			
+  		
 			<script src="/resources/assets/js/spot/browser.min.js"></script>
 			<script src="/resources/assets/js/spot/breakpoints.min.js"></script>
 			<script src="/resources/assets/js/spot/util.js"></script>
 			<script src="/resources/assets/js/spot/main.js"></script>
-			
+		
 	</body>
 	
 </html>

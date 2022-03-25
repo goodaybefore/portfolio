@@ -40,7 +40,23 @@
 			me_email = #{input.me_email}
 		WHERE
 			me_id = #{input.me_id};
-			
-			
+	</update>
+	
+	<update id="deleteProfile">
+		UPDATE member
+		SET
+			me_photo = null,
+			me_ori_photo_name = null
+		WHERE
+			me_id=#{me_id};
+	</update>
+	
+	<update id="updateProfile">
+		UPDATE member
+		SET
+			me_photo = #{photo.me_photo},
+			me_ori_photo_name = #{photo.me_ori_photo_name}
+		WHERE
+			me_id = #{photo.me_id};
 	</update>
 </mapper>

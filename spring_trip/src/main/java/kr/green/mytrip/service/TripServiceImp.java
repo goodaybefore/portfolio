@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.green.mytrip.dao.TripDAO;
 import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.utills.UploadFileUtills;
+import kr.green.mytrip.vo.ActivityPhotoVO;
 import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
@@ -23,6 +24,7 @@ public class TripServiceImp implements TripService{
 	TripDAO tripDao;
 	
 	String uploadPath = "E:\\2021\\portfolio\\upload_file";
+	String imgUploadPath = "E:\\2021\\portfolio\\activity_photo";
 	
 	@Override
 	public boolean insertTrip(MemberVO user, TripVO trip, List<MultipartFile> file, Integer mc_num, Integer sc_num) {
@@ -214,6 +216,28 @@ public class TripServiceImp implements TripService{
 		//삭제 진행
 		tripDao.deleteActivity(dbActivity.getAc_num());
 		return true;
+	}
+	
+	//활동 사진 추가 및 저장
+	@Override
+	public String summernoteImg(MultipartFile img) {
+		if(img != null && img.getOriginalFilename().length() != 0) {
+			return uploadImgFile(img, null);
+		}
+		return "";
+	}
+	private String uploadImgFile(MultipartFile file, Integer ac_num) {
+		try {
+			String path = UploadFileUtills.uploadFile(
+				imgUploadPath, file.getOriginalFilename(), file.getBytes());
+			ActivityPhotoVO photoVo = 
+				new ActivityPhotoVO(file.getOriginalFilename(), path, ac_num);
+			tripDao.insertActivityPhoto(photoVo);
+			return path;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

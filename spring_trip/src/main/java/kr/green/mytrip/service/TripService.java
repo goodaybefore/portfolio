@@ -55,6 +55,12 @@ public interface TripService {
 	
 	//활동 삭제(delete)
 	boolean deleteActivity(ActivityVO dbActivity);
+	
+	//활동 이미지 저장
+	String summernoteImg(MultipartFile img);
+	
+	
+	
 
 	
 

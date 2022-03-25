@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import kr.green.mytrip.pagination.Criteria;
+import kr.green.mytrip.vo.ActivityPhotoVO;
 import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
@@ -60,6 +61,9 @@ public interface TripDAO {
 	
 	//활동 Delete
 	void deleteActivity(@Param("ac_num")int ac_num);
+	
+	//활동 사진 저장
+	void insertActivityPhoto(@Param("photo")ActivityPhotoVO photoVo);
 	
 	
 	

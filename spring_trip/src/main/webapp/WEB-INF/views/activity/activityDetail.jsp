@@ -8,7 +8,98 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!-- kakao map -->
 		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4d47c161d7b6d187f225aba5f7cc5b5&libraries=services"></script>
+		
+		<!-- Swiper -->
+	 	 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+		
 		<style>
+		/*Demo Styles*/
+		html,
+     body {
+       position: relative;
+       height: 100%;
+     }
+
+     body {
+       color: #000;
+       margin: 0;
+       padding: 0;
+     }
+
+     .swiper {
+       width: 100%;
+       height: 100%;
+     }
+
+     .swiper-slide {
+       text-align: center;
+       font-size: 18px;
+       background: #fff;
+
+       /* Center slide text vertically */
+       display: -webkit-box;
+       display: -ms-flexbox;
+       display: -webkit-flex;
+       display: flex;
+       -webkit-box-pack: center;
+       -ms-flex-pack: center;
+       -webkit-justify-content: center;
+       justify-content: center;
+       -webkit-box-align: center;
+       -ms-flex-align: center;
+       -webkit-align-items: center;
+       align-items: center;
+     }
+
+     .swiper-slide img {
+       display: block;
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+     }
+     .swiper {
+       width: 100%;
+       height: 300px;
+       margin-left: auto;
+       margin-right: auto;
+     }
+
+     .swiper-slide {
+       background-size: cover;
+       background-position: center;
+     }
+
+     .mySwiper2 {
+       height: 80%;
+       width: 100%;
+     }
+
+     .mySwiper {
+       height: 20%;
+       box-sizing: border-box;
+       padding: 10px 0;
+     }
+
+     .mySwiper .swiper-slide {
+       width: 25%;
+       height: 100%;
+       opacity: 0.4;
+     }
+
+     .mySwiper .swiper-slide-thumb-active {
+       opacity: 1;
+     }
+
+     .swiper-slide img {
+       display: block;
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+     }
+     
+     
+     /*activityDetail*/
 		.activity-reg-box{
 			padding : 10px;
 			min-width : 600px;
@@ -108,7 +199,7 @@
 												<label class="detail-label">활동내용</label>
 												<div>${activity.ac_contents }</div>
 											</div>
-											
+											<!-- 활동사진 -->
 											<div class="address-container">
 												<label class="detail-label">활동주소</label>
 												<p>${activity.ac_address} ${activity.ac_address_detail}</p>
@@ -130,7 +221,13 @@
 			</div>
 			
 	<script src="/resources/assets/js/spot/tripDetail.js"></script>
+
+  
 	<script>
+		
+		//swiperJS
+		
+		//address
 		$(function(){
 			var mapAddress = '${activity.ac_address}';//표기할 주소
 			
@@ -170,8 +267,24 @@
 			        map.setCenter(coords);
 			    } 
 			});    
-			
+			var swiper = new Swiper(".mySwiper", {
+		        spaceBetween: 10,
+		        slidesPerView: 4,
+		        freeMode: true,
+		        watchSlidesProgress: true,
+		      });
+		      var swiper2 = new Swiper(".mySwiper2", {
+		        spaceBetween: 10,
+		        navigation: {
+		          nextEl: ".swiper-button-next",
+		          prevEl: ".swiper-button-prev",
+		        },
+		        thumbs: {
+		          swiper: swiper,
+		        },
+		      });
 		})
 	</script>
+	
 	</body>
 </html>
