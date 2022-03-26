@@ -23,7 +23,8 @@ public class TripServiceImp implements TripService{
 	@Autowired
 	TripDAO tripDao;
 	
-	String uploadPath = "E:\\2021\\portfolio\\upload_file";
+	String uploadTripPath = "E:\\2021\\portfolio\\upload_file";
+	String uploadActivityPath = "E:\\2021\\portfolio\\upload_file";
 	String imgUploadPath = "E:\\2021\\portfolio\\activity_photo";
 	
 	@Override
@@ -46,11 +47,10 @@ public class TripServiceImp implements TripService{
 		trip.setTr_mca_name(mca_name);
 		trip.setTr_sca_name(sca_name);
 		
-		
 		//trip insert
 		tripDao.insertTrip(trip);
 		//file insert
-		uploadFile(file, trip.getTr_num());
+		uploadFile(file, trip.getTr_num(), uploadTripPath);
 		
 		return true;
 	}
@@ -66,14 +66,14 @@ public class TripServiceImp implements TripService{
 	
 	
 	//file upload 함수
-	private void uploadFile(List<MultipartFile> file, Integer tr_num) {
+	private void uploadFile(List<MultipartFile> file, Integer primary_num, String uploadPath) {
 		if(file == null) return;
 		for(MultipartFile tmpFile : file) {
 			if(tmpFile != null && tmpFile.getOriginalFilename().length()!=0) {
 				String path;
 				try {
 					path = UploadFileUtills.uploadFile(uploadPath, tmpFile.getOriginalFilename(), tmpFile.getBytes());
-					FileVO f = new FileVO(tmpFile.getOriginalFilename(), path, tr_num);
+					FileVO f = new FileVO(tmpFile.getOriginalFilename(), path, primary_num);
 					tripDao.insertFile(f);
 					
 				}catch(Exception e) {
@@ -181,7 +181,7 @@ public class TripServiceImp implements TripService{
 		activity.setAc_mca_name(tripDao.selectMiddleCategoryName(mc_num));
 		activity.setAc_sca_name(tripDao.selectSmallCategoryName(sc_num));
 		System.out.println("activity : "+activity);
-		tripDao.insertActivity(activity);
+		//tripDao.insertActivity(activity);
 		return true;
 	}
 	

@@ -1,8 +1,8 @@
 package kr.green.mytrip.controller;
 
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,10 +41,11 @@ public class ActivityController {
 	}
 	@RequestMapping(value = "/activityReg", method = RequestMethod.POST)
 	public ModelAndView activityRegPost(ModelAndView mv, HttpServletRequest request, ActivityVO activity, String from,
-			Integer mc_num, Integer sc_num, Integer reg_sm_num) {
+			Integer mc_num, Integer sc_num, Integer reg_sm_num, List<MultipartFile> ac_files) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
 		System.out.println("reg_sm_num : "+reg_sm_num);
+		System.out.println("ac_files : "+ac_files);
 		
 		//여행기간(String)을 Date로 변환
 		String tr_dates[] = from.split(" ~ ");
@@ -171,4 +170,16 @@ public class ActivityController {
 			return mv;
 		}
 		
+		
+//		//활동에 이미지 추가 및 저장
+//		@ResponseBody
+//		@RequestMapping(value = "/uploadSummernoteImageFile")
+//		public Map<String, Object>  uploadSummernoteImageFile(@RequestParam("file") MultipartFile img) {
+//			//activity_photo테이블에 ap_ac_num을 null허용으로 설정해야함
+//			String imgUrl = tripService.summernoteImg(img);
+//			System.out.println("imgUrl : "+imgUrl);
+//			Map<String, Object> map = new HashMap<String, Object>();
+//			map.put("imgUrl", imgUrl);
+//			return map;
+//		}
 }

@@ -105,6 +105,14 @@
 				box-shadow : none;
 				height:auto;
 			}
+			.thumb-image{
+				width : 200px;
+				height : 200px;
+			}
+			.img-preview{
+				text-decoration : none !important;
+				text-decoration-line : none !important;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -187,7 +195,12 @@
 											<div class="map-container">
 												<div id="map"></div>
 											</div>
-											
+											<div class="body container">
+												<a class="img-preview" href="javascript:;"><button>사진 업로드</button></a>
+												<div id="image-holder">
+													<input type="file" accept="image/*" style="display: none" name="files">
+												</div>
+											</div>
 										</div>
 									</div>
 									
@@ -211,6 +224,59 @@
 			
 			
 			<script>
+			//이미지
+			var imgCount = 0;
+			$(document).on('change','#image-holder input[type=file]:last', function () {
+			    //Get count of selected files
+			    var countFiles = $(this)[0].files.length;
+			    console.log('countFiles : '+countFiles)
+			    var imgPath = $(this)[0].value;
+			    //확장자 체크
+			    var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+			    var image_holder = $("#image-holder");
+			    
+			
+			    if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+			        if (typeof (FileReader) != "undefined") {
+			
+			            //loop for each file selected for uploaded.
+			            for (var i = 0; i < countFiles; i++) {
+			
+			                var reader = new FileReader();
+			                reader.onload = function (e) {
+			                    $("<img />", {
+			                        "src": e.target.result,
+			                            "class": "thumb-image"
+			                    }).appendTo(image_holder);
+			                    var str = '<input type="file" accept="image/*" style="display: none" name="ac_files">';
+			                    $(str).appendTo(image_holder);
+			                }
+			                image_holder.show();
+			                reader.readAsDataURL($(this)[0].files[i]);
+			                
+			            }
+			
+			        } else {
+			            alert("This browser does not support FileReader.");
+			        }
+			    } else {
+			        alert("Pls select only images");
+			    }
+			    
+			});
+			$('.img-preview').click(function(e){
+				$('#image-holder input[type=file]:last').click();
+				e.preventDefault();
+			})
+			
+			$(document).on('click','.thumb-image', function(){
+				if(confirm('이미지를 삭제하겠습니까?')){
+					$(this).prev().remove();
+					$(this).remove();
+				}
+			});
+			
+			
 			var spot_user = '${spot_user}';
 			$('form').submit(function(){
 				
@@ -221,54 +287,6 @@
 				$('[name=reg_sm_num]').val(reg_sm_num);
 				
 			});
-			
-			//summernote
-			$('#summernote').summernote({
-        placeholder: '활동 내용을 입력하세요!',
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-        ],
-        callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-					onImageUpload : function(files) {
-						uploadSummernoteImageFile(files[0],this);
-					},
-					onPaste: function (e) {
-						var clipboardData = e.originalEvent.clipboardData;
-						if (clipboardData && clipboardData.items && clipboardData.items.length) {
-							var item = clipboardData.items[0];
-							if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
-								e.preventDefault();
-							}
-						}
-					}
-		  }
-      });
-			
-			function uploadSummernoteImageFile(file, editor) {
-				data = new FormData();
-				data.append("file", file);
-				$.ajax({
-					data : data,
-					type : "POST",
-					url : "<%=request.getContextPath()%>/uploadSummernoteImageFile",
-					contentType : false,
-					processData : false,
-					success : function(data) {
-	           	
-						$(editor).summernote('insertImage', '<%=request.getContextPath()%>/img'+data.imgUrl);
-					}
-				});
-			}
-			
-			
 			
 			singleDatePicker();
 			showDateRangePickerr();
@@ -354,7 +372,6 @@
 					    dataType:"json",
 					    success : function(res){
 					    	for(middle of res.list){
-								console.log('middle : '+middle);
 					    		str += '<option value="'+middle.mc_num+'">'+middle.mc_name+'</option>';
 					    	}
 					    	$('.middle-category').html(str);
