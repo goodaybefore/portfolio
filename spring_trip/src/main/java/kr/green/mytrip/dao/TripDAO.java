@@ -63,7 +63,8 @@ public interface TripDAO {
 	void deleteActivity(@Param("ac_num")int ac_num);
 	
 	//활동 사진 저장
-	void insertActivityPhoto(@Param("photo")ActivityPhotoVO photoVo);
+	//void insertActivityPhoto(@Param("photo")ActivityPhotoVO photoVo);
+	void insertActivityImgFile(@Param("ap")ActivityPhotoVO ap);
 	
 	
 	

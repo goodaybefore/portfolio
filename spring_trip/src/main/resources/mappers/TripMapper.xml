@@ -100,7 +100,9 @@
 		SELECT * FROM activity WHERE ac_tr_num = #{tr_num} ORDER BY ac_num DESC;
 	</select>
 	
-	<insert id="insertActivity">
+	<insert id="insertActivity"
+		useGeneratedKeys="true" keyProperty="activity.ac_num"
+		parameterType="kr.green.mytrip.vo.ActivityVO">
 		INSERT into activity(
 			ac_tr_num, ac_me_id, ac_title, ac_mca_name, ac_sca_name,
 			ac_address, ac_address_detail, ac_start_date, ac_end_date,
@@ -146,4 +148,13 @@
 			del_date = now()
 		WHERE ac_num = #{ac_num};
 	</update>
+	
+	<insert id="insertActivityImgFile">
+		INSERT INTO activity_photo(
+			ap_ac_num, ap_name, ap_ori_name
+		)
+		VALUES(
+			#{ap.ap_ac_num},#{ap.ap_name},#{ap.ap_ori_name}
+		);
+	</insert>
 </mapper>

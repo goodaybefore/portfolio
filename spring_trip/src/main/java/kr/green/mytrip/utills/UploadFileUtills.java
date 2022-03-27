@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.springframework.util.FileCopyUtils;
 
+import kr.green.mytrip.vo.ActivityVO;
+
 public class UploadFileUtills {
 	public static String uploadFile(String uploadPath, String originalName, byte[] 	
 			fileData)throws Exception{
@@ -18,6 +20,30 @@ public class UploadFileUtills {
 		String uploadFileName = makeIcon(uploadPath, savedPath, savedName);
 		return uploadFileName;
 	}
+	
+	//활동사진 저장
+	public static String uploadActivityImg(String uploadPath, String originalName, byte[] 	
+			fileData, ActivityVO activity)throws Exception{
+		UUID uid = UUID.randomUUID();
+		String savedName = uid.toString() +"_" + originalName;
+		String savedPath = calcActivityImgPath(uploadPath, activity);
+		File target = new File(uploadPath + savedPath, savedName);
+		FileCopyUtils.copy(fileData, target);
+		String uploadFileName = makeIcon(uploadPath, savedPath, savedName);
+		return uploadFileName;
+	}
+	
+	//활동 사진이 저장될 위치
+	private static String calcActivityImgPath(String uploadPath, ActivityVO activity) {
+		String idPath = File.separator+activity.getAc_me_id();
+		String trPath = idPath + File.separator+ activity.getAc_tr_num();
+		String acPath = trPath + File.separator+ activity.getAc_num();
+		
+		makeDir(uploadPath, idPath, trPath, acPath);
+		return acPath;
+ 
+	}
+	
 	
 	//프로필사진
 	public static String uploadProfile(String uploadPath, String originalName,
@@ -43,6 +69,9 @@ public class UploadFileUtills {
 		return uploadFileName;
 		}
 	
+	
+	
+	
 	//프로필사진
 	public static void makeIdDir(String uploadPath, String paths) {
 		if(new File(uploadPath + paths).exists())
@@ -53,6 +82,8 @@ public class UploadFileUtills {
 			//해당 폴더를 실제로 만듦
 			dirPath.mkdir();
 	}
+	
+	
 	public static String calcPath(String uploadPath, String me_id) {
 		String idPath = File.separator+me_id;
 		makeIdDir(uploadPath, idPath);

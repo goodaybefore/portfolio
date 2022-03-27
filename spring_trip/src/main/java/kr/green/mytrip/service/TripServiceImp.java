@@ -24,8 +24,7 @@ public class TripServiceImp implements TripService{
 	TripDAO tripDao;
 	
 	String uploadTripPath = "E:\\2021\\portfolio\\upload_file";
-	String uploadActivityPath = "E:\\2021\\portfolio\\upload_file";
-	String imgUploadPath = "E:\\2021\\portfolio\\activity_photo";
+	String uploadActivityPath = "E:\\2021\\portfolio\\activity_photo";
 	
 	@Override
 	public boolean insertTrip(MemberVO user, TripVO trip, List<MultipartFile> file, Integer mc_num, Integer sc_num) {
@@ -50,7 +49,7 @@ public class TripServiceImp implements TripService{
 		//trip insert
 		tripDao.insertTrip(trip);
 		//file insert
-		uploadFile(file, trip.getTr_num(), uploadTripPath);
+		uploadTripFile(file, trip.getTr_num(), uploadTripPath);
 		
 		return true;
 	}
@@ -66,7 +65,7 @@ public class TripServiceImp implements TripService{
 	
 	
 	//file upload 함수
-	private void uploadFile(List<MultipartFile> file, Integer primary_num, String uploadPath) {
+	private void uploadTripFile(List<MultipartFile> file, Integer primary_num, String uploadPath) {
 		if(file == null) return;
 		for(MultipartFile tmpFile : file) {
 			if(tmpFile != null && tmpFile.getOriginalFilename().length()!=0) {
@@ -83,6 +82,26 @@ public class TripServiceImp implements TripService{
 		}
 		
 	}
+	//activity img upload
+	//file upload 함수
+		private void uploadActivityFile(List<MultipartFile> file, ActivityVO activity, String uploadPath) {
+			if(file == null) return;
+			for(MultipartFile tmpFile : file) {
+				System.out.println("file : "+file);
+				if(tmpFile != null && tmpFile.getOriginalFilename().length()!=0) {
+					String path;
+					try {
+						path = UploadFileUtills.uploadActivityImg(uploadPath, tmpFile.getOriginalFilename(), tmpFile.getBytes(), activity);
+						ActivityPhotoVO ap = new ActivityPhotoVO(tmpFile.getOriginalFilename(), path, activity.getAc_num());
+						tripDao.insertActivityImgFile(ap);
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}
 	
 	//여행지리스트(tripList)가져오기
 	@Override
@@ -174,14 +193,18 @@ public class TripServiceImp implements TripService{
 	
 	//활동 등록
 	@Override
-	public boolean insertActivity(ActivityVO activity, Integer mc_num, Integer sc_num) {
+	public boolean insertActivity(ActivityVO activity, Integer mc_num, Integer sc_num, List<MultipartFile> ac_files) {
 		if(activity==null || activity.getAc_title()==null || activity.getAc_op_name() == null)
 			return false;
 		//mca_name과 sca_name을 mc_num, sc_num을 통해 set하기
 		activity.setAc_mca_name(tripDao.selectMiddleCategoryName(mc_num));
 		activity.setAc_sca_name(tripDao.selectSmallCategoryName(sc_num));
 		System.out.println("activity : "+activity);
-		//tripDao.insertActivity(activity);
+		
+		
+		tripDao.insertActivity(activity);
+		System.out.println("ac_files.toString() : "+ac_files.toString());
+		uploadActivityFile(ac_files, activity, uploadActivityPath);
 		return true;
 	}
 	
@@ -219,6 +242,7 @@ public class TripServiceImp implements TripService{
 	}
 	
 	//활동 사진 추가 및 저장
+	//서머노트 이용하는건데 지금 안씀.. 안될듯 ㅇㅅㅇ
 	@Override
 	public String summernoteImg(MultipartFile img) {
 		if(img != null && img.getOriginalFilename().length() != 0) {
@@ -227,12 +251,13 @@ public class TripServiceImp implements TripService{
 		return "";
 	}
 	private String uploadImgFile(MultipartFile file, Integer ac_num) {
+		ActivityVO activity = tripDao.selectActivity(ac_num);
 		try {
-			String path = UploadFileUtills.uploadFile(
-				imgUploadPath, file.getOriginalFilename(), file.getBytes());
+			String path = UploadFileUtills.uploadActivityImg(
+				uploadActivityPath, file.getOriginalFilename(), file.getBytes(), activity);
 			ActivityPhotoVO photoVo = 
 				new ActivityPhotoVO(file.getOriginalFilename(), path, ac_num);
-			tripDao.insertActivityPhoto(photoVo);
+			//tripDao.insertActivityPhoto(photoVo);
 			return path;
 		}catch (Exception e) {
 			e.printStackTrace();

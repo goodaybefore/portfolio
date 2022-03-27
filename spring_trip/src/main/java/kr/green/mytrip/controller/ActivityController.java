@@ -60,7 +60,7 @@ public class ActivityController {
 			System.out.println("activity Reg에서의 period 변환 문제");
 			e.printStackTrace();
 		}
-		if(tripService.insertActivity(activity, mc_num, sc_num)) {
+		if(tripService.insertActivity(activity, mc_num, sc_num, ac_files)) {
 			System.out.println("insert 성공");
 			mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+reg_sm_num+"/"+activity.getAc_tr_num());
 		}else {
