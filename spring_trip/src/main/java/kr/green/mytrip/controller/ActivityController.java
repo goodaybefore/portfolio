@@ -76,14 +76,14 @@ public class ActivityController {
 	public ModelAndView activityDetailGet(ModelAndView mv, HttpServletRequest request, Integer tr_num,
 			@PathVariable(required=false, value="ac_num")Integer ac_num,
 			@PathVariable(required=false, value="reg_tr_num")Integer reg_tr_num,
-			@PathVariable(required=false, value="sm_num")Integer sm_num) {
+			@PathVariable(required=false, value="reg_sm_num")Integer reg_sm_num) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
 		
 		ActivityVO active = tripService.selectActivity(ac_num);
 		if(active == null) {
 			System.out.println("activity load fail");
-			mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+sm_num+"/"+reg_tr_num);
+			mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+reg_sm_num+"/"+reg_tr_num);
 		}else {
 			mv.addObject("activity", active);
 			mv.setViewName("/activity/activityDetail");

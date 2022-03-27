@@ -97,7 +97,7 @@
 	</select>
 	
 	<select id="selectActivityList" resultType="kr.green.mytrip.vo.ActivityVO">
-		SELECT * FROM activity WHERE ac_tr_num = #{tr_num} ORDER BY ac_num DESC;
+		SELECT * FROM activity WHERE ac_tr_num = #{tr_num} AND ac_del !='Y' ORDER BY ac_num DESC;
 	</select>
 	
 	<insert id="insertActivity"
@@ -106,11 +106,11 @@
 		INSERT into activity(
 			ac_tr_num, ac_me_id, ac_title, ac_mca_name, ac_sca_name,
 			ac_address, ac_address_detail, ac_start_date, ac_end_date,
-			ac_contents, ac_with, ac_op_name 
+			ac_contents, ac_with, ac_op_name, ac_del
 		)VALUES(
 			#{activity.ac_tr_num}, #{activity.ac_me_id}, #{activity.ac_title}, #{activity.ac_mca_name}, #{activity.ac_sca_name},
 			#{activity.ac_address}, #{activity.ac_address_detail}, #{activity.ac_start_date}, #{activity.ac_end_date},
-			#{activity.ac_contents}, #{activity.ac_with}, #{activity.ac_op_name}
+			#{activity.ac_contents}, #{activity.ac_with}, #{activity.ac_op_name}, 'N'
 		);
 	</insert>
 	
