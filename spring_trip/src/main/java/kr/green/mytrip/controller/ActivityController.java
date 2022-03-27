@@ -44,9 +44,10 @@ public class ActivityController {
 			Integer mc_num, Integer sc_num, Integer reg_sm_num, List<MultipartFile> ac_files) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
-		System.out.println("reg_sm_num : "+reg_sm_num);
-		System.out.println("ac_files : "+ac_files);
-		
+		System.out.println("activity files");
+		for(MultipartFile tmp : ac_files) {
+			System.out.println(tmp.getOriginalFilename());
+		}
 		//여행기간(String)을 Date로 변환
 		String tr_dates[] = from.split(" ~ ");
 		try {

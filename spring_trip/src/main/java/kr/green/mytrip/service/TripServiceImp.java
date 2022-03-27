@@ -46,6 +46,7 @@ public class TripServiceImp implements TripService{
 		trip.setTr_mca_name(mca_name);
 		trip.setTr_sca_name(sca_name);
 		
+		
 		//trip insert
 		tripDao.insertTrip(trip);
 		//file insert
@@ -84,15 +85,14 @@ public class TripServiceImp implements TripService{
 	}
 	//activity img upload
 	//file upload 함수
-		private void uploadActivityFile(List<MultipartFile> file, ActivityVO activity, String uploadPath) {
+		private void uploadActivityImg(List<MultipartFile> file, ActivityVO activity, String uploadPath) {
 			if(file == null) return;
-			for(MultipartFile tmpFile : file) {
-				System.out.println("file : "+file);
-				if(tmpFile != null && tmpFile.getOriginalFilename().length()!=0) {
+			for(int i=0;i<file.size()-1;i++) {
+				if(file.get(i) != null && file.get(i).getOriginalFilename().length()!=0) {
 					String path;
 					try {
-						path = UploadFileUtills.uploadActivityImg(uploadPath, tmpFile.getOriginalFilename(), tmpFile.getBytes(), activity);
-						ActivityPhotoVO ap = new ActivityPhotoVO(tmpFile.getOriginalFilename(), path, activity.getAc_num());
+						path = UploadFileUtills.uploadActivityImg(uploadPath, file.get(i).getOriginalFilename(), file.get(i).getBytes(), activity);
+						ActivityPhotoVO ap = new ActivityPhotoVO(file.get(i).getOriginalFilename(), path, activity.getAc_num());
 						tripDao.insertActivityImgFile(ap);
 						
 					}catch(Exception e) {
@@ -168,7 +168,6 @@ public class TripServiceImp implements TripService{
 		if(trip.getTr_mca_name()== null) return false;
 		
 		System.out.println("trip : "+trip);
-		System.out.println("file : "+file);
 		System.out.println("fileNums :" + fileNums);
 		tripDao.updateTrip(trip);
 		return true;
@@ -199,12 +198,12 @@ public class TripServiceImp implements TripService{
 		//mca_name과 sca_name을 mc_num, sc_num을 통해 set하기
 		activity.setAc_mca_name(tripDao.selectMiddleCategoryName(mc_num));
 		activity.setAc_sca_name(tripDao.selectSmallCategoryName(sc_num));
-		System.out.println("activity : "+activity);
 		
-		
+		//활동 저장
 		tripDao.insertActivity(activity);
-		System.out.println("ac_files.toString() : "+ac_files.toString());
-		uploadActivityFile(ac_files, activity, uploadActivityPath);
+		//활동 첨부사진 저장
+		uploadActivityImg(ac_files, activity, uploadActivityPath);
+		
 		return true;
 	}
 	

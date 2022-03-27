@@ -198,7 +198,7 @@
 											<div class="body container">
 												<a class="img-preview" href="javascript:;"><button>사진 업로드</button></a>
 												<div id="image-holder">
-													<input type="file" accept="image/*" style="display: none" name="files">
+													<input type="file" accept="image/*" style="display: none" name="ac_files">
 												</div>
 											</div>
 										</div>
@@ -229,7 +229,6 @@
 			$(document).on('change','#image-holder input[type=file]:last', function () {
 			    //Get count of selected files
 			    var countFiles = $(this)[0].files.length;
-			    console.log('countFiles : '+countFiles)
 			    var imgPath = $(this)[0].value;
 			    //확장자 체크
 			    var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
@@ -241,7 +240,6 @@
 			
 			            //loop for each file selected for uploaded.
 			            for (var i = 0; i < countFiles; i++) {
-			
 			                var reader = new FileReader();
 			                reader.onload = function (e) {
 			                    $("<img />", {
@@ -253,7 +251,8 @@
 			                }
 			                image_holder.show();
 			                reader.readAsDataURL($(this)[0].files[i]);
-			                
+			                console.log('파일이름 : '+$(this)[0].files[i].name)
+			                imgCount++;
 			            }
 			
 			        } else {
@@ -271,6 +270,8 @@
 			
 			$(document).on('click','.thumb-image', function(){
 				if(confirm('이미지를 삭제하겠습니까?')){
+					
+					imgCount--;
 					$(this).prev().remove();
 					$(this).remove();
 				}
