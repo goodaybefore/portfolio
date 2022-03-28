@@ -159,6 +159,10 @@
 		
 	</update>
 	
+	<select id="selectActivityPhotoList" resultType="kr.green.mytrip.vo.ActivityPhotoVO">
+		SELECT * FROM activity_photo WHERE ap_ac_num = #{ac_num};
+	</select>
+	
 	<update id="deleteActivity">
 		UPDATE activity
 		SET

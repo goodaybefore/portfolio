@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.green.mytrip.pagination.Criteria;
-import kr.green.mytrip.pagination.PageMaker;
 import kr.green.mytrip.service.TripService;
+import kr.green.mytrip.vo.ActivityPhotoVO;
 import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.TripVO;
@@ -112,8 +111,15 @@ public class ActivityController {
 		
 		if(user == null || !user.getMe_id().equals(spot_user)|| !activity.getAc_me_id().equals(user.getMe_id())) mv.setViewName("redirect:/");
 		else {
+			//해당 activity의 img file 불러오기
+			List<ActivityPhotoVO> imgList = tripService.getActivityPhotoList(ac_num);
+			for(int i=0;i<imgList.size();i++) {
+				System.out.println(imgList.get(i));
+			}
 			sc_num = tripService.getScaNum(activity.getAc_sca_name());
 			mc_num = tripService.getMcaNum(activity.getAc_mca_name());
+			mv.addObject("imgList", imgList);
+			mv.addObject("imgListSize", imgList.size());
 			mv.addObject("mc_num", mc_num);
 			mv.addObject("sc_num", sc_num);
 			mv.addObject("ac_num", ac_num);

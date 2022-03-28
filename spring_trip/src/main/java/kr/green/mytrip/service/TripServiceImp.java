@@ -269,5 +269,9 @@ public class TripServiceImp implements TripService{
 	public int getTotalActivityCount(Criteria cri, Integer reg_tr_num) {
 		return tripDao.selectTotalActivityCount(reg_tr_num);
 	}
+	@Override
+	public List<ActivityPhotoVO> getActivityPhotoList(Integer ac_num) {
+		return tripDao.selectActivityPhotoList(ac_num);
+	}
 
 }

@@ -61,13 +61,14 @@ public interface TripDAO {
 	
 	//활동 Modify(update)
 	void updateActivity(@Param("activity")ActivityVO activity);
-	
+	List<ActivityPhotoVO> selectActivityPhotoList(@Param("ac_num")Integer ac_num);//활동사진들
 	//활동 Delete
 	void deleteActivity(@Param("ac_num")int ac_num);
 	
 	//활동 사진 저장
 	//void insertActivityPhoto(@Param("photo")ActivityPhotoVO photoVo);
 	void insertActivityImgFile(@Param("ap")ActivityPhotoVO ap);
+	
 	
 	
 	

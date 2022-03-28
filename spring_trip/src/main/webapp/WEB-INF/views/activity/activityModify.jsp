@@ -106,6 +106,10 @@
 				box-shadow : none;
 				height:auto;
 			}
+			.thumb-image{
+				width : 200px;
+				height : 200px;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -193,6 +197,15 @@
 											<div class="map-container">
 												<div id="map"></div>
 											</div>
+											<div class="body container">
+												<a class="img-preview" href="javascript:;"><button>사진 업로드</button></a>
+												<div id="image-holder">
+													<c:forEach items="${imgList }" var="imgList">
+														<img src="/img/portfolio/activity_photo${imgList.ap_name }" class="thumb-image">
+														<input type="file" accept="image/*" style="display:none" name="ac_files">;
+													</c:forEach>
+												</div>
+											</div>
 										</div>
 									</div>
 									
@@ -216,6 +229,80 @@
 			
 			
 			<script>
+			//img
+			var imgCount = 0;
+			var imgListSize = '${imgListSize}';
+			console.log('imgListSize : '+imgListSize);
+			//Get count of selected files
+			
+	    var imgPath = $(this)[0].value;
+	    var image_holder = $("#image-holder");
+			
+			
+			//modify에 이미 insert 되어있는 이미지 넣기
+      for (var i = 0; i < imgListSize; i++) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              $("<img />", {
+                  "src": e.target.result,
+                      "class": "thumb-image"
+              }).appendTo(image_holder);
+              var str = '<input type="file" accept="image/*" style="display: none" name="ac_files">';
+              $(str).appendTo(image_holder);
+          }
+          image_holder.show();
+          reader.readAsDataURL($(this)[0].files[i]);
+          console.log('파일이름 : '+$(this)[0].files[i].name)
+          imgCount++;
+      }
+			 
+			$(document).on('change','#image-holder input[type=file]:last', function () {
+			    
+			    
+			
+			    if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+			        if (typeof (FileReader) != "undefined") {
+			
+			            //loop for each file selected for uploaded.
+			            for (var i = 0; i < countFiles; i++) {
+			                var reader = new FileReader();
+			                reader.onload = function (e) {
+			                    $("<img />", {
+			                        "src": e.target.result,
+			                            "class": "thumb-image"
+			                    }).appendTo(image_holder);
+			                    var str = '<input type="file" accept="image/*" style="display: none" name="ac_files">';
+			                    $(str).appendTo(image_holder);
+			                }
+			                image_holder.show();
+			                reader.readAsDataURL($(this)[0].files[i]);
+			                console.log('파일이름 : '+$(this)[0].files[i].name)
+			                imgCount++;
+			            }
+			
+			        } else {
+			            alert("This browser does not support FileReader.");
+			        }
+			    } else {
+			        alert("Pls select only images");
+			    }
+			    
+			});
+			$('.img-preview').click(function(e){
+				$('#image-holder input[type=file]:last').click();
+				e.preventDefault();
+			})
+			
+			$(document).on('click','.thumb-image', function(){
+				if(confirm('이미지를 삭제하겠습니까?')){
+					
+					imgCount--;
+					$(this).prev().remove();
+					$(this).remove();
+				}
+			});
+			
+			
 			var spot_user = '${spot_user}';
 			$('form').submit(function(){
 				

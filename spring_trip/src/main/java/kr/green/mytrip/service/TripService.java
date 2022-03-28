@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.mytrip.pagination.Criteria;
+import kr.green.mytrip.vo.ActivityPhotoVO;
 import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
@@ -54,12 +55,15 @@ public interface TripService {
 	
 	//활동 수정(modify)
 	boolean modifyActivity(ActivityVO activity, Integer mc_num, Integer sc_num, MemberVO user);
+	//활동에 첨부한 이미지 가져오기
+	List<ActivityPhotoVO> getActivityPhotoList(Integer ac_num);
 	
 	//활동 삭제(delete)
 	boolean deleteActivity(ActivityVO dbActivity);
 	
 	//활동 이미지 저장
 	String summernoteImg(MultipartFile img);
+	
 	
 	
 	
