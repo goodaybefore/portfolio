@@ -165,6 +165,7 @@
 										<h1>Activity Detail</h1>
 										<p>활동정보 열람</p>
 									</header>
+										<input type="hidden" name="reg_sm_num" value="${reg_sm_num}">
 									<div class="activity-detail">
 											<c:if test="${activity.ac_me_id == user.me_id}">
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityMod?ac_num=${activity.ac_num}" style="border-bottom : none;"><button>modify</button></a>

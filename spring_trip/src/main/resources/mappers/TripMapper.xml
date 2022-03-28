@@ -64,6 +64,12 @@
 		AND (tr_op_name= "전체공개" OR tr_op_name="트립메이트공개" OR tr_op_name= "회원공개" OR tr_op_name= "비공개");
 	</select>
 	
+	<select id="selectTotalActivityCount" resultType="int">
+		SELECT COUNT(*) FROM activity
+		WHERE ac_tr_num = #{tr_num} AND ac_del !='Y'
+	</select>
+	
+	
 	<select id="selectFileList" resultType="kr.green.mytrip.vo.FileVO">
 		SELECT * FROM file WHERE fi_tr_num=#{tr_num} AND fi_del='N';
 	</select>
@@ -79,6 +85,15 @@
 			del_date = now()
 		WHERE tr_num = #{tr_num};
 	</update>
+	
+	<update id="deleteTripActivity">
+		UPDATE activity
+		SET
+			ac_del='Y'
+			del_date = now()
+		WHERE ac_tr_num = #{tr_num};
+	</update>
+	
 	
 	<update id="updateTrip">
 		UPDATE trip
@@ -97,7 +112,10 @@
 	</select>
 	
 	<select id="selectActivityList" resultType="kr.green.mytrip.vo.ActivityVO">
-		SELECT * FROM activity WHERE ac_tr_num = #{tr_num} AND ac_del !='Y' ORDER BY ac_num DESC;
+		SELECT * FROM activity
+		WHERE ac_tr_num = #{tr_num} AND ac_del !='Y'
+		ORDER BY ac_num DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum};
 	</select>
 	
 	<insert id="insertActivity"

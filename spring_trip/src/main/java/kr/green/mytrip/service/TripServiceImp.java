@@ -139,7 +139,9 @@ public class TripServiceImp implements TripService{
 	@Override
 	public boolean deleteTrip(MemberVO user, TripVO dbTrip) {
 		if(user == null  || dbTrip == null || dbTrip.getTr_num() <=0) return false;
-		//tripDao.deleteTrip(tr_num);
+		tripDao.deleteTrip(dbTrip.getTr_num());
+		//trip이 삭제될 때 ac_tr_num = tr_num인 activity도 모두 ac_del='Y'로 만들어주기
+		tripDao.deleteTripActivity(dbTrip.getTr_num());
 		return true;
 	}
 	@Override
@@ -185,9 +187,9 @@ public class TripServiceImp implements TripService{
 	
 	//활동 리스트 불러오기
 	@Override
-	public List<ActivityVO> getActList(Integer tr_num) {
+	public List<ActivityVO> getActList(Integer tr_num, Criteria cri) {
 		if(tr_num <=0 || tr_num == null) return null;
-		return tripDao.selectActivityList(tr_num);
+		return tripDao.selectActivityList(tr_num, cri);
 	}
 	
 	//활동 등록
@@ -262,6 +264,10 @@ public class TripServiceImp implements TripService{
 			e.printStackTrace();
 			return null;
 		}
+	}
+	@Override
+	public int getTotalActivityCount(Criteria cri, Integer reg_tr_num) {
+		return tripDao.selectTotalActivityCount(reg_tr_num);
 	}
 
 }

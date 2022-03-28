@@ -174,17 +174,24 @@ public class TripController {
 	}
 	
 	//여행지(trip) 상세(detail)
-	@GetMapping("/{spot_user}/tripDetail/{sm_num}/{tr_num}")
+	@GetMapping("/{spot_user}/tripDetail/{reg_sm_num}/{tr_num}")
 	public ModelAndView tripDetail(ModelAndView mv, HttpServletRequest request,
-			@PathVariable(required=false, value="sm_num")Integer sm_num,
+			@PathVariable(required=false, value="reg_sm_num")Integer reg_sm_num,
 			@PathVariable(required=false, value="spot_user")String spot_user,
-			@PathVariable(required=false, value="tr_num")Integer tr_num) {
+			@PathVariable(required=false, value="tr_num")Integer tr_num,
+			Criteria cri) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
 		List<FileVO> fileList = tripService.getFileList(tr_num);
 		
+		
+		//pagination
+		cri.setPerPageNum(5);
+		int totalCount = tripService.getTotalActivityCount(cri, trip.getTr_num());
 		//활동 (activity) 불러오기 및 출력
-		List<ActivityVO> actList = tripService.getActList(tr_num);
+		List<ActivityVO> actList = tripService.getActList(tr_num, cri);
+		PageMaker pm = new PageMaker(totalCount, 2, cri);
+		mv.addObject("pm", pm);
 		
 		mv.addObject("actList", actList);
 		mv.addObject("trip", trip);
@@ -271,9 +278,6 @@ public class TripController {
 		if(tripService.deleteTrip(user, dbTrip)){
 			System.out.println("삭제성공");
 			mv.setViewName("redirect:/"+user.getMe_id()+"/tripList/"+dbTrip.getTr_sm_num());
-		}else if(dbTrip == null) {
-			 System.out.println("삭제실패");
-			 mv.setViewName("redirect:/spot/"+user.getMe_id()+"/home");
 		}else {
 			mv.setViewName("redirect:/"+user.getMe_id()+"/tripDetail/"+dbTrip.getTr_sm_num()+"/"+dbTrip.getTr_num());
 		}

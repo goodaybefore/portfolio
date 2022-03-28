@@ -36,12 +36,15 @@ public interface TripDAO {
 	//여행지 detail
 	TripVO selectTripDetail(@Param("tr_num") Integer tr_num);
 	List<FileVO> selectFileList(@Param("tr_num")Integer tr_num);
-	List<ActivityVO> selectActivityList(Integer tr_num);//활동 리스트 출력
+	List<ActivityVO> selectActivityList(@Param("tr_num")Integer tr_num, @Param("cri")Criteria cri);//활동 리스트 출력
+	int selectTotalActivityCount(@Param("tr_num")Integer reg_tr_num);//pagination
 	
 	//여행지 delete
 	void deleteTrip(@Param("tr_num")Integer tr_num);
 	TripVO selectTrip(@Param("tr_num")Integer tr_num);
-	
+	//trip Delete시 활동도 함께 delete
+	void deleteTripActivity(@Param("tr_num")Integer tr_num);
+		
 	//여행지 modify
 	void updateTrip(@Param("trip")TripVO trip);
 	Integer selectSmallcategoryNum(String tr_sca_name);
@@ -65,6 +68,9 @@ public interface TripDAO {
 	//활동 사진 저장
 	//void insertActivityPhoto(@Param("photo")ActivityPhotoVO photoVo);
 	void insertActivityImgFile(@Param("ap")ActivityPhotoVO ap);
+	
+	
+	
 	
 	
 	

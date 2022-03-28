@@ -1,7 +1,6 @@
 package kr.green.mytrip.controller;
 
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.green.mytrip.pagination.Criteria;
+import kr.green.mytrip.pagination.PageMaker;
 import kr.green.mytrip.service.TripService;
 import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.MemberVO;
@@ -80,13 +81,17 @@ public class ActivityController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
 		
+		
 		ActivityVO active = tripService.selectActivity(ac_num);
 		if(active == null) {
 			System.out.println("activity load fail");
 			mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+reg_sm_num+"/"+reg_tr_num);
 		}else {
+			
 			mv.addObject("activity", active);
+			mv.addObject("reg_sm_num", reg_sm_num);
 			mv.setViewName("/activity/activityDetail");
+			
 		}
 		
 		return mv;

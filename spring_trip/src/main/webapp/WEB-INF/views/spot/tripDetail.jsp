@@ -74,8 +74,7 @@
 									<header>
 										<h1>Detail</h1>
 										<p>여행 정보 상세 + 활동정보 관리</p>
-										${trip }<br>
-										${user }
+										pm : ${pm }
 									</header>
 									<div class="trip-detail">
 											<c:if test="${trip.tr_me_id == user.me_id}">
@@ -125,7 +124,7 @@
 											      <th scope="col" class="col-12 " style="min-width:200px;">activity title</th>
 											      <th scope="col" class="text-center" style="width:150px;">date</th>
 											      <th scope="col" class="text-center" style="width:100px;">sort</th>
-											      <th scope="col" class="text-center" style="width:120px;">공개범위</th>
+											      <th scope="col" class="text-center" style="width:120px;">공개범2위</th>
 											    </tr>
 											  </thead>
 											  <tbody>
@@ -142,6 +141,20 @@
 											  	</c:forEach>
 											  </tbody>
 											</table>
+											<div style="display : flex; justify-content : center;">
+											<!-- pagination -->
+											<ul class="pagination" style="">
+												<li>
+													<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDetail/${trip.tr_sm_num }/${trip.tr_num}?page=${pm.startPage-1}" class="<c:if test="${!pm.prev}">disabled</c:if>">Prev</a>
+												</li>
+												<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+													<li>
+														<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDetail/${trip.tr_sm_num }/${trip.tr_num}?page=${i}" class="page <c:if test="${pm.criteria.page==i}">active</c:if>">${i}</a>
+													</li>
+												</c:forEach>
+													<li><a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDetail/${trip.tr_sm_num }/${trip.tr_num}?page=${pm.endPage+1}" class="<c:if test="${!pm.next}">disabled</c:if>">Next</a></li>
+											</ul>
+										</div>
 										<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityReg?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>add activity</button></a>
 									</div>
 								</div>
