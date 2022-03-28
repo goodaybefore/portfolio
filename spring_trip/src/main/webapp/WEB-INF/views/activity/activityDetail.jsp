@@ -150,6 +150,10 @@
 		.ac-dates{
 			display : inline-block !important;
 		} 
+		.thumb-image{
+				width : 200px;
+				height : 200px;
+			}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -206,7 +210,10 @@
 												<p>${activity.ac_address} ${activity.ac_address_detail}</p>
 												<div id="map" style="width:100%;height:350px;"></div>
 											</div>
-											
+											<c:forEach items="${imgList }" var="imgList">
+												<img src="/img/portfolio/activity_photo${imgList.ap_name }" class="thumb-image">
+												<input type="file" accept="image/*" style="display:none" name="ac_files">;
+											</c:forEach>
 											<div class="with-container">
 												<label class="detail-label">함께한 사람들</label>
 												<p>${activity.ac_with}</p>

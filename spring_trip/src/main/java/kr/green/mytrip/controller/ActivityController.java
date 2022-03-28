@@ -86,7 +86,8 @@ public class ActivityController {
 			System.out.println("activity load fail");
 			mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+reg_sm_num+"/"+reg_tr_num);
 		}else {
-			
+			List<ActivityPhotoVO> imgList = tripService.getActivityPhotoList(ac_num);
+			mv.addObject("imgList", imgList);
 			mv.addObject("activity", active);
 			mv.addObject("reg_sm_num", reg_sm_num);
 			mv.setViewName("/activity/activityDetail");
