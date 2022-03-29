@@ -69,6 +69,8 @@ public interface TripDAO {
 	//void insertActivityPhoto(@Param("photo")ActivityPhotoVO photoVo);
 	void insertActivityImgFile(@Param("ap")ActivityPhotoVO ap);
 	
+	//활동 복사
+	List<ActivityVO> selectCopyActList(@Param("tr_num")Integer tr_num);//활동 리스트 전부 불러오기
 	
 	
 	

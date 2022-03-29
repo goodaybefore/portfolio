@@ -286,6 +286,28 @@ public class TripController {
 	}
 	
 	
+	//여행지 가져오기(copy) At tripDetail
+	@RequestMapping(value="/{spot_user}/tripCopy", method = RequestMethod.GET)
+	public ModelAndView tripCopyGet(ModelAndView mv, HttpServletRequest request, Integer tr_num,
+			@PathVariable(required=false, value="spot_user")String spot_user) {
+		//해당 여행번호 가져오기
+		
+		/* user확인
+			=> 회원본인-회원본인인 경우 copy 안되게해야함
+			=> 되는경우 : (회원-관리자)(결제후가능) / (트립메이트-트립메이트)
+			일단 나중에 검사하는걸로 하고 지금은 일단 대충 user != null user!=user로 하자 
+		*/
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		
+		if(tripService.copyTrip(user, tr_num)) {
+			System.out.println("가져오기완료");
+			//tripList를 setviewname해조야함
+		}else {
+			//tripDetail을 setviewName
+			System.out.println("가져오기실패");
+		}
+		return mv;
+	}
 	
 
 }

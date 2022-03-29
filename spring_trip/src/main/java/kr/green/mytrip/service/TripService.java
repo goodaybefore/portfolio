@@ -41,6 +41,11 @@ public interface TripService {
 	Integer getScaNum(String tr_sca_name);
 	Integer getMcaNum(String tr_mca_name);
 	
+	//여행 가져오기
+	boolean copyTrip(MemberVO user, Integer tr_num);
+	
+	
+	
 	//활동 목록 출력
 	List<ActivityVO> getActList(Integer tr_num, Criteria cri);
 	//활동 개수(pagination)
@@ -63,6 +68,8 @@ public interface TripService {
 	
 	//활동 이미지 저장
 	String summernoteImg(MultipartFile img);
+	
+	
 	
 	
 	

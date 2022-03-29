@@ -273,5 +273,30 @@ public class TripServiceImp implements TripService{
 	public List<ActivityPhotoVO> getActivityPhotoList(Integer ac_num) {
 		return tripDao.selectActivityPhotoList(ac_num);
 	}
+	@Override
+	public boolean copyTrip(MemberVO user, Integer tr_num) {
+		TripVO copyTrip = tripDao.selectTrip(tr_num);
+		List<ActivityVO> copyActList = tripDao.selectCopyActList(tr_num);
+		//내가 내껄 복사하려는 경우
+		if(copyTrip.getTr_me_id().equals(user.getMe_id())) return false;
+		//trip이 없는경우
+		if(copyTrip == null) return false;
+		
+		/* 복사 진행
+		 * trip Insert로 번호(tr_num) return하고
+		 * activity Insert로 번호(ac_num) 리턴하기
+		 * */
+		System.out.println("여행복사");
+		//id 변경 후 Trip insert
+//		copyTrip.setTr_me_id(user.getMe_id());
+//		tripDao.insertTrip(copyTrip);
+//		if(copyActList == null) return false;
+//		//불러온 Activity 목록을 복사하기
+//		for(int i=0;i<copyActList.size();i++) {
+//			copyActList.get(i).setAc_me_id(user.getMe_id());
+//			tripDao.insertActivity(copyActList.get(i));
+//		}
+		return true;
+	}
 
 }

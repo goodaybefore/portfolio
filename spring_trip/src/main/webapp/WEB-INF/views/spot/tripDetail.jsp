@@ -80,6 +80,7 @@
 											<c:if test="${trip.tr_me_id == user.me_id}">
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
+												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripCopy?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>Copy</button></a>
 											</c:if>
 										<div class="trip-reg-box detail-container">
 											<!-- 여행기간 -->

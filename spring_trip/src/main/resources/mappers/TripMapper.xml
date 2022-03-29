@@ -179,4 +179,7 @@
 			#{ap.ap_ac_num},#{ap.ap_name},#{ap.ap_ori_name}
 		);
 	</insert>
+	<select id="selectCopyActList" resultType="kr.green.mytrip.vo.ActivityVO">
+	SELECT * FROM activity WHERE ac_tr_num = #{tr_num};
+	</select>
 </mapper>
