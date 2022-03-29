@@ -3,6 +3,7 @@ package kr.green.mytrip.controller;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,15 +67,17 @@ public class TripController {
 			Criteria cri) {
 		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		cri.setPerPageNum(5);
-		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num, cri);
 		
+		cri.setPerPageNum(5);
+		System.out.println("here1");
+		System.out.println("sm_num : "+sm_num);
+		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num, cri);
+		System.out.println("here2");
 		int totalCount = tripService.getTotalTripCount(cri, sm_num);
 		PageMaker pm = new PageMaker(totalCount, 2, cri);
 		
 		mv.addObject("pm", pm);
 		mv.addObject("tripList", tripList);
-		mv.addObject("sm_num", sm_num);//사용자메뉴번호
 		
 		mv.setViewName("/spot/tripList"); 
 		return mv;

@@ -40,10 +40,11 @@
 	<select id="selectTripList" resultType="kr.green.mytrip.vo.TripVO">
 		SELECT * FROM trip
 		WHERE tr_del='N'
-		AND tr_op_name = "전체공개"
-		AND tr_sm_num = #{sm_num}
+		AND tr_op_name = #{openRange}
+		AND tr_sm_num = ${sm_num}
 		AND tr_me_id = #{spot_user}
-		ORDER BY tr_num DESC;
+		ORDER BY tr_num DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum};
 	</select>
 	
 	<select id="selectMiddleCategoryName" resultType="string">

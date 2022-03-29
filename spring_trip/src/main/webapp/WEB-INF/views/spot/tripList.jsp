@@ -24,7 +24,7 @@
 									<div class="content">
 										<header>
 											<h1>TRIP LIST</h1>
-											<p>여행지 목록을 등록해보세요<br>${pm }</p>
+											<p>여행지 목록을 등록해보세요<br>${pm }<br>tripList : ${tripList }</p>
 										</header>
 										<table class="table table-hover" style="table-layout: fixed;">
 										  <thead>

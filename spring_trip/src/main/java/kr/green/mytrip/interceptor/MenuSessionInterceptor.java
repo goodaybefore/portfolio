@@ -43,6 +43,7 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 		else if(!url[2].isEmpty() && url[1].equals("spot")) {
 			thisUser = url[2];
 			menuList = memberService.getMenuList(thisUser);
+			System.out.println("url[2] : "+thisUser);
 		}
 		
 		if(thisUser == null) {
@@ -71,7 +72,8 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			response.sendRedirect(request.getContextPath()+"/spot/"+user.getMe_id());
 			return false;
 			}else {
-			
+			System.out.println("menuList : "+menuList);
+			System.out.println("thisUser : "+thisUser);
 			HttpSession session = request.getSession();
 			session.setAttribute("menu", menuList);
 			session.setAttribute("spot_user", thisUser);
