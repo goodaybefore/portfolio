@@ -81,9 +81,11 @@
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
 											</c:if>
-											<input type="button" onclick="openChild()" value="test link">
+											<c:if test="${trip.tr_me_id != user.me_id }">
+												<input type="button" onclick="openChild()" value="copy">
+											</c:if>
+											
 											<input type="hidden" id="tr_num" name="tr_num" value="${trip.tr_num }">
-											<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripCopy?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>Copy</button></a>
 										<div class="trip-reg-box detail-container">
 											<!-- 여행기간 -->
 											<div class="period-container">

@@ -337,9 +337,9 @@ public class TripController {
 			return mv;
 		}else {
 			if(tripService.copyTrip(user, tr_num, copy_sm_num)) {
-				out.println("<script>alert('여행 가져오기가 완료되었습니다.');");
+				out.println("<script>alert('여행 가져오기가 완료되었습니다.\\n첨부파일과 활동사진은 저장되지 않습니다.');");
 			}else {
-				out.println("<script>alert('여행 가져오기에 실패했습니다.');");
+				out.println("<script>alert('여행 가져오기에 실패했습니다. 다시 시도해주세요');");
 			}
 			
 		}
