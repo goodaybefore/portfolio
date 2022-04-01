@@ -1,14 +1,16 @@
 package kr.green.mytrip.controller;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,10 +71,7 @@ public class TripController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		
 		cri.setPerPageNum(5);
-		System.out.println("here1");
-		System.out.println("sm_num : "+sm_num);
 		List<TripVO> tripList = tripService.getTripList(user, spot_user, sm_num, cri);
-		System.out.println("here2");
 		int totalCount = tripService.getTotalTripCount(cri, sm_num);
 		PageMaker pm = new PageMaker(totalCount, 2, cri);
 		
@@ -288,12 +287,70 @@ public class TripController {
 		return mv;
 	}
 	
+	//tripcopy 새창
+	@RequestMapping(value="/{spot_user}/tripDetail/{sm_num}/selectMenuCategory")
+	public ModelAndView tripCopySelectInsertMenu(ModelAndView mv, HttpServletRequest request,
+			@PathVariable(required=false, value="sm_num")String sm_num, Integer tr_num) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		//내 여행 메뉴리스트 불러와서 출력
+		List<SpotMenuVO> menuList = tripService.getUserMenu(user.getMe_id());
+		System.out.println("menuList : "+menuList);
+		mv.addObject("sm_num", sm_num);
+		mv.setViewName("spot/tripCopySelectMenu");
+		return mv;
+	}
+	
+	@ResponseBody//여기서 menu리스트 받아오는 ajax동작을 
+	@RequestMapping(value="/{userId}/menuCategory", method = RequestMethod.GET)
+	public Map<String, Object> menuCategoryGet(String userId){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<SpotMenuVO> menuList = tripService.getUserMenu(userId);
+		map.put("menuList", menuList); 
+		return map;
+	}
+	
+	@RequestMapping(value="/{spot_user}/tripDetail/{sm_num}/selectMenuCategory", method = RequestMethod.POST)
+	public ModelAndView tripCopySelectInsertMenuPost(ModelAndView mv, HttpServletRequest request, Integer sm_num,
+			Integer tr_num,	HttpServletResponse response, Integer copy_sm_num) throws IOException {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		//System.out.println("user : "+user);
+		
+		
+		System.out.println("selectMenuCategory.copy_sm_num : "+copy_sm_num);
+		System.out.println("tr_num : "+tr_num);
+		TripVO copyTrip = tripService.getTripDetail(tr_num);
+
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		// 공개범위에 따라 copy 제한 걸어줘야함.. 아직 공개범위 설정 안했음
+		if(copyTrip==null || copyTrip.getTr_op_name().equals("비공개")) {
+			System.out.println("비어있음");
+			out.println("<script>alert('복사할 수 없는 여행입니다.');");
+		}else if(copy_sm_num == null) {
+			out.println("<script>alert('메뉴를 선택해주세요.');</script>");
+			out.flush();
+			mv.addObject("sm_num", sm_num);
+			mv.setViewName("spot/tripCopySelectMenu");
+			return mv;
+		}else {
+			out.println("<script>alert('복사가 완료되었습니다.');");
+		}
+		
+		out.println("window.close();</script>");
+		out.flush();
+		mv.setViewName("spot/tripCopySelectMenu");
+		return mv;
+	}
 	
 	//여행지 가져오기(copy) At tripDetail
 	@RequestMapping(value="/{spot_user}/tripCopy", method = RequestMethod.GET)
 	public ModelAndView tripCopyGet(ModelAndView mv, HttpServletRequest request, Integer tr_num,
-			@PathVariable(required=false, value="spot_user")String spot_user) {
+			@PathVariable(required=false, value="spot_user")String spot_user,
+			HttpServletResponse response) throws IOException {
 		//해당 여행번호 가져오기
+		TripVO copyTrip = tripService.getTripDetail(tr_num);
 		
 		/* user확인
 			=> 회원본인-회원본인인 경우 copy 안되게해야함
@@ -301,14 +358,21 @@ public class TripController {
 			일단 나중에 검사하는걸로 하고 지금은 일단 대충 user != null user!=user로 하자 
 		*/
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		
+		String resultStr="";
 		if(tripService.copyTrip(user, tr_num)) {
 			System.out.println("가져오기완료");
-			//tripList를 setviewname해조야함
+			resultStr = "가져오기를 완료했습니다";
 		}else {
 			//tripDetail을 setviewName
 			System.out.println("가져오기실패");
+			resultStr = "가져오기를 실패하였습니다.";
 		}
+		response.setContentType("text/html; charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('"+resultStr+"');</script>");
+		mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+copyTrip.getTr_sm_num()+"/"+copyTrip.getTr_num());
+		
 		return mv;
 	}
 	

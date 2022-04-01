@@ -8,8 +8,10 @@ import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.vo.ActivityPhotoVO;
 import kr.green.mytrip.vo.ActivityVO;
 import kr.green.mytrip.vo.FileVO;
+import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SmallCategoryVO;
+import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 public interface TripDAO {
@@ -71,6 +73,7 @@ public interface TripDAO {
 	
 	//활동 복사
 	List<ActivityVO> selectCopyActList(@Param("tr_num")Integer tr_num);//활동 리스트 전부 불러오기
+	List<SpotMenuVO> selectUserMenu(@Param("me_id")String me_id);
 	
 	
 	

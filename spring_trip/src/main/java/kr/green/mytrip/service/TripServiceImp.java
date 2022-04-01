@@ -106,11 +106,6 @@ public class TripServiceImp implements TripService{
 	//여행지리스트(tripList)가져오기
 	@Override
 	public List<TripVO> getTripList(MemberVO user, String spot_user, Integer sm_num, Criteria cri) {
-		System.out.println("getTripList");
-		System.out.println("spot_user : "+spot_user);
-		System.out.println("sm_num : "+sm_num);
-		System.out.println("cri : "+cri);
-		
 		if(spot_user == null) return null;
 		//guest로그인시..일단 다 보여주기
 		if(user == null) 
@@ -118,7 +113,6 @@ public class TripServiceImp implements TripService{
 		if(user.getMe_id().equals(spot_user)) 
 			return tripDao.selectTripListAll(sm_num, cri, spot_user);
 		if(!user.getMe_id().equals(spot_user)) {
-			System.out.println("여기들어왔나?");
 			return tripDao.selectTripList("전체공개", sm_num, spot_user, cri);
 		}
 			
@@ -306,6 +300,11 @@ public class TripServiceImp implements TripService{
 //			tripDao.insertActivity(copyActList.get(i));
 //		}
 		return true;
+	}
+	@Override
+	public List<SpotMenuVO> getUserMenu(String me_id) {
+		if(me_id == null) return null;
+		return tripDao.selectUserMenu(me_id);
 	}
 
 }

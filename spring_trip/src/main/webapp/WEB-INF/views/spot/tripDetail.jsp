@@ -80,8 +80,10 @@
 											<c:if test="${trip.tr_me_id == user.me_id}">
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
-												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripCopy?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>Copy</button></a>
 											</c:if>
+											<input type="button" onclick="openChild()" value="test link">
+											<input type="hidden" id="tr_num" name="tr_num" value="${trip.tr_num }">
+											<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripCopy?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>Copy</button></a>
 										<div class="trip-reg-box detail-container">
 											<!-- 여행기간 -->
 											<div class="period-container">
@@ -167,5 +169,12 @@
 			</div>
 		
 	<script src="/resources/assets/js/spot/tripDetail.js"></script>
+	<script>
+		function openChild(){
+			window.name = "select My Menu";
+			window.open('selectMenuCategory','window_name','width=600 height=300, location=no, scrollbars=no');
+			
+		}
+	</script>
 	</body>
 </html>

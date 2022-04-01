@@ -183,4 +183,8 @@
 	<select id="selectCopyActList" resultType="kr.green.mytrip.vo.ActivityVO">
 	SELECT * FROM activity WHERE ac_tr_num = #{tr_num};
 	</select>
+	
+	<select id="selectUserMenu" resultType="kr.green.mytrip.vo.SpotMenuVO">
+		SELECT * FROM spot_menu WHERE sm_me_id = #{me_id};
+	</select>
 </mapper>

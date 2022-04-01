@@ -35,7 +35,7 @@ public interface TripService {
 	TripVO selectTrip(Integer tr_num);
 	//여행지의 Menu Category 불러오기
 	SpotMenuVO selectMenu(TripVO trip, MemberVO user);
-	
+
 	//여행지 수정
 	boolean modifyTrip(TripVO trip, List<MultipartFile> file, Integer[] fileNums, Integer mc_num, Integer sc_num);
 	Integer getScaNum(String tr_sca_name);
@@ -43,7 +43,7 @@ public interface TripService {
 	
 	//여행 가져오기
 	boolean copyTrip(MemberVO user, Integer tr_num);
-	
+	List<SpotMenuVO> getUserMenu(String me_id);//여행지 내려받을 회원의 spotMenuList 불러오기
 	
 	
 	//활동 목록 출력
@@ -68,6 +68,8 @@ public interface TripService {
 	
 	//활동 이미지 저장
 	String summernoteImg(MultipartFile img);
+	
+
 	
 	
 	
