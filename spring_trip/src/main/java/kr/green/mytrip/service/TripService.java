@@ -42,7 +42,7 @@ public interface TripService {
 	Integer getMcaNum(String tr_mca_name);
 	
 	//여행 가져오기
-	boolean copyTrip(MemberVO user, Integer tr_num);
+	boolean copyTrip(MemberVO user, Integer tr_num, Integer copy_sm_num);
 	List<SpotMenuVO> getUserMenu(String me_id);//여행지 내려받을 회원의 spotMenuList 불러오기
 	
 	

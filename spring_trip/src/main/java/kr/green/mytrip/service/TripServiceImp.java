@@ -277,7 +277,7 @@ public class TripServiceImp implements TripService{
 		return tripDao.selectActivityPhotoList(ac_num);
 	}
 	@Override
-	public boolean copyTrip(MemberVO user, Integer tr_num) {
+	public boolean copyTrip(MemberVO user, Integer tr_num, Integer copy_sm_num) {
 		TripVO copyTrip = tripDao.selectTrip(tr_num);
 		List<ActivityVO> copyActList = tripDao.selectCopyActList(tr_num);
 		//내가 내껄 복사하려는 경우
@@ -291,14 +291,23 @@ public class TripServiceImp implements TripService{
 		 * */
 		System.out.println("여행복사");
 		//id 변경 후 Trip insert
-//		copyTrip.setTr_me_id(user.getMe_id());
-//		tripDao.insertTrip(copyTrip);
-//		if(copyActList == null) return false;
-//		//불러온 Activity 목록을 복사하기
-//		for(int i=0;i<copyActList.size();i++) {
-//			copyActList.get(i).setAc_me_id(user.getMe_id());
-//			tripDao.insertActivity(copyActList.get(i));
-//		}
+		copyTrip.setTr_me_id(user.getMe_id());
+		copyTrip.setTr_sm_num(copy_sm_num);
+		tripDao.insertTrip(copyTrip);
+		System.out.println("Copied Trip");
+		System.out.println("trip : ");
+		System.out.println(copyTrip);
+		System.out.println("activity : ");
+		//불러온 Activity 목록을 복사하기
+		if(copyActList != null) {
+			for(int i=0;i<copyActList.size();i++) {
+				copyActList.get(i).setAc_me_id(user.getMe_id());
+				copyActList.get(i).setAc_tr_num(copyTrip.getTr_num());
+				tripDao.insertActivity(copyActList.get(i));
+				System.out.println(copyActList.get(i));
+			}
+		}
+		
 		return true;
 	}
 	@Override
