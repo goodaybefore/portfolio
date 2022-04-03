@@ -6,6 +6,9 @@
 		<title>my spot home</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- IMPORT 결제시스템 -->
+		<script src ="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
+		
 		<style>
 		.trip-reg-box{
 			padding : 10px;
@@ -80,6 +83,9 @@
 											<c:if test="${trip.tr_me_id == user.me_id}">
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
+											</c:if>
+											<c:if test="${user.me_gr_name !='트립매니저'||user.me_gr_name !='트립파트너' || user.me_gr_name !='트립서포터'}">
+												<input type="button" class="btn-purchase" id="check_module" value="purchase"/>
 											</c:if>
 											<c:if test="${trip.tr_me_id != user.me_id }">
 												<input type="button" onclick="openChild()" value="copy">
@@ -163,7 +169,7 @@
 										<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityReg?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>add activity</button></a>
 									</div>
 								</div>
-								<span>span 태그 테스트</span>
+								<span>span 태그 테스트</span>$
 							</section>
 					
 					</div>
@@ -172,10 +178,48 @@
 		
 	<script src="/resources/assets/js/spot/tripDetail.js"></script>
 	<script>
+		$(function(){
+			//IMPORT 결제
+			
+			$('#check_module').click(function(){
+				console.log('#check is clicked1');
+				IMP.init('imp19089190');
+
+				IMP.request_pay({
+				    pg : 'inicis', // version 1.1.0부터 지원.
+				    pay_method : 'card',
+				    merchant_uid : 'merchant_' + new Date().getTime(),
+				    name : '결제한 여행 번호 : ${trip.tr_num}',
+				    amount : 100, //판매 가격
+				    buyer_name : '${user.me_id}',
+				    buyer_tel : '${user.me_phone}'
+				}, function(rsp) {
+				    if ( rsp.success ) {
+				        console.log(rsp);
+				        //ajax로 post하기
+				        $.ajax({
+				        	
+				        })
+				    } else {
+				        var msg = '결제에 실패하였습니다.';
+				        msg += '에러내용 : ' + rsp.error_msg;
+				        alert(msg);
+				    }
+				});
+				
+				
+				
+			});
+		});
+	
 		function openChild(){
 			window.name = "select My Menu";
 			window.open('selectMenuCategory','window_name','width=600 height=300, location=no, scrollbars=no');
 			
+		}
+		function openPurChase(){
+			window.name = "Purchase Trip";
+			window.open('selectMenuCategory','window_name','width=600 height=300, location=no, scrollbars=no');
 		}
 	</script>
 	</body>

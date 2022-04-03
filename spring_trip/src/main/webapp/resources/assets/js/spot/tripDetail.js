@@ -17,4 +17,8 @@ $(function() {
 		console.log('여행 기간 : '+dateCalc/resDay+'일');
 		$('.trip-period').html('('+dateCalc/resDay+'일)');
 	}
+	
+	
+	
+	
 });
