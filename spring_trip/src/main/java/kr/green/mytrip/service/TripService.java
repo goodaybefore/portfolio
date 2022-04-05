@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.vo.ActivityPhotoVO;
 import kr.green.mytrip.vo.ActivityVO;
+import kr.green.mytrip.vo.ChargeTripVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
@@ -42,7 +43,7 @@ public interface TripService {
 	Integer getMcaNum(String tr_mca_name);
 	
 	//여행 가져오기
-	boolean copyTrip(MemberVO user, Integer tr_num, Integer copy_sm_num);
+	boolean copyTrip(String user, Integer tr_num, Integer copy_sm_num);
 	List<SpotMenuVO> getUserMenu(String me_id);//여행지 내려받을 회원의 spotMenuList 불러오기
 	
 	
@@ -68,6 +69,9 @@ public interface TripService {
 	
 	//활동 이미지 저장
 	String summernoteImg(MultipartFile img);
+	
+	//trip 결제 내역 저장
+	boolean insertChargeRecord(ChargeTripVO chargeTrip);
 	
 
 	

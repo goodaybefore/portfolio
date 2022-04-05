@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +33,7 @@ import kr.green.mytrip.pagination.PageMaker;
 import kr.green.mytrip.service.MemberService;
 import kr.green.mytrip.service.TripService;
 import kr.green.mytrip.vo.ActivityVO;
+import kr.green.mytrip.vo.ChargeTripVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
@@ -309,6 +311,8 @@ public class TripController {
 		return map;
 	}
 	
+	
+	
 	@RequestMapping(value="/{spot_user}/tripDetail/{sm_num}/selectMenuCategory", method = RequestMethod.POST)
 	public ModelAndView tripCopySelectInsertMenuPost(ModelAndView mv, HttpServletRequest request, Integer sm_num,
 			Integer tr_num,	HttpServletResponse response, Integer copy_sm_num) throws IOException {
@@ -336,7 +340,7 @@ public class TripController {
 			mv.setViewName("spot/tripCopySelectMenu");
 			return mv;
 		}else {
-			if(tripService.copyTrip(user, tr_num, copy_sm_num)) {
+			if(tripService.copyTrip(user.getMe_id(), tr_num, copy_sm_num)) {
 				out.println("<script>alert('여행 가져오기가 완료되었습니다.\\n첨부파일과 활동사진은 저장되지 않습니다.');");
 			}else {
 				out.println("<script>alert('여행 가져오기에 실패했습니다. 다시 시도해주세요');");
@@ -349,6 +353,25 @@ public class TripController {
 		mv.setViewName("spot/tripCopySelectMenu");
 		return mv;
 	}
+	
+	//결제 내역 추가하기
+	@ResponseBody
+	@RequestMapping(value="{spot_user}/chargeRecord")
+	public Map<String, Object> chargeRecord(@RequestBody ChargeTripVO chargeTrip, HttpServletRequest request){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		chargeTrip.setCh_me_id(user.getMe_id());
+		System.out.println("charged : "+chargeTrip);
+		//chargeTrip에 insert
+		if(tripService.insertChargeRecord(chargeTrip)) {
+			map.put("result", "ok");
+		}else {
+			map.put("result", "failed");
+		}
+		return map;
+	}
+	
+	
 //	
 //	//여행지 가져오기(copy) At tripDetail
 //	@RequestMapping(value="/{spot_user}/tripCopy", method = RequestMethod.GET)

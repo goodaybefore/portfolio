@@ -104,6 +104,18 @@
 		WHERE tr_num = #{trip.tr_num};
 	</update>
 	
+	<insert id="insertChargeRecord">
+		INSERT INTO charge_trip(
+			ch_me_id, ch_amount, ch_tr_num
+		) VALUES(
+			#{charged.ch_me_id}, #{charged.ch_amount}, #{charged.ch_tr_num}
+		);
+	</insert>
+	
+	<select id="selectMemberInfo" resultType="kr.green.mytrip.vo.MemberVO">
+		SELECT * FROM member WHERE me_id = #{me_id};
+	</select>
+	
 	<select id="selectMiddlecategoryNum" resultType="Integer">
 		SELECT mc_num FROM middle_category WHERE mc_name = #{tr_mca_name};
 	</select>

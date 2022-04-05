@@ -11,6 +11,7 @@ import kr.green.mytrip.pagination.Criteria;
 import kr.green.mytrip.utills.UploadFileUtills;
 import kr.green.mytrip.vo.ActivityPhotoVO;
 import kr.green.mytrip.vo.ActivityVO;
+import kr.green.mytrip.vo.ChargeTripVO;
 import kr.green.mytrip.vo.FileVO;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.MiddleCategoryVO;
@@ -277,11 +278,11 @@ public class TripServiceImp implements TripService{
 		return tripDao.selectActivityPhotoList(ac_num);
 	}
 	@Override
-	public boolean copyTrip(MemberVO user, Integer tr_num, Integer copy_sm_num) {
+	public boolean copyTrip(String user, Integer tr_num, Integer copy_sm_num) {
 		TripVO copyTrip = tripDao.selectTrip(tr_num);
 		List<ActivityVO> copyActList = tripDao.selectCopyActList(tr_num);
 		//내가 내껄 복사하려는 경우
-		if(copyTrip.getTr_me_id().equals(user.getMe_id())) return false;
+		if(copyTrip.getTr_me_id().equals(user)) return false;
 		//trip이 없는경우
 		if(copyTrip == null) return false;
 		
@@ -289,19 +290,14 @@ public class TripServiceImp implements TripService{
 		 * trip Insert로 번호(tr_num) return하고
 		 * activity Insert로 번호(ac_num) 리턴하기
 		 * */
-		System.out.println("여행복사");
 		//id 변경 후 Trip insert
-		copyTrip.setTr_me_id(user.getMe_id());
+		copyTrip.setTr_me_id(user);
 		copyTrip.setTr_sm_num(copy_sm_num);
 		tripDao.insertTrip(copyTrip);
-		System.out.println("Copied Trip");
-		System.out.println("trip : ");
-		System.out.println(copyTrip);
-		System.out.println("activity : ");
 		//불러온 Activity 목록을 복사하기
 		if(copyActList != null) {
 			for(int i=0;i<copyActList.size();i++) {
-				copyActList.get(i).setAc_me_id(user.getMe_id());
+				copyActList.get(i).setAc_me_id(user);
 				copyActList.get(i).setAc_tr_num(copyTrip.getTr_num());
 				tripDao.insertActivity(copyActList.get(i));
 				System.out.println(copyActList.get(i));
@@ -314,6 +310,20 @@ public class TripServiceImp implements TripService{
 	public List<SpotMenuVO> getUserMenu(String me_id) {
 		if(me_id == null) return null;
 		return tripDao.selectUserMenu(me_id);
+	}
+	@Override
+	public boolean insertChargeRecord(ChargeTripVO chargeTrip) {
+		TripVO dbTrip = tripDao.selectTrip(chargeTrip.getCh_tr_num());
+		if(dbTrip == null) return false;
+		//trip작성자가 관리자가 아닐경우 return false 하기
+		MemberVO dbUser = tripDao.selectMemberInfo(dbTrip.getTr_me_id());
+		if(dbUser.getMe_gr_name().equals("트립매니저") || dbUser.getMe_gr_name().equals("트립서포터")) return false;
+		//예외처리
+		
+		if(chargeTrip.getCh_amount() != dbTrip.getTr_charge()) return false;
+		
+		tripDao.insertChargeRecord(chargeTrip);
+		return true;
 	}
 
 }

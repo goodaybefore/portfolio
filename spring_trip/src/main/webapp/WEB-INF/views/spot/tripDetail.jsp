@@ -86,9 +86,11 @@
 											</c:if>
 											<c:if test="${user.me_gr_name !='트립매니저'||user.me_gr_name !='트립파트너' || user.me_gr_name !='트립서포터'}">
 												<input type="button" class="btn-purchase" id="check_module" value="purchase"/>
+												<div class="purchase-container"></div>
+												<input type="button" class="btn-purchase-copy" style="display:none;" onclick="openChild()" value="purchase copy">
 											</c:if>
-											<c:if test="${trip.tr_me_id != user.me_id }">
-												<input type="button" onclick="openChild()" value="copy">
+											<c:if test="${trip.tr_me_id != user.me_id}">
+												<input type="button" class="btn-copy" onclick="openChild()" value="copy">
 											</c:if>
 											
 											<input type="hidden" id="tr_num" name="tr_num" value="${trip.tr_num }">
@@ -180,9 +182,10 @@
 	<script>
 		$(function(){
 			//IMPORT 결제
-			
+			var tr_num = '${trip.tr_num}';
+			var userId = '${user.me_id}';
+			var isSuccess = false; 
 			$('#check_module').click(function(){
-				console.log('#check is clicked1');
 				IMP.init('imp19089190');
 
 				IMP.request_pay({
@@ -194,12 +197,42 @@
 				    buyer_name : '${user.me_id}',
 				    buyer_tel : '${user.me_phone}'
 				}, function(rsp) {
+					 	//charge_trip 테이블에 결제내역 추가하기(확인)
+					 	var chargeRecords = {
+					 			ch_amount : '${trip.tr_charge}',
+					 			ch_tr_num : tr_num
+					 	}
+					 	
+		        $.ajax({
+		        	async : false,
+		        	type : 'post',
+		        	data : JSON.stringify(chargeRecords),
+		        	url : '<%=request.getContextPath()%>/spot/'+userId+'/chargeRecord',
+		        	dataType : "json",
+		        	contentType:"application/json; charset=UTF-8",
+		        	success : function(res){
+		        		
+		        		console.log('결제내역 추가 동작');
+		        		console.log('result : '+res.result);
+		        		if(res.result == 'failed'){
+		        			alert('잘못된 결제 접근입니다. 결제를 다시 시도해주세요.')
+		        			return ;
+		        		}
+		        	}
+		        	
+		        });
 				    if ( rsp.success ) {
 				        console.log(rsp);
-				        //ajax로 post하기
-				        $.ajax({
-				        	
-				        })
+				     	 	//copy_sm_num 선택할 수 있는 창 띄우기
+				      	isSuccess = true;
+				        /*
+				        result : tripNull => trip이 비어있음
+				        result : smnumNull => 복사할 sm_num이 비어있음 => 다시 선택하도록
+				        ****결제한 trip에 대해서는 결제버튼이 뜨지 않도록 하기 => 대신 copy버튼만 뜨게하기 => Detail.get에서 수정
+				        */
+				        alert('결제 성공');
+				        openChild();
+				        
 				    } else {
 				        var msg = '결제에 실패하였습니다.';
 				        msg += '에러내용 : ' + rsp.error_msg;
@@ -208,18 +241,17 @@
 				});
 				
 				
-				
 			});
+			
+			
+			
 		});
-	
+		var win = window;
+		var ok = false;
 		function openChild(){
 			window.name = "select My Menu";
 			window.open('selectMenuCategory','window_name','width=600 height=300, location=no, scrollbars=no');
 			
-		}
-		function openPurChase(){
-			window.name = "Purchase Trip";
-			window.open('selectMenuCategory','window_name','width=600 height=300, location=no, scrollbars=no');
 		}
 	</script>
 	</body>
