@@ -318,12 +318,23 @@ public class TripServiceImp implements TripService{
 		//trip작성자가 관리자가 아닐경우 return false 하기
 		MemberVO dbUser = tripDao.selectMemberInfo(dbTrip.getTr_me_id());
 		if(dbUser.getMe_gr_name().equals("트립매니저") || dbUser.getMe_gr_name().equals("트립서포터")) return false;
-		//예외처리
-		
 		if(chargeTrip.getCh_amount() != dbTrip.getTr_charge()) return false;
 		
 		tripDao.insertChargeRecord(chargeTrip);
 		return true;
+	}
+	
+	//회원의 등급 리턴
+	@Override
+	public String getUserGrade(String me_id) {
+		MemberVO dbUser = tripDao.selectMemberInfo(me_id);
+		return dbUser.getMe_gr_name();
+	}
+	@Override
+	public boolean checkTripPurchase(Integer tr_num, String me_id) {
+		ChargeTripVO dbCh = tripDao.selectChargedRecord(tr_num, me_id);
+		if(dbCh != null) return true;
+		return false;
 	}
 
 }

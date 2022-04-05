@@ -106,14 +106,20 @@
 	
 	<insert id="insertChargeRecord">
 		INSERT INTO charge_trip(
-			ch_me_id, ch_amount, ch_tr_num
+			ch_me_id, ch_amount, ch_tr_num, ch_date
 		) VALUES(
-			#{charged.ch_me_id}, #{charged.ch_amount}, #{charged.ch_tr_num}
+			#{charged.ch_me_id}, #{charged.ch_amount}, #{charged.ch_tr_num}, now()
 		);
 	</insert>
 	
 	<select id="selectMemberInfo" resultType="kr.green.mytrip.vo.MemberVO">
 		SELECT * FROM member WHERE me_id = #{me_id};
+	</select>
+	
+	<select id="selectChargedRecord" resultType="kr.green.mytrip.vo.ChargeTripVO">
+		SELECT * FROM charge_trip
+		WHERE
+			ch_me_id = #{me_id} AND ch_tr_num = #{tr_num};
 	</select>
 	
 	<select id="selectMiddlecategoryNum" resultType="Integer">

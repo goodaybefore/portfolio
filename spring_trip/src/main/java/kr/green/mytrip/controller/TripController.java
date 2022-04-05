@@ -49,8 +49,11 @@ public class TripController {
 	TripService tripService;
 	@Autowired
 	MemberService memberService;
+	String[] managers = { "트립매니저", "트립서포터" };
 	
 	@GetMapping({"{spot_user}/home", "/home", "/{spot_user}"})
+	
+	
 	public ModelAndView spotUserHome(@PathVariable(required=false, value="spot_user")String spot_user, ModelAndView mv,
 			HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
@@ -187,7 +190,21 @@ public class TripController {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		TripVO trip = tripService.getTripDetail(tr_num);
 		List<FileVO> fileList = tripService.getFileList(tr_num);
+		boolean isPurchased = false;
 		
+		//글쓴이의 등급이 관리자일 때?
+		String userGrade = tripService.getUserGrade(trip.getTr_me_id());
+		boolean isManager = false;
+		System.out.println("isManager1 : "+isManager);
+		for(String tmp : managers) {
+			if(userGrade.equals(tmp)) isManager = true;
+		}
+		System.out.println("isManager2 : "+isManager);
+		if(isManager) {//해당여행에 현재 로그인한 사용자가 결제했는지 확인
+			//결제했으면 isPurchase를 리턴
+			isPurchased = tripService.checkTripPurchase(tr_num, user.getMe_id());
+		}
+		System.out.println("isManager3 : "+isManager);
 		
 		//pagination
 		cri.setPerPageNum(5);
@@ -200,6 +217,8 @@ public class TripController {
 		mv.addObject("actList", actList);
 		mv.addObject("trip", trip);
 		mv.addObject("fileList", fileList);
+		mv.addObject("isManager", isManager);
+		mv.addObject("isPurchased", isPurchased);
 		mv.setViewName("/spot/tripDetail");
 		return mv;
 	}

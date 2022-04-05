@@ -77,19 +77,23 @@
 									<header>
 										<h1>Detail</h1>
 										<p>여행 정보 상세 + 활동정보 관리</p>
-										pm : ${pm }
+										pm : ${pm }<br>
+										isPurchased : ${isPurchased } <br>
+										isManager : ${isManager }
 									</header>
 									<div class="trip-detail">
 											<c:if test="${trip.tr_me_id == user.me_id}">
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
 											</c:if>
-											<c:if test="${user.me_gr_name !='트립매니저'||user.me_gr_name !='트립파트너' || user.me_gr_name !='트립서포터'}">
+											<c:if test="${isManager == 'true' && isPurchased == 'false'}">
 												<input type="button" class="btn-purchase" id="check_module" value="purchase"/>
 												<div class="purchase-container"></div>
-												<input type="button" class="btn-purchase-copy" style="display:none;" onclick="openChild()" value="purchase copy">
 											</c:if>
-											<c:if test="${trip.tr_me_id != user.me_id}">
+											<c:if test="${isPurchased == 'true'}">
+												<input type="button" class="btn-purchase-copy" onclick="openChild()" value="copy">
+											</c:if>
+											<c:if test="${(trip.tr_me_id != user.me_id) && isManager == 'false'}">
 												<input type="button" class="btn-copy" onclick="openChild()" value="copy">
 											</c:if>
 											

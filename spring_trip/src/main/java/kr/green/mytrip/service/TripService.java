@@ -72,6 +72,11 @@ public interface TripService {
 	
 	//trip 결제 내역 저장
 	boolean insertChargeRecord(ChargeTripVO chargeTrip);
+
+	//me_id의 회원등급 알아보기
+	String getUserGrade(String me_id);
+
+	boolean checkTripPurchase(Integer tr_num, String me_id);//me_id로 이 여행에 대한 결제가 있는지 확인
 	
 
 	
