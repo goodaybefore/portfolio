@@ -195,16 +195,13 @@ public class TripController {
 		//글쓴이의 등급이 관리자일 때?
 		String userGrade = tripService.getUserGrade(trip.getTr_me_id());
 		boolean isManager = false;
-		System.out.println("isManager1 : "+isManager);
 		for(String tmp : managers) {
 			if(userGrade.equals(tmp)) isManager = true;
 		}
-		System.out.println("isManager2 : "+isManager);
 		if(isManager) {//해당여행에 현재 로그인한 사용자가 결제했는지 확인
 			//결제했으면 isPurchase를 리턴
 			isPurchased = tripService.checkTripPurchase(tr_num, user.getMe_id());
 		}
-		System.out.println("isManager3 : "+isManager);
 		
 		//pagination
 		cri.setPerPageNum(5);
