@@ -31,24 +31,23 @@ public class CommentController {
 		return commentService.insertComment(comment, user);
 	}
 	
-//	//comment list
-//	@RequestMapping(value = "/comment/list", method=RequestMethod.GET)
-//	public Map<String, Object> commentList(Integer page, Integer bd_num){
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		
-//		int totalCnt = commentService.selectTotalCnt(bd_num); // db에서 가져올 예정
-//		int displayPageNum = 2;
-//		Criteria cri = new Criteria(page, 3);//1페이지, 한 페이지에 3개씩
-//		
-//		List<CommentVO> list = commentService.selectCommentList(bd_num, cri);
-//		PageMaker pm = new PageMaker(totalCnt, displayPageNum, cri);
-//		
-//		
-//		map.put("pm", pm);
-//		map.put("list", list);
-//		return map;
-//	}
+	//comment list
+	@RequestMapping(value = "/comment/list", method=RequestMethod.GET)
+	public Map<String, Object> commentList(Integer page, Integer bd_num){
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("bd_num : "+bd_num);
+		int totalCnt = commentService.selectTotalCnt(bd_num); // db에서 가져올 예정
+		int displayPageNum = 2;
+		Criteria cri = new Criteria(page, 3);//1페이지, 한 페이지에 3개씩
+		
+		List<CommentVO> list = commentService.selectCommentList(bd_num, cri);
+		System.out.println("comment list : "+list);
+		PageMaker pm = new PageMaker(totalCnt, displayPageNum, cri);
+		map.put("pm", pm);
+		map.put("list", list);
+		return map;
+	}
 //	
 //	//댓글 삭제
 //	@RequestMapping(value = "/comment/delete", method=RequestMethod.GET)
