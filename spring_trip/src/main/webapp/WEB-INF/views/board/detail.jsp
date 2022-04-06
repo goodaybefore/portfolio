@@ -15,6 +15,7 @@
 		
 		<!-- 이 템플릿의 원래 css -->
 		<link rel="stylesheet" href="/resources/assets/css/myspot/main.css" />
+		<script type="text/javascript" src="<%=request.getContextPath() %>/resources/assets/js/comment.js"></script>
 		<style>
 		textarea.bd_contents{
 			resize: none;
@@ -79,6 +80,8 @@
 				</div>
 			</div>
 			 <script>
+			 var contextPath = '<%=request.getContextPath()%>';
+			 commentService.setContextPath(contextPath);
 			 $(function(){
 				 var co_bd_num = '${board.bd_num}';
 				 var co_me_id = '${user.me_id}';
@@ -108,7 +111,18 @@
 						commentService.insert(url, comment, insertSuccess);
 					})
 				 
-			 })
+			 });
+			 
+			 function insertSuccess(res){
+					if(res){
+						$('.text-comment').val('');//기존에 입력한 댓글을 지워줌
+						//댓글등록시 댓글목록 새로고침
+						var listUrl = '/comment/list?page=1&bd_num='+'${board.bd_num}';
+						commentService.list(listUrl, listSuccess);
+					}else{
+						alert('댓글 등록에 실패하였습니다');
+					}
+				}
 			 </script>
 	</body>
 </html>

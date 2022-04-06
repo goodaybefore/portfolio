@@ -2,7 +2,7 @@
  * 
  */
 
-let commonService = (function(){
+let commentService = (function(){
 	function setContextPath(contextPath){
 		this.contextPath = contextPath;
 	}
@@ -33,7 +33,7 @@ let commonService = (function(){
 	
 	
 	return{
-		name : 'CommonService',
+		name : 'CommentService',
 		contextPath : '',
 		setContextPath : setContextPath,
 		insert : ajaxPost,
