@@ -28,9 +28,7 @@ public class CommentController {
 	public boolean commentInsert(@RequestBody CommentVO comment, HttpServletRequest request){
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		System.out.println("comment : "+comment);
-		
-		return false;
-		//return commentService.insertComment(comment, user);
+		return commentService.insertComment(comment, user);
 	}
 	
 //	//comment list
