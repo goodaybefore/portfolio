@@ -41,6 +41,8 @@ public interface TripDAO {
 	List<FileVO> selectFileList(@Param("tr_num")Integer tr_num);
 	List<ActivityVO> selectActivityList(@Param("tr_num")Integer tr_num, @Param("cri")Criteria cri);//활동 리스트 출력
 	int selectTotalActivityCount(@Param("tr_num")Integer reg_tr_num);//pagination
+	List<String> selectActivityAddressList(@Param("tr_num")Integer tr_num);//여행지의 활동들의 장소 리스트
+	
 	
 	//여행지 delete
 	void deleteTrip(@Param("tr_num")Integer tr_num);
@@ -81,6 +83,7 @@ public interface TripDAO {
 	MemberVO selectMemberInfo(@Param("me_id")String tr_me_id);//여행결제
 	ChargeTripVO selectChargedRecord(@Param("tr_num")Integer tr_num,
 			@Param("me_id")String me_id);//해당 여행에대해 로그인한 사용자가 결제했는지 안했는지 알아보기
+	
 	
 	
 	

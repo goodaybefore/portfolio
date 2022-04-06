@@ -192,7 +192,10 @@ public class TripController {
 		List<FileVO> fileList = tripService.getFileList(tr_num);
 		boolean isPurchased = false;
 		
-		//글쓴이의 등급이 관리자일 때?
+		//해당 trip의 activity 주소들을 모두 불러오기
+		List<String> actAddressList = tripService.getActAddressList(tr_num);
+		System.out.println("actAddressList : "+actAddressList);
+		//trip 글쓴이의 등급 확인
 		String userGrade = tripService.getUserGrade(trip.getTr_me_id());
 		boolean isManager = false;
 		for(String tmp : managers) {
@@ -216,6 +219,7 @@ public class TripController {
 		mv.addObject("fileList", fileList);
 		mv.addObject("isManager", isManager);
 		mv.addObject("isPurchased", isPurchased);
+		mv.addObject("acAdList", actAddressList);
 		mv.setViewName("/spot/tripDetail");
 		return mv;
 	}

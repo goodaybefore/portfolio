@@ -30,6 +30,7 @@ public interface TripService {
 	//여행지 detail
 	TripVO getTripDetail(Integer tr_num);
 	List<FileVO> getFileList(Integer tr_num);
+	List<String> getActAddressList(Integer tr_num);//map 출력을 위한 trip의 모든 activity 가져오기
 	//여행지 delete
 	boolean deleteTrip(MemberVO user, TripVO dbTrip);
 	//여행지 선택
@@ -72,11 +73,10 @@ public interface TripService {
 	
 	//trip 결제 내역 저장
 	boolean insertChargeRecord(ChargeTripVO chargeTrip);
-
 	//me_id의 회원등급 알아보기
 	String getUserGrade(String me_id);
-
 	boolean checkTripPurchase(Integer tr_num, String me_id);//me_id로 이 여행에 대한 결제가 있는지 확인
+	
 	
 
 	

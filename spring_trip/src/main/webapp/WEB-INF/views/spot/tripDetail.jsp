@@ -6,9 +6,10 @@
 		<title>my spot home</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- kakao map -->
+		<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b4d47c161d7b6d187f225aba5f7cc5b5&libraries=services"></script>
 		<!-- IMPORT 결제시스템 -->
 		<script src ="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
-		
 		<style>
 		.trip-reg-box{
 			padding : 10px;
@@ -62,7 +63,11 @@
 		}
 		.tr-dates{
 			display : inline-block !important;
-		} 
+		}
+		.btn-group input[type=button]{
+			margin-bottom : 10px;
+			margin-top: 10px;
+		}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -77,11 +82,10 @@
 									<header>
 										<h1>Detail</h1>
 										<p>여행 정보 상세 + 활동정보 관리</p>
-										pm : ${pm }<br>
-										isPurchased : ${isPurchased } <br>
-										isManager : ${isManager }
+										acAdList : ${acAdList }<br>
 									</header>
 									<div class="trip-detail">
+										<div class="btn-group">
 											<c:if test="${trip.tr_me_id == user.me_id}">
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
@@ -96,8 +100,13 @@
 											<c:if test="${(trip.tr_me_id != user.me_id) && isManager == 'false'}">
 												<input type="button" class="btn-copy" onclick="openChild()" value="copy">
 											</c:if>
-											
 											<input type="hidden" id="tr_num" name="tr_num" value="${trip.tr_num }">
+										</div>
+										
+										<div class="trip-map-container">
+											<div id="map" style="width : 100%; height:400px; min-width:500px;"></div>
+										</div>
+										
 										<div class="trip-reg-box detail-container">
 											<!-- 여행기간 -->
 											<div class="period-container">
@@ -175,7 +184,6 @@
 										<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityReg?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>add activity</button></a>
 									</div>
 								</div>
-								<span>span 태그 테스트</span>$
 							</section>
 					
 					</div>
@@ -185,6 +193,36 @@
 	<script src="/resources/assets/js/spot/tripDetail.js"></script>
 	<script>
 		$(function(){
+			//detail 지도 표시
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	      level: 3 // 지도의 확대 레벨
+	    };
+			//지도 생성
+			var map = new kakao.maps.Map(mapContainer, mapOption);
+			
+			
+			//addobject로 받은주소를 리스트에 넣기
+			if('${acAdList}' != ''){
+				var address_list = new Array();
+				<c:forEach items="${acAdList}" var="item1">
+				address_list.push("${item1}");
+				</c:forEach>
+				for(var i=0;i<address_list.length;i++){
+					console.log(address_list[i]);
+				}
+			}
+			
+			//주소 마커표시
+			
+			//주소-좌표 변환 객체를 생성
+			var geocoder = new kakao.maps.services.Geocoder();
+			//주소로 좌표검색
+			searchCoordinates(address_list[0]);
+			
+			
+			
 			//IMPORT 결제
 			var tr_num = '${trip.tr_num}';
 			var userId = '${user.me_id}';
@@ -243,20 +281,33 @@
 				        alert(msg);
 				    }
 				});
-				
-				
 			});
 			
-			
-			
+			function searchCoordinates(address_str){
+				var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png'; 
+				geocoder.addressSearch(address_str, function(result, status) {
+				    // 정상적으로 검색이 완료됐으면 
+				     if (status === kakao.maps.services.Status.OK) {
+				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				        // 결과값으로 받은 위치를 마커로 표시합니다
+				        var marker = new kakao.maps.Marker({
+				            map: map,
+				            position: coords
+				        });
+				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        map.setCenter(coords);
+				        }
+				    });
+			}
 		});
+		
 		var win = window;
 		var ok = false;
 		function openChild(){
 			window.name = "select My Menu";
-			window.open('selectMenuCategory','window_name','width=600 height=300, location=no, scrollbars=no');
-			
+			window.open('selectMenuCategory','window_name','width=600 height=300, location=no, scrollbars=no');	
 		}
+		
 	</script>
 	</body>
 </html>

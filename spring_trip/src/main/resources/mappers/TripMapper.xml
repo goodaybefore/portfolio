@@ -65,6 +65,10 @@
 		AND (tr_op_name= "전체공개" OR tr_op_name="트립메이트공개" OR tr_op_name= "회원공개" OR tr_op_name= "비공개");
 	</select>
 	
+	<select id="selectActivityAddressList" resultType="String">
+		SELECT ac_address FROM activity WHERE ac_tr_num = #{tr_num} AND ac_address !='';
+	</select>
+	
 	<select id="selectTotalActivityCount" resultType="int">
 		SELECT COUNT(*) FROM activity
 		WHERE ac_tr_num = #{tr_num} AND ac_del !='Y'

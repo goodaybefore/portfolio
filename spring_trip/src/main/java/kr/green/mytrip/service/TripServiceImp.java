@@ -336,5 +336,9 @@ public class TripServiceImp implements TripService{
 		if(dbCh != null) return true;
 		return false;
 	}
+	@Override
+	public List<String> getActAddressList(Integer tr_num) {
+		return tripDao.selectActivityAddressList(tr_num);
+	}
 
 }
