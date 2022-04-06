@@ -42,7 +42,7 @@
 						<li>
 							<span class="opener">trip info</span>
 							<ul>
-								<li><a href="#">notice</a></li>
+								<li><a href="<%=request.getContextPath()%>/board/list">notice</a></li>
 								<li><a href="#">today's trip</a></li>
 							</ul>
 						</li>

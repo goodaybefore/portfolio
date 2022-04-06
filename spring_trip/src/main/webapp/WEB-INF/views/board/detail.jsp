@@ -10,10 +10,6 @@
 		<!-- 부트스트랩 -->
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-		<!-- jQuery library -->
-		<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
-		<!-- Popper JS -->
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 		<!-- Latest compiled JavaScript -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 		
@@ -23,6 +19,17 @@
 		textarea.bd_contents{
 			resize: none;
 		}
+		.board-title{
+			font-size : 18px;
+		}
+		.bd_title{
+			margin-top : 10px !important;
+			margin-bottom : 10px !important;
+		}
+		.btn-comment{
+			width : 100%;
+			height : 100%;
+		}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -31,19 +38,6 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<!-- Header -->
-								<header id="header">
-									<a href="<%=request.getContextPath()%>/board/list" class="logo"><strong>Board</strong></a>
-									<ul class="icons">
-										<c:if test="${user==null}"><li><a href="<%=request.getContextPath()%>/" class=""><span class="label">login</span></a></li></c:if>
-										<c:if test="${user!=null}"><li><a href="<%=request.getContextPath()%>/logout" class=""><span class="label">logout</span></a></li></c:if>
-										<li><a href="#" class=""><span class="label">tripmate</span></a></li>
-										<li><a href="#" class=""><span class="label">notice</span></a></li>
-										<li><a href="#" class=""><span class="label">event</span></a></li>
-										<li><a href="#" class=""><span class="label">special</span></a></li>
-									</ul>
-								</header>
-
 							<!-- Banner -->
 							<section id="banner">
 								<div class="content">
@@ -51,75 +45,70 @@
 										<h1>Detail</h1>
 										<p>게시글 상세</p>
 										<div class="board bd_title">
-											<p><strong>${board.bd_title}</strong></p>
+											<p>제목</p><input type="text" value="${board.bd_title}" readonly>
 										</div>
 										
 										<div class="board bd_contents">
+										<p>내용</p>
 											<textarea class="bd_contents" rows="10" readonly>${board.bd_contents}</textarea>
 										</div>
 									</header>
 								</div>
 								<span>span 태그 테스트</span>
-								ㅗㅑ
 							</section>
 							
 					<c:if test="${user.me_gr_name == '트립매니저' || user.me_gr_name =='트립파트너'}">
 						<a href="<%=request.getContextPath()%>/board/register" style="border-bottom : none;"><button>modify</button></a>
 						<a href="<%=request.getContextPath()%>/board/register" style="border-bottom : none;"><button>delete</button></a>
 					</c:if>
-					</div>
-				</div>
-							
-							
-							
-				<!-- Sidebar -->
-				<div id="sidebar">
-					<div class="inner">
-						<!-- Menu -->
-							<nav id="menu">
-								<header class="major">
-									<h2>My Menu</h2>
-								<section id="search" class="alt">
-									<form method="post" action="#">
-										<input type="text" name="query" id="query" placeholder="Search" />
-									</form>
-								</section>
-								</header>
-								<ul>
-									<li><a href="<%=request.getContextPath()%>/myspot/home">my spot home</a></li>
-									<li>
-										<span class="opener">trip</span>
-										<ul>
-										<c:forEach items="${menu }" var="menu">
-											<li><a href="<%=request.getContextPath()%>/myspot/tripList?menu=${menu}">${menu}</a></li>
-										</c:forEach>
-										</ul>
-									</li>
-									<li>
-										<span class="opener">Tripmate</span>
-										<ul>
-											<li><a href="#">request</a></li>
-											<li><a href="#">my tripmates</a></li>
-										</ul>
-									</li>
-									<li>
-										<span class="opener">trip info</span>
-										<ul>
-											<li><a href="#">notice</a></li>
-											<li><a href="#">today's trip</a></li>
-										</ul>
-									</li>
-									<li><a href="#">my page</a></li>
-								</ul>
-							</nav>
+					
+					<!-- 댓글 -->
+					<hr class="mt-3">
+					<div class="comment-list"></div>
+					<div class="comment-pagination"></div>
+					<div class="comment-box">
+						<div class="input-group mb-3 mt-3">
+							<textarea class="form-control text-comment" rows="2" placeholder="Comment"></textarea>
+							<div class="input-group-append">
+								<button class="btn btn-comment primary">등록</button>  
+							</div>
 						</div>
 					</div>
+					
+					</div>
+				</div>
 			</div>
-			<script src="/resources/assets/js/myspot/jquery.min.js"></script>
-			<script src="/resources/assets/js/myspot/browser.min.js"></script>
-			<script src="/resources/assets/js/myspot/breakpoints.min.js"></script>
-			<script src="/resources/assets/js/myspot/util.js"></script>
-			<script src="/resources/assets/js/myspot/main.js"></script>
-			
+			 <script>
+			 $(function(){
+				 var co_bd_num = '${board.bd_num}';
+				 var co_me_id = '${user.me_id}';
+				 
+				 //댓글 등록
+				 $('.btn-comment').click(function(){
+						var co_contents = $('.text-comment').val();
+						
+						if(co_me_id=='') {
+							alert('로그인 후 시도하세요');
+							return;
+						}
+					
+						if(co_contents==''){
+							alert('내용을 입력하세요');
+							return;
+						}
+						
+						var comment = {
+								co_me_id : co_me_id,
+								co_contents : co_contents,
+								co_bd_num : co_bd_num
+						};
+						//댓글 삽입
+						//ajax
+						var url = '/comment/insert';
+						commentService.insert(url, comment, insertSuccess);
+					})
+				 
+			 })
+			 </script>
 	</body>
 </html>

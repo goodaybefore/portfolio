@@ -37,6 +37,7 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			thisUser = user.getMe_id();
 			menuList = memberService.getMenuList(user.getMe_id());
 		}else if(url.length == 3 && url[1].equals("board")) {
+			thisUser = user.getMe_id();
 			menuList = memberService.getMenuList(thisUser);
 		}
 		//'/spot/(~~)' 형식
