@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -146,6 +147,24 @@ public class HomeController {
 	    return entity;
 	}
 	
-	
+	@RequestMapping(value = "/find", method = RequestMethod.GET)
+	public ModelAndView findMemberGet(ModelAndView mv) {
+		mv.setViewName("member/find");
+		return mv;
+	}
+	//id찾기
+	@ResponseBody
+	@RequestMapping(value = "/member/find/id", method=RequestMethod.POST)
+	public String findIdPost(@RequestBody MemberVO member){
+		System.out.println("find memeber : "+member);
+		return memberService.findId(member);
+	}
+	//pw찾기
+	@ResponseBody
+	@RequestMapping(value = "/member/find/pw", method=RequestMethod.POST)
+	public String findPwPost(@RequestBody MemberVO member){
+		System.out.println("find memeber : "+member);
+		return memberService.findPw(member);
+	}
 	
 }

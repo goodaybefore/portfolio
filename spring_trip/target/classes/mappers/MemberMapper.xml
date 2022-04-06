@@ -59,4 +59,23 @@
 		WHERE
 			me_id = #{photo.me_id};
 	</update>
+	
+	<select id="selectMemberByEmail" resultType="kr.green.mytrip.vo.MemberVO">
+		SELECT * FROM member
+		WHERE me_email = #{member.me_email} AND me_name = #{member.me_name};
+	</select>
+	
+	<update id="updateMember">
+		UPDATE member
+	  SET
+	  	me_pw = #{user.me_pw},
+	  	me_name = #{user.me_name},
+	  	me_birth = #{user.me_birth},
+	  	me_phone = #{user.me_phone},
+	  	me_gr_name= #{user.me_gr_name}
+	  WHERE
+	  	me_id = #{user.me_id};
+	</update>
+	
+	
 </mapper>

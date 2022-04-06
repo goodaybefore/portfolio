@@ -23,5 +23,10 @@ public interface MemberDAO {
 	//photo(프로필사진
 	void updateProfile(@Param("photo")MemberVO p);
 	void deleteProfile(@Param("me_id")String me_id);
+	
+	//아이디 찾기
+	MemberVO selectMemberByEmail(@Param("member")MemberVO member);
+	//비밀번호 찾기
+	void updateMember(@Param("user")MemberVO dbuser);
 
 }
