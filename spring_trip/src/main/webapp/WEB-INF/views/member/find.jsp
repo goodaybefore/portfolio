@@ -16,6 +16,10 @@
 		.tab-container{
 			margin-top : 50px;
 		}
+		.spinner-box{
+			position : absolute; top : calc(50vh - 16px);
+			left : calc(50vw - 16px); width : 32px; height : 32px;
+		}
 	</style>
 <body>
 	<div class="container body tab-container">
@@ -53,7 +57,7 @@
 				    <input type="text" class="form-control" name="me_id" placeholder="아이디 입력">
 			    </div>
 		    </div>
-		    <button class="btn fit btn-find-pw primary">비밀번호 찾기</button>
+		    	<button class="btn fit btn-find-pw primary">비밀번호 찾기</button>
 		  </div>
 		</div>
 	</div>
@@ -81,6 +85,7 @@
 		        }
 			});
 		});
+		
 		$('.btn-find-pw').click(function(){
 			var me_email = $(this).siblings().find('[name=me_email]').val();
 			var me_id= $(this).siblings().find('[name=me_id]').val();
@@ -88,6 +93,8 @@
 					me_email : me_email,
 					me_id : me_id
 			};
+			$('.btn-find-pw').text('');
+			$('.btn-find-pw').html('<div class="spinner-box"><div class="spinner-border"></div></div>');
 			setTimeout(()=> {
 				$.ajax({
 			    	async : false,
@@ -97,16 +104,16 @@
 			        //화면이 서버로 보낸 데이터의 타입
 			        contentType:"application/json; charset=UTF-8",
 			        success : function(res){
-						if(res == 'true'){
-							alert('등록된 이메일로 비밀번호를 전송하였습니다.');
-						}else if(res == 'false'){
-							alert('비밀번호 전송에 실패하였습니다. 다시 시도해주세요.');
+								if(res == 'true'){
+									alert('등록된 이메일로 비밀번호를 전송하였습니다.');
+								}else if(res == 'false'){
+									alert('비밀번호 전송에 실패하였습니다. 다시 시도해주세요.');
+								}
+								else if(res == 'error'){
+									alert('비밀번호 전송에 실패하였습니다. 관리자에게 문의해주세요.');
+								}
+								$('.btn-find-pw').text('비밀번호찾기');
 						}
-						else if(res == 'error'){
-							alert('비밀번호 전송에 실패하였습니다. 관리자에게 문의해주세요.');
-						}
-						$('.spinner-box').hide();
-			        }
 				});
 			},100)
 			
