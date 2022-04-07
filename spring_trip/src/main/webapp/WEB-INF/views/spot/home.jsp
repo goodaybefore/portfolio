@@ -18,20 +18,16 @@
 								<section id="banner">
 									<div class="content">
 										<header>
-											<h1>My Spot Home</h1>
-											<p>${menu}</p>
+											<h1 style="width : 100%;">My Spot Home</h1>
 											<c:if test="${user == null}">
 												<p>로그인하면 더 많은 기능을 사용할 수 있습니다!</p>
 											</c:if>
+											<c:if test="${user !=null }">
+												<p>${user.me_id }의 여행 다이어리에 오신 것을 환영합니다!</p>
+											</c:if>
+											<div style="height : 500px; width : 100%;"></div>
 										</header>
-										<p>${user}</p>
-										<ul class="actions">
-											<li><a href="#" class="button big">Learn More</a></li>
-										</ul>
 									</div>
-									<span class="image object">
-										<img src="/resources/images/myspot/pic10.jpg" alt="" />
-									</span>
 								</section>
 
 							<!-- Section -->

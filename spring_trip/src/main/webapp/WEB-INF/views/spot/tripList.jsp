@@ -24,16 +24,16 @@
 									<div class="content">
 										<header>
 											<h1>TRIP LIST</h1>
-											<p>여행지 목록을 등록해보세요<br>${pm }<br>tripList : ${tripList }</p>
+											<p>여행지 목록을 등록해보세요</p>
 										</header>
 										<table class="table table-hover" style="table-layout: fixed;">
 										  <thead>
 										    <tr>
 										      <th scope="col" style="width:50px;">num</th>
 										      <th scope="col" style="width:100px;" class="">area</th>
-										      <th scope="col" class="col-12 " style="min-width:200px;">trip title</th>
+										      <th scope="col" class="col-12 " style="min-width:200px; width:200px;">trip title</th>
 										      <th scope="col" class="text-center" style="width:150px;">period</th>
-										      <th scope="col" class="text-center" style="width:100px;">with</th>
+										      <th scope="col" class="text-center" style="width:120px;">with</th>
 										      <th scope="col" class="text-center" style="width:120px;">공개범위</th>
 										      <th scope="col" class="text-center" style="width:50px;">즐찾</th>
 										    </tr>
@@ -55,7 +55,7 @@
 										  			</c:if>
 										  		
 										  		</td>
-										  		<td>아직안함</td>
+										  		<td>${tripList.tr_with}</td>
 										  		<td>${tripList.tr_op_name }</td>
 										  		<td class="text-center">*</td>
 										  	</tr>

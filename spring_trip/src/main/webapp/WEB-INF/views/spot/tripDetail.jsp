@@ -82,7 +82,6 @@
 									<header>
 										<h1>Detail</h1>
 										<p>여행 정보 상세 + 활동정보 관리</p>
-										acAdList : ${acAdList }<br>
 									</header>
 									<div class="trip-detail">
 										<div class="btn-group">
@@ -90,7 +89,7 @@
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
 											</c:if>
-											<c:if test="${isManager == 'true' && isPurchased == 'false'}">
+											<c:if test="${isManager == 'false' && isPurchased == 'false'}">
 												<input type="button" class="btn-purchase" id="check_module" value="purchase"/>
 												<div class="purchase-container"></div>
 											</c:if>
@@ -150,7 +149,7 @@
 											      <th scope="col" class="col-12 " style="min-width:200px;">activity title</th>
 											      <th scope="col" class="text-center" style="width:150px;">date</th>
 											      <th scope="col" class="text-center" style="width:100px;">sort</th>
-											      <th scope="col" class="text-center" style="width:120px;">공개범2위</th>
+											      <th scope="col" class="text-center" style="width:120px;">공개범위</th>
 											    </tr>
 											  </thead>
 											  <tbody>
