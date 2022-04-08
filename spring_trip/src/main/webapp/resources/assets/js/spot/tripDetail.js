@@ -14,8 +14,8 @@ $(function() {
 		
 		var dateCalc = endDate - startDate;
 		var resDay = 24 * 60 * 60 * 1000; //시*분*초*밀리세컨
-		console.log('여행 기간 : '+dateCalc/resDay+'일');
-		$('.trip-period').html('('+dateCalc/resDay+'일)');
+		console.log('여행 기간 : '+((dateCalc/resDay)+1)+'일');
+		$('.trip-period').html('('+((dateCalc/resDay)+1)+'일)');
 	}
 	
 	

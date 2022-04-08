@@ -103,7 +103,9 @@
 										</div>
 										
 										<div class="trip-map-container">
-										<button id="btnMaps" onclick="setBounds()">지도재설정!</button>
+										<c:if test="${acAdList!=''}">
+											<button id="btnMaps" style="display:none;" onclick="setBounds()">지도재설정!</button>
+										</c:if>
 											<div id="map" style="width : 100%; height:400px; min-width:500px;"></div>
 										</div>
 										
@@ -129,7 +131,13 @@
 											</div>
 											<div class="with-container">
 												<label class="detail-label">함께한 사람들</label>
-												<p>${trip.tr_with}</p>
+												<c:if test="${trip.tr_with == '' }">
+													<p>함께한 사람이 없습니다.</p>
+												</c:if>
+												<c:if test="${trip.tr_with != '' }">
+													<p>${trip.tr_with }</p>
+												</c:if>
+												
 											</div>
 											<div class="file-container">
 												<label class="detail-label">첨부파일</label>
@@ -222,14 +230,10 @@
 				map = new kakao.maps.Map(mapContainer, mapOption);
 				return;
 			}
-			
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		    	mapOption = {
-						center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-		      	level: 3 // 지도의 확대 레벨
-		    	};
-			map = new kakao.maps.Map(mapContainer, mapOption);
-			
+			else{
+				
+				showDefaultMap();
+				
 			//주소를 좌표로 변환하는 코드
 			var callback = function(result, status){
 				if(status ==kakao.maps.services.Status.OK){
@@ -238,12 +242,12 @@
 				}
 			}
 			
+			
 			for(i=0;i<address_list.length;i++){
 				geocoder.addressSearch(address_list[i], callback);
 			}
 			
 			//배열에 들어간 coordList 사용하기
-			console.log('not timeout : '+coordList);
 			setTimeout(function(){
 				console.log(coordList);
 				
@@ -253,7 +257,19 @@
 					marker.setMap(map);
 					bounds.extend(coordList[i]);
 				}
+				$('#btnMaps').click();
 			}, 200);
+			}
+			
+			//기본지도 출력
+			function showDefaultMap(){
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    	mapOption = {
+						center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		      	level: 3 // 지도의 확대 레벨
+		    	};
+				map = new kakao.maps.Map(mapContainer, mapOption);
+			}
 			
 			
 			
