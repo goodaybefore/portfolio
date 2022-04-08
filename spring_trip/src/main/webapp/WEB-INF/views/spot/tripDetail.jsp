@@ -89,7 +89,7 @@
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripModify?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>modify</button></a>
 												<a href="<%=request.getContextPath()%>/spot/${spot_user}/tripDelete?tr_num=${trip.tr_num}" style="border-bottom : none;"><button>delete</button></a>
 											</c:if>
-											<c:if test="${isManager == 'false' && isPurchased == 'false'}">
+											<c:if test="${isManager == 'true' && isPurchased == 'false'}">
 												<input type="button" class="btn-purchase" id="check_module" value="purchase"/>
 												<div class="purchase-container"></div>
 											</c:if>
