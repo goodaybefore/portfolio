@@ -103,6 +103,7 @@
 										</div>
 										
 										<div class="trip-map-container">
+										<button id="btnMaps" onclick="setBounds()">지도재설정!</button>
 											<div id="map" style="width : 100%; height:400px; min-width:500px;"></div>
 										</div>
 										
@@ -191,34 +192,69 @@
 		
 	<script src="/resources/assets/js/spot/tripDetail.js"></script>
 	<script>
+
+		var geocoder = new kakao.maps.services.Geocoder();
+		var bounds = new kakao.maps.LatLngBounds();
+		var map;
 		$(function(){
-			//detail 지도 표시
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-				center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	      level: 3 // 지도의 확대 레벨
-	    };
-			//지도 생성
-			var map = new kakao.maps.Map(mapContainer, mapOption);
-			
+			//주소-좌표 변환 객체를 생성
+			var coordList = [];
+			var coords;
+			var address_list;
 			
 			//addobject로 받은주소를 리스트에 넣기
 			if('${acAdList}' != ''){
-				var address_list = new Array();
+				address_list = new Array();
 				<c:forEach items="${acAdList}" var="item1">
 				address_list.push("${item1}");
 				</c:forEach>
-				for(var i=0;i<address_list.length;i++){
-					console.log(address_list[i]);
+				console.log('acAdList를 array로 변환 완료')
+			}
+			
+			//address_list가 없을때
+			if(address_list == ''){
+				//detail 지도 표시
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    mapOption = {
+					center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		      level: 3 // 지도의 확대 레벨
+		    };
+				map = new kakao.maps.Map(mapContainer, mapOption);
+				return;
+			}
+			
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		    	mapOption = {
+						center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		      	level: 3 // 지도의 확대 레벨
+		    	};
+			map = new kakao.maps.Map(mapContainer, mapOption);
+			
+			//주소를 좌표로 변환하는 코드
+			var callback = function(result, status){
+				if(status ==kakao.maps.services.Status.OK){
+					coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					coordList.push(coords);
 				}
 			}
 			
-			//주소 마커표시
+			for(i=0;i<address_list.length;i++){
+				geocoder.addressSearch(address_list[i], callback);
+			}
 			
-			//주소-좌표 변환 객체를 생성
-			var geocoder = new kakao.maps.services.Geocoder();
-			//주소로 좌표검색
-			searchCoordinates(address_list[0]);
+			//배열에 들어간 coordList 사용하기
+			console.log('not timeout : '+coordList);
+			setTimeout(function(){
+				console.log(coordList);
+				
+				var marker;
+				for(var i=0;i<coordList.length;i++){
+					marker = new kakao.maps.Marker({position : coordList[i]})
+					marker.setMap(map);
+					bounds.extend(coordList[i]);
+				}
+			}, 200);
+			
 			
 			
 			
@@ -255,7 +291,7 @@
 		        		
 		        		console.log('결제내역 추가 동작');
 		        		console.log('result : '+res.result);
-		        		if(res.result == 'failed'){
+		        		if(res.result == 'failed'){''
 		        			alert('잘못된 결제 접근입니다. 결제를 다시 시도해주세요.')
 		        			return ;
 		        		}
@@ -280,14 +316,17 @@
 				        alert(msg);
 				    }
 				});
+				
+				
 			});
 			
 			function searchCoordinates(address_str){
-				var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png'; 
+				var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+				var coords;
 				geocoder.addressSearch(address_str, function(result, status) {
 				    // 정상적으로 검색이 완료됐으면 
 				     if (status === kakao.maps.services.Status.OK) {
-				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				        coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 				        // 결과값으로 받은 위치를 마커로 표시합니다
 				        var marker = new kakao.maps.Marker({
 				            map: map,
@@ -298,8 +337,14 @@
 				        }
 				    });
 			}
+			
+			
 		});
-		
+		function setBounds() {
+		    // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+		    // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+		    map.setBounds(bounds);
+		}
 		var win = window;
 		var ok = false;
 		function openChild(){
