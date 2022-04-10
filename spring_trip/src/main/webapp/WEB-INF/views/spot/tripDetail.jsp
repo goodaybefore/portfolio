@@ -218,7 +218,7 @@
 				</c:forEach>
 				console.log('acAdList를 array로 변환 완료')
 			}
-			
+			console.log('address_list.length : '+address_list.length);
 			//address_list가 없을때
 			if(address_list == ''){
 				//detail 지도 표시

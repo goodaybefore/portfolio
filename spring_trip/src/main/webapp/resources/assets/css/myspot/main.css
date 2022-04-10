@@ -1864,7 +1864,8 @@ button,
   flex-shrink: 1;
   width: 100%; }
   #main > .inner {
-    padding: 0 6em 0.1em 6em ;
+    /*padding: 0 6em 0.1em 6em ;*/
+    padding : 0px;
     margin: 0 auto;
     max-width: 110em; }
     #main > .inner > section {

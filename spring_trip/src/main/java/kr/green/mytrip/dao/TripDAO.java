@@ -16,6 +16,8 @@ import kr.green.mytrip.vo.SpotMenuVO;
 import kr.green.mytrip.vo.TripVO;
 
 public interface TripDAO {
+	//spot_home
+	List<String> selectTripPoints(@Param("spot_user")String spot_user);
 	
 	//여행지 장소
 	List<MiddleCategoryVO> selectMiddleCategory(@Param("lc_num")Integer lc_num);
@@ -83,6 +85,7 @@ public interface TripDAO {
 	MemberVO selectMemberInfo(@Param("me_id")String tr_me_id);//여행결제
 	ChargeTripVO selectChargedRecord(@Param("tr_num")Integer tr_num,
 			@Param("me_id")String me_id);//해당 여행에대해 로그인한 사용자가 결제했는지 안했는지 알아보기
+	
 	
 	
 	

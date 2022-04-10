@@ -1,5 +1,6 @@
 package kr.green.mytrip.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -339,6 +340,10 @@ public class TripServiceImp implements TripService{
 	@Override
 	public List<String> getActAddressList(Integer tr_num) {
 		return tripDao.selectActivityAddressList(tr_num);
+	}
+	@Override
+	public List<String> getTripPoints(String spot_user) {
+		return tripDao.selectTripPoints(spot_user);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,16 +53,20 @@ public class TripController {
 	String[] managers = { "트립매니저", "트립서포터" };
 	
 	@GetMapping({"{spot_user}/home", "/home", "/{spot_user}"})
-	
-	
 	public ModelAndView spotUserHome(@PathVariable(required=false, value="spot_user")String spot_user, ModelAndView mv,
 			HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		//spot_user의 여행목록가져오기
+		List<String> points = tripService.getTripPoints(spot_user);
+		points.removeAll(Arrays.asList("", null));
+		System.out.println("points.length : "+points.size());
+		System.out.println("points : "+points);
 		//해당 유저의 trip 정보 가져오기 - spot user의 공개범위에 따라 현재 로그인한 user에게 보여줄 범위를 가져옴
 		//tripService.getTripList(spot_user, user);
-
+		mv.addObject("points", points);
 		mv.addObject("user", user);
 		mv.addObject("spot_user", spot_user);
+		
 		mv.setViewName("/spot/home");
 		return mv;
 	}
