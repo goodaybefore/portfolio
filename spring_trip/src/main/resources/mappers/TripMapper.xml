@@ -98,7 +98,7 @@
 	<update id="deleteTripActivity">
 		UPDATE activity
 		SET
-			ac_del='Y'
+			ac_del='Y',
 			del_date = now()
 		WHERE ac_tr_num = #{tr_num};
 	</update>

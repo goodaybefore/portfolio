@@ -59,8 +59,6 @@ public class TripController {
 		//spot_user의 여행목록가져오기
 		List<String> points = tripService.getTripPoints(spot_user);
 		points.removeAll(Arrays.asList("", null));
-		System.out.println("points.length : "+points.size());
-		System.out.println("points : "+points);
 		//해당 유저의 trip 정보 가져오기 - spot user의 공개범위에 따라 현재 로그인한 user에게 보여줄 범위를 가져옴
 		//tripService.getTripList(spot_user, user);
 		mv.addObject("points", points);
@@ -298,17 +296,17 @@ public class TripController {
 	
 	
 	//여행지 삭제(delete)
-	@RequestMapping(value = "/tripDelete", method = RequestMethod.GET)
-	public ModelAndView tripDelete(ModelAndView mv, HttpServletRequest request, Integer tr_num) {
+	@RequestMapping(value = "/{spot_user}/tripDelete", method = RequestMethod.GET)
+	public ModelAndView tripDelete(ModelAndView mv, HttpServletRequest request, Integer tr_num,
+			@PathVariable(required=false, value="spot_user")String spot_user) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		System.out.println();
 		TripVO dbTrip = tripService.selectTrip(tr_num);
 
 		if(tripService.deleteTrip(user, dbTrip)){
 			System.out.println("삭제성공");
-			mv.setViewName("redirect:/"+user.getMe_id()+"/tripList/"+dbTrip.getTr_sm_num());
+			mv.setViewName("redirect:/"+spot_user+"/tripList/"+dbTrip.getTr_sm_num());
 		}else {
-			mv.setViewName("redirect:/"+user.getMe_id()+"/tripDetail/"+dbTrip.getTr_sm_num()+"/"+dbTrip.getTr_num());
+			mv.setViewName("redirect:/"+spot_user+"/tripDetail/"+dbTrip.getTr_sm_num()+"/"+dbTrip.getTr_num());
 		}
 		
 		return mv;
@@ -342,11 +340,6 @@ public class TripController {
 	public ModelAndView tripCopySelectInsertMenuPost(ModelAndView mv, HttpServletRequest request, Integer sm_num,
 			Integer tr_num,	HttpServletResponse response, Integer copy_sm_num) throws IOException {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		//System.out.println("user : "+user);
-		
-		
-		System.out.println("selectMenuCategory.copy_sm_num : "+copy_sm_num);
-		System.out.println("tr_num : "+tr_num);
 		TripVO copyTrip = tripService.getTripDetail(tr_num);
 
 		//jsp 파일에 script를 쓰기 위한 초석작업

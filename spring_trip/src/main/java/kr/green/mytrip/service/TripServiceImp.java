@@ -301,7 +301,6 @@ public class TripServiceImp implements TripService{
 				copyActList.get(i).setAc_me_id(user);
 				copyActList.get(i).setAc_tr_num(copyTrip.getTr_num());
 				tripDao.insertActivity(copyActList.get(i));
-				System.out.println(copyActList.get(i));
 			}
 		}
 		
@@ -315,10 +314,13 @@ public class TripServiceImp implements TripService{
 	@Override
 	public boolean insertChargeRecord(ChargeTripVO chargeTrip) {
 		TripVO dbTrip = tripDao.selectTrip(chargeTrip.getCh_tr_num());
+		System.out.println("chargeTrip.getCh_tr_num()"+chargeTrip.getCh_tr_num());
 		if(dbTrip == null) return false;
 		//trip작성자가 관리자가 아닐경우 return false 하기
 		MemberVO dbUser = tripDao.selectMemberInfo(dbTrip.getTr_me_id());
-		if(dbUser.getMe_gr_name().equals("트립매니저") || dbUser.getMe_gr_name().equals("트립서포터")) return false;
+		System.out.println("dbUser의 회원등급 : "+dbUser.getMe_gr_name());
+		if(!dbUser.getMe_gr_name().equals("트립매니저") && !dbUser.getMe_gr_name().equals("트립서포터")) return false;
+		
 		if(chargeTrip.getCh_amount() != dbTrip.getTr_charge()) return false;
 		
 		tripDao.insertChargeRecord(chargeTrip);

@@ -279,6 +279,7 @@
 			var userId = '${user.me_id}';
 			var isSuccess = false; 
 			$('#check_module').click(function(){
+				console.log()
 				IMP.init('imp19089190');
 
 				IMP.request_pay({
@@ -304,10 +305,11 @@
 		        	dataType : "json",
 		        	contentType:"application/json; charset=UTF-8",
 		        	success : function(res){
-		        		
 		        		console.log('결제내역 추가 동작');
 		        		console.log('result : '+res.result);
-		        		if(res.result == 'failed'){''
+		        		
+		        		if(res.result == 'failed'){
+		        			console.log('result : '+res.result);
 		        			alert('잘못된 결제 접근입니다. 결제를 다시 시도해주세요.')
 		        			return ;
 		        		}
