@@ -13,12 +13,25 @@
 		.logo{
 			padding-left : 50px !important;
 		}
+		.header-logo{
+			list-style : none;
+			padding-left : 0px !important;
+			
+		}
+		.header-logo-li{
+			float : left !important;
+			margin-right : 30px;
+		}
 		</style>
 	</head>
 	<body>
 		<!-- Header -->
 		<header id="header">
-			<a href="/" class="logo"><strong>My Trip List</strong> ${spot_user}</a>
+			
+			<ul class="header-logo">
+				<li class="header-logo-li">my Trip Spot</li>
+				<li class="header-logo-li"><a href="<%=request.getContextPath()%>/spot/${spot_user}/home">${spot_user }</a></li>
+			</ul>
 			<ul class="icons">
 				<c:if test="${user==null}"><li><a href="<%=request.getContextPath()%>/" class=""><span class="label">login</span></a></li></c:if>
 				<c:if test="${user!=null}"><li><a href="<%=request.getContextPath()%>/logout" class=""><span class="label">logout</span></a></li></c:if>
