@@ -3,7 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.green.mytrip.dao.MateDAO">
-
+	<select id="selectMateList" resultType="kr.green.mytrip.vo.TripmateVO">
+		SELECT * FROM tripmate
+		WHERE tm_me_id = #{me_id} AND tm_mate_id != '';
+	</select>
 
 
 </mapper>
