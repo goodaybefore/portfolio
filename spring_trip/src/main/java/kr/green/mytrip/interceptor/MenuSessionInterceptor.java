@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import kr.green.mytrip.service.MateService;
 import kr.green.mytrip.service.MemberService;
 import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.SpotMenuVO;
@@ -17,6 +18,8 @@ import kr.green.mytrip.vo.SpotMenuVO;
 public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	MateService mateService;
 	@Override
 	public boolean preHandle(HttpServletRequest request, 
 			HttpServletResponse response, 
@@ -25,6 +28,7 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String[] url = request.getServletPath().split("/");
+		String isTripmate = "false";
 		
 		List<SpotMenuVO> menuList = null;
 		String thisUser = null;
@@ -35,17 +39,18 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 				return false;
 			}
 			thisUser = user.getMe_id();
-			menuList = memberService.getMenuList(user.getMe_id());
+			
 		}else if(url.length == 3 && url[1].equals("board")) {
 			thisUser = user.getMe_id();
-			menuList = memberService.getMenuList(thisUser);
+			
 		}
 		//'/spot/(~~)' 형식
 		else if(!url[2].isEmpty() && url[1].equals("spot")) {
 			thisUser = url[2];
-			menuList = memberService.getMenuList(thisUser);
-			//System.out.println("url[2] : "+thisUser);
+			isTripmate = mateService.isTripmate(user.getMe_id(), thisUser);
 		}
+		
+		menuList = memberService.getMenuList(thisUser);
 		
 		if(thisUser == null) {
 			System.out.println("==========");
@@ -78,7 +83,7 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			HttpSession session = request.getSession();
 			session.setAttribute("menu", menuList);
 			session.setAttribute("spot_user", thisUser);
-			
+			session.setAttribute("isTripmate", isTripmate);
 			return true;
 		}
 	}

@@ -7,6 +7,10 @@
 		SELECT * FROM tripmate
 		WHERE tm_me_id = #{me_id} AND tm_mate_id != '';
 	</select>
-
+	
+	<select id="selectTripmate" resultType="kr.green.mytrip.vo.TripmateVO">
+		SELECT * FROM tripmate
+		WHERE tm_me_id = #{me_id_1} AND tm_mate_id = #{me_id_2};
+	</select>
 
 </mapper>

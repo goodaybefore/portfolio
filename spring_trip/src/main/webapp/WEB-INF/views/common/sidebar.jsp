@@ -32,12 +32,17 @@
 							</c:forEach>
 							</ul>
 						</li>
+						<c:if test="${user.me_id != spot_user && user.me_id !=null && isTripmate == 'false'}">
+							<li>
+								<a href="#">request tripmate</a>
+							</li>
+						</c:if>
 						<c:if test="${user.me_id == spot_user && user.me_id !=null}">
 						<li>
 							<span class="opener">Tripmate</span>
 							<ul>
-								<li><a href="#">request</a></li>
-								<li><a href="<%=request.getContextPath()%>/spot/${user.me_id}/tripmate/friendList">my tripmates</a></li>
+								<li><a href="<%=request.getContextPath()%>/spot/${user.me_id}/tripmate/tripmateRequest">request</a></li>
+								<li><a href="<%=request.getContextPath()%>/spot/${user.me_id}/tripmate/tripmateList">my tripmates</a></li>
 							</ul>
 						
 						</li>

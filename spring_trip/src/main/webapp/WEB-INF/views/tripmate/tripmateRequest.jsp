@@ -15,30 +15,47 @@
 							<section id="banner">
 							<div class="content">
 								<header>
-									<h1>TRIPMATE LIST</h1>
-									<p>트립메이트 리스트</p>
+									<h1>TRIPMATE Request</h1>
+									<p>트립메이트 신청</p>
 								</header>
-								<div class="tripmate-list-container">
-									<table class="table table-hover" style="table-layout: fixed;">
-										  <thead>
-										    <tr>
-										    	<th scpoe="col" style="width:50px;">num</th>
-										      <th scope="col" style="width:150px;">user ID</th>
-										      <th scope="col" style="width:200px;" class="">user spot home</th>
-										      
-										    </tr>
-										  </thead>
-										  <tbody>
-										  <c:forEach items="${mateList }" var="mateList">
-										  	<tr>
-										  		 <td>${mateList.tm_num }</td>
-										  		 <td>${mateList.tm_mate_id }</td>
-										  		 <td><a href="#">spot home</a></td>
-										  	</tr>
-										  </c:forEach>
-										  </tbody>
+								<section>
+								<h3>내가 보낸 트립메이트 신청</h3>
+									<div class="tripmate-receive-container">
+										<table class="table table-hover" style="table-layout: fixed">
+											<thead>
+												<tr>
+													<th>num</th>
+													<th>id</th>
+													<th>user spot home</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+											</tbody>
 										</table>
-								</div>
+									</div>
+								</section>
+								
+								<section>
+								<h3>나에게 온 트립메이트 신청</h3>
+									<div class="tripmate-list-container">
+										<table class="table table-hover" style="table-layout: fixed;">
+											  <thead>
+											    <tr>
+											    	<th scpoe="col" style="width:50px;">num</th>
+											      <th scope="col" style="width:150px;">user ID</th>
+											      <th scope="col" style="width:200px;" class="">user spot home</th>
+											    </tr>
+											  </thead>
+											  <tbody>
+											  </tbody>
+											</table>
+									</div>
+								</section>
 							</div>
 						</section>
 						</div>
