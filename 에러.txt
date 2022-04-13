@@ -1,0 +1,18 @@
+새창에서 만든 copy 버튼을 눌렀을 때
+post동작을 하는 form을 통해 데이터가 넘어오고 + 자동으로 창이 닫히는(window.close()) 동작을 함께 수행하고 싶음.
+현재 안됨.
+
+- out.println()에 적을 때 "<script></script>" 를 넣어서 코드 작성하기
+
+
+그래도 에러는 뜸
+
+
+에러1)  mv.setViewName()을 호출했을 때 발생 =>  응답(response)을 보낸 후에 setViewName을 하지말라는 뜻 같아보임
+에러내용)java.lang.IllegalStateException: 응답이 이미 커밋된 후에는, sendRedirect()를 호출할 수 없습니다.
+
+에러2)  mv.setViewName()을 지정해주지 않았을 때 발생 => 이하 경로에 jsp파일이 없다...??
+에러내용) 파일 [&#47;WEB-INF&#47;views&#47;spot&#47;qwer&#47;tripDetail&#47;1&#47;selectMenuCategory.jsp를 찾을 수 없습니다
+
+
+==> redirect:/로 보내지말고 그냥 /spot/tripCopySelectMenu 경로로 보내주면 해결
