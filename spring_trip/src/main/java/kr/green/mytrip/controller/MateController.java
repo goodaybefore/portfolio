@@ -41,7 +41,6 @@ public class MateController {
 			@PathVariable(required=false, value="spot_user")String spot_user) {
 		String isTripmate = (String)request.getSession().getAttribute("isTripmate");
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		System.out.println("isTripmate : "+isTripmate);
 		
 		if(!user.getMe_id().equals(spot_user)) mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripmate/tripmateRequest");
 		else mv.setViewName("/tripmate/tripmateRequest");
