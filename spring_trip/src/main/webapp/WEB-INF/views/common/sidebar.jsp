@@ -34,7 +34,7 @@
 						</li>
 						<c:if test="${user.me_id != spot_user && user.me_id !=null && isTripmate == 'false'}">
 							<li>
-								<a href="#">request tripmate</a>
+								<a href="javascript:void(0)" onclick="javascript:goTripmateRequest('${spot_user}')">request tripmate</a>
 							</li>
 						</c:if>
 						<c:if test="${user.me_id == spot_user && user.me_id !=null}">
@@ -59,5 +59,30 @@
 				</nav>
 			</div>
 		</div>
+		<script>
+		
+		function goTripmateRequest(spot_user){
+			let newForm = $('<form></form>')
+			//let spot_user = '${spot_user}';
+			
+			let url = getContextPath()+'/'+spot_user+'/tripmate/sendTripmateRequest';
+			console.log('url : '+url);
+			
+			newForm.attr('method', 'post');
+			newForm.attr('action', url);
+			newForm.append($('<input type="hidden" name="spot_user" value="'+spot_user+'"/>'));
+			newForm.appendTo('.opener');
+			document.charset = 'UTF-8';
+			console.log('newForm : '+newForm.html());
+			newForm.submit();
+		}
+		
+		
+		function getContextPath(){
+			var hostIndex = location.href.indexOf(location.host) + location.host.length;
+			var contextPath = location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
+			return contextPath;
+		}
+		</script>
 </body>
 </html>

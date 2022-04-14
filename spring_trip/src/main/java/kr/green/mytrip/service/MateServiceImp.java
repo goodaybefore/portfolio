@@ -29,6 +29,23 @@ public class MateServiceImp implements MateService{
 		else return "false";
 		
 	}
+
+	//트립메이트 신청
+	@Override
+	public String requestTripmate(String me_id, String spot_user) {
+		if(spot_user == null) return "false";
+		String check = "";
+		
+		TripmateVO dbMate = mateDao.checkTripmate(me_id, spot_user);
+		if(dbMate != null) return "duplicated";
+		//tripmate 신청
+		//me_id => 신청한 사용자(tr_me_id)
+		//spot_user => 신청 받은 사용자(tr_mate_id)
+		mateDao.insertTripmate(me_id, spot_user);
+		return "true";
+	}
+
+	
 	
 	
 
