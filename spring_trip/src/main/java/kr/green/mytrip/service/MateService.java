@@ -16,5 +16,9 @@ public interface MateService {
 	List<TripmateVO> getReceiveList(String me_id);
 	//내가 보낸 트립메이트 신청 확인
 	List<TripmateVO> getSendList(String me_id);
+	//내가 보낸 트립메이트 신청 취소
+	boolean mateRequestCancel(String receive_id, String request_id);
+	//내가 받은 트립메이트 신청 반응(수락/거절)
+	boolean tripmateResponse(String request_id, String me_id, boolean response);
 
 }

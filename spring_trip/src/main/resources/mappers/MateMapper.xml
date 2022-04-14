@@ -38,4 +38,13 @@
 		WHERE tq_request_id = #{me_id};
 	</select>
 	
+	<delete id="deleteTripmateRequest">
+	DELETE FROM tripmate_request
+	WHERE tq_receive_id = #{receive_id} AND tq_request_id = #{request_id};
+	</delete>
+	
+	<insert id="insertTripmate">
+		INSERT INTO tripmate( tm_me_id, tm_mate_id)
+		VALUES ( #{request_id}, #{receive_id} );
+	</insert>
 </mapper>

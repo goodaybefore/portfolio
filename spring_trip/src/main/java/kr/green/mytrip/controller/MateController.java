@@ -50,11 +50,12 @@ public class MateController {
 		//내가 보낸(tr_me_id가 로그인된 사용자인) 트립메이트 신청이 있는지 확인
 		List<TripmateVO> sendList = mateService.getSendList(user.getMe_id());
 		
-		System.out.println("receiveList : "+receiveList);
-		System.out.println("sendList : "+sendList);
-		
 		if(!user.getMe_id().equals(spot_user)) mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripmate/tripmateRequest");
-		else mv.setViewName("/tripmate/tripmateRequest");
+		else {
+			mv.addObject("receiveList", receiveList);
+			mv.addObject("sendList", sendList);
+			mv.setViewName("/tripmate/tripmateRequest");
+		}
 		return mv;
 	}
 	
@@ -79,4 +80,31 @@ public class MateController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/tripmate/tripmateCancel", method = RequestMethod.GET)
+	public ModelAndView friendRequestGet(ModelAndView mv, String receive_id, HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println("request ID : "+receive_id);
+		if(mateService.mateRequestCancel(receive_id, user.getMe_id())) {
+			System.out.println("트립메이트 신청 취소 완료");
+		}else {
+			System.out.println("트립메이트 신청 취소 실패");
+		}
+		mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripmate/tripmateRequest");
+		return mv;
+	}
+	
+	@RequestMapping(value="/tripmate/tripmateResponse", method = RequestMethod.GET)
+	public ModelAndView friendResponseGet(ModelAndView mv, String request_id, boolean response,
+			HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println("response : "+response);
+		System.out.println("requset_id : "+request_id);
+		if(mateService.tripmateResponse(request_id, user.getMe_id(), response)) {
+			System.out.println("응답성공 : "+response);
+		}else {
+			System.out.println("응답실패");
+		}
+		mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripmate/tripmateRequest");
+		return mv;
+	}
 }

@@ -23,5 +23,10 @@ public interface MateDAO {
 	//내가 받은 트립메이트 신청 확인
 	List<TripmateVO> tripmateReceived(@Param("me_id")String me_id);
 	List<TripmateVO> tripmateRequest(@Param("me_id")String me_id);
+	//트립메이트 신청 취소하기
+	void deleteTripmateRequest(@Param("request_id")String request_id, @Param("receive_id")String receive_id);
+	
+	//트립메이트 등록
+	void insertTripmate(@Param("receive_id")String receive_id, @Param("request_id")String request_id);
 
 }

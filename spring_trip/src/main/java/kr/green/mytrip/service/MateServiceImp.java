@@ -62,6 +62,37 @@ public class MateServiceImp implements MateService{
 		else return null;
 	}
 
+	@Override//request : user
+	public boolean mateRequestCancel(String receive_id, String request_id) {
+		TripmateRequestVO rqCheck = mateDao.checkTripmateRequest(request_id, receive_id);
+		System.out.println("rqCheck : "+rqCheck);
+		if(rqCheck ==null) return false;
+		else {
+			mateDao.deleteTripmateRequest(request_id, receive_id);
+			return true;
+		}
+		
+	}
+
+	@Override
+	public boolean tripmateResponse(String request_id, String me_id, boolean response) {
+		if(request_id == null) return false;
+		if(response == true) {
+			System.out.println("true!");
+			//수락
+			mateDao.insertTripmate(me_id, request_id);
+			mateDao.insertTripmate(request_id, me_id);
+			mateDao.deleteTripmateRequest(request_id, me_id);
+			return true;
+		}else if(response == false) {
+			System.out.println("false!");
+			//거절
+			mateDao.deleteTripmateRequest(request_id, me_id);
+			return true;
+		}
+		return false;
+	}
+
 	
 	
 	
