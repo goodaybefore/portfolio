@@ -19,11 +19,11 @@ import kr.green.mytrip.vo.MemberVO;
 import kr.green.mytrip.vo.TripmateVO;
 
 @Controller
-@RequestMapping(value="/spot/{spot_user}/tripmate")
+@RequestMapping(value="/spot/{spot_user}")
 public class MateController {
 	@Autowired
 	MateService mateService;
-	@RequestMapping(value="/tripmateList", method = RequestMethod.GET)
+	@RequestMapping(value="/tripmate/tripmateList", method = RequestMethod.GET)
 	public ModelAndView friendListGet(ModelAndView mv, HttpServletRequest request ) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		if(user == null) {
@@ -39,18 +39,26 @@ public class MateController {
 		return mv;
 	}
 	
-	@RequestMapping(value="/tripmateRequest", method = RequestMethod.GET)
+	@RequestMapping(value="/tripmate/tripmateRequest", method = RequestMethod.GET)
 	public ModelAndView friendRequestGet(ModelAndView mv, HttpServletRequest request,
 			@PathVariable(required=false, value="spot_user")String spot_user) {
 		String isTripmate = (String)request.getSession().getAttribute("isTripmate");
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		
+		//내가 받은(tm_mate_id가 로그인된 사용자인) 트립메이트 신청이 있는지 확인
+		List<TripmateVO> receiveList = mateService.getReceiveList(user.getMe_id());
+		//내가 보낸(tr_me_id가 로그인된 사용자인) 트립메이트 신청이 있는지 확인
+		List<TripmateVO> sendList = mateService.getSendList(user.getMe_id());
+		
+		System.out.println("receiveList : "+receiveList);
+		System.out.println("sendList : "+sendList);
 		
 		if(!user.getMe_id().equals(spot_user)) mv.setViewName("redirect:/spot/"+user.getMe_id()+"/tripmate/tripmateRequest");
 		else mv.setViewName("/tripmate/tripmateRequest");
 		return mv;
 	}
 	
-	@RequestMapping(value="/sendTripmateRequest", method = RequestMethod.POST)
+	@RequestMapping(value="/tripmate/sendTripmateRequest", method = RequestMethod.POST)
 	public ModelAndView friendRequestPost(ModelAndView mv, String spot_user, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
@@ -59,12 +67,13 @@ public class MateController {
 		PrintWriter out = response.getWriter();
 		//tripmate 신청 insert 성공시
 		if(mateService.requestTripmate(user.getMe_id(), spot_user) == "true") {
-			out.println("<script>alert('트립메이트 신청이 완료되었습니다.');</script>");
+			out.println("<script>alert('트립메이트 신청이 완료되었습니다.');");
 		}else if(mateService.requestTripmate(user.getMe_id(), spot_user) == "duplicated") {
-			out.println("<script>alert('트립메이트 수락 대기중입니다.');</script>");
+			out.println("<script>alert('트립메이트 수락 대기중입니다.');");
 		}else {
-			out.println("<script>alert('트립메이트 신청 대상이 존재하지 않습니다.');</script>");
+			out.println("<script>alert('트립메이트 신청 대상이 존재하지 않습니다.');");
 		}
+		out.println("location.href='/spot/"+user.getMe_id()+"/home';</script>");
 		out.flush();
 		mv.setViewName("/spot/home");
 		return mv;

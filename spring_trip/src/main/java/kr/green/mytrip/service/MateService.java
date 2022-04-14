@@ -11,5 +11,10 @@ public interface MateService {
 	String isTripmate(String me_id, String thisUser);
 	//트립메이트 신청
 	String requestTripmate(String me_id, String spot_user);
+	
+	//내가 받은 트립메이트 신청 확인
+	List<TripmateVO> getReceiveList(String me_id);
+	//내가 보낸 트립메이트 신청 확인
+	List<TripmateVO> getSendList(String me_id);
 
 }

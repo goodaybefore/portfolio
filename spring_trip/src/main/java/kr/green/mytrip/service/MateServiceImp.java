@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.green.mytrip.dao.MateDAO;
+import kr.green.mytrip.vo.TripmateRequestVO;
 import kr.green.mytrip.vo.TripmateVO;
 
 @Service
@@ -34,15 +35,31 @@ public class MateServiceImp implements MateService{
 	@Override
 	public String requestTripmate(String me_id, String spot_user) {
 		if(spot_user == null) return "false";
-		String check = "";
 		
-		TripmateVO dbMate = mateDao.checkTripmate(me_id, spot_user);
-		if(dbMate != null) return "duplicated";
+		TripmateRequestVO dbRequestMate = mateDao.checkTripmateRequest(me_id, spot_user);
+		if(dbRequestMate != null) return "duplicated";
+		
+		TripmateVO dbTripmate = mateDao.checkTripmate(me_id, spot_user);
+		
 		//tripmate 신청
 		//me_id => 신청한 사용자(tr_me_id)
 		//spot_user => 신청 받은 사용자(tr_mate_id)
-		mateDao.insertTripmate(me_id, spot_user);
+		mateDao.insertTripmateRequest(me_id, spot_user);
 		return "true";
+	}
+
+	@Override
+	public List<TripmateVO> getReceiveList(String me_id) {
+		List<TripmateVO> received = mateDao.tripmateReceived(me_id);
+		if(received != null) return received;
+		else return null;
+	}
+
+	@Override
+	public List<TripmateVO> getSendList(String me_id) {
+		List<TripmateVO> request = mateDao.tripmateRequest(me_id);
+		if(request != null) return request;
+		else return null;
 	}
 
 	
