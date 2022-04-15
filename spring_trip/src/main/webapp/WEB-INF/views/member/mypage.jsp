@@ -6,10 +6,13 @@
 		<title>my spot home</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- fontawesome -->
+		 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 		<style>
 		.mypage-box{
 			padding-top : 10px;
 			min-width : 600px;
+			width : ;
 			border : 1px solid #f56a6a;
 			margin-bottom : 10px !important;
 			padding : 5px !important;
@@ -44,6 +47,7 @@
 		}
 		.profile-box{
 			margin : 5px;
+			display:flex;
 		}
 		.profile-img{
 			height : 200px;
@@ -54,17 +58,47 @@
 		}
 		.profile-btn-box{
 			margin-top :5px;
+			margin-left:5px;
 		}
 		.btn-input-profile-img{
 			padding : 6px 25px;
 			background : #f56a6a;
 			color : white;
+			font-weight:white;
 			border-radius : 4px;
 			text-align:center;
 			cursor : pointer;
 			display : inline-block;
 			width : 200px;
-			
+		}
+		.btn-input-profile-img:hover{
+			color:white !important;
+		}
+		
+		.menu-setting-btn{
+			font-weight:bold;
+			padding : 6px 6px;
+			background : white;
+			color : #f56a6a;
+			border-radius : 4px;
+			border : 2px solid #f56a6a;
+			text-align:center;
+			cursor : pointer;
+			display : inline-block;
+			width:55px;
+			height:35px;
+			box-sizing : border-box;
+		}
+		.menu-setting-btn:hover{
+			background : #f56a6a;
+			color : white !important;
+		}
+		.primary{
+			background : #f56a6a;
+			color : white;
+		}
+		.primary:hover{
+			color:white !important;
 		}
 		.phone{
 			width : 250px !important;
@@ -76,7 +110,6 @@
 		.membership-container{
 			
 		}
-		
 		.btn-primary, .btn-primary.disabled, .btn-primary:disabled{
 			background-color : white !important;
 			border-color : white !important;
@@ -95,10 +128,17 @@
 		}
 		
 		.thumb-image, .user-photo-img{
-			width : 200px;
-			height : 200px !important;
+			width : 198px;
+			height : 198px !important;
 		}
 		
+		.height-line{
+			width:1px; height:200px; border-right:1px solid gray; margin-left:15px; margin-right:15px;
+		}
+		
+		.menu-setting-container{
+			display:flex;
+		}
 		</style>
 	</head>
 	<body class="is-preload">
@@ -112,7 +152,7 @@
 								<div class="content">
 									<header>
 										<h1>MyPage</h1>
-										<p>mypage<br>${user }</p>
+										<p>mypage</p>
 									</header>
 										<form action="<%=request.getContextPath()%>/mypage" method="post" enctype="multipart/form-data">
 											<input type="hidden" name="me_id" value="${user.me_id}"/>
@@ -138,7 +178,7 @@
 												</div>
 											</div>
 											<div class="mypage-box profile-container">
-												<label class="mypage-label">profile</label>
+												<label class="mypage-label">profile & menu settings</label>
 												<div class="profile-box">
 													<div class="profile-img">
 														<c:if test="${user.me_photo != null }">
@@ -147,13 +187,26 @@
 														<c:if test="${user.me_photo == null }">no image</c:if>
 													
 													</div>
-													<div class="profile-btn-box">
+													<div class="height-line"></div>
+													<div class="menu-setting-container">
+														<div class="menu-view-box" style="width:170px; height:200px; border:1px solid gray; font-weight:bold; color:black;"></div>
+														<div class="button-container" style="margin-left:10px;">
+															<a class="menu-setting-btn btn-menu-add">add</a>
+															<a class="menu-setting-btn btn-menu-mod">mod</a>
+															<a class="menu-setting-btn btn-menu-del">del</a>
+															<div class="menu-setting-details" style="margin-top:15px; width:100%;display:flex;">
+																
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												<div class="profile-btn-box">
 														<input type="file" multiple accept="image/*" id="fileUpload" name="file" style="display: none">
 														<a class="btn-input-profile-img" href="javascript:;">upload</a>
-														<!-- <input type="file" id="fileUpload" name="file" style="display:none;" value="${user.me_photo}" multiple accept="image/*"/> -->
-													</div>
-													
 												</div>
+												
+												
 											</div>
 											<div class="mypage-box intro-container">
 												<label class="mypage-label">intro</label>
@@ -176,6 +229,7 @@
 												<label class="mypage-label">membership</label>
 												<c:if test="${user.me_membership != 'Y'}">
 													<p>멤버십 사용 기간이 아닙니다.</p>
+													<button class="fit">멤버십 신청하기(30일)</button>
 												</c:if>
 											</div>
 											
@@ -197,6 +251,104 @@
 		
 	<script src="/resources/assets/js/spot/tripDetail.js"></script>
 	<script>
+	$(document).ready(function(){
+		$('.menu-view-box').load('/MemberMenu');
+		
+		//add
+		$('.btn-menu-add').click(function(){
+			console.log('click add');
+			$('.menu-setting-details').html('');
+			var addStr = '';
+			addStr += '<input type="text" name="sm_name" placeholder="메뉴이름입력" style="width:120px; line-height:25px; margin-right:5px;"/>'+
+			'<input type="hidden" name="btn-type" value="add">'+
+			'<a href="#" class="menu-setting-btn primary btn-submit" style="width:50px;"><i class="fas fa-check"></i></a>';
+			$('.menu-setting-details').html(addStr);
+		});
+		
+		//mod
+		$('.btn-menu-mod').click(function(){
+			$('.menu-setting-details').html('');
+			var modStr = '';
+			modStr += '<div><select class="menu-select" style="width:120px"><option value="none;">메뉴선택</option></select><div class="menu"></div>';
+			
+			modStr += '<input type="hidden" name="btn-type" value="mod">'+
+			'<input type="text" class="get-sm-name" name="sm_name" style="width:120px; line-height:25px; margin-right:5px; margin-top:5px;"/></div>'+
+			 '<a href="#" class="menu-setting-btn primary btn-submit" style="width:50px;"><i class="fas fa-check"></i></a>'+
+			'<div class="menu-select-smnum"></div>';
+			$('.menu-setting-details').html(modStr);
+			setMenuModify();
+			
+		})
+		
+		//del
+		$('.btn-menu-del').click(function(){
+			$('.menu-setting-details').html('');
+			var delStr = '';
+			delStr += '<select class="menu-select" style="width:120px"><option value="none;">메뉴선택</option></select><div class="menu"></div>';
+			delStr += '<input type="hidden" name="btn-type" value="del">'+
+			 '<a href="#" class="menu-setting-btn primary btn-submit" style="width:50px; margin-left:5px;"><i class="fas fa-check"></i></a>'+
+			'<div class="menu-select-smnum"></div>';
+			$('.menu-setting-details').html(delStr);
+			setMenuDelete();
+			
+			
+		})
+		
+		
+		
+		$(document).on('click', '.btn-submit', function(){
+			console.log('btn-type : '+ $('[name=btn-type]').val());
+		})
+		
+	
+		
+		function getContextPath(){
+			var hostIndex = location.href.indexOf(location.host)+location.host.length;
+			var contextPath = location.href.substring(hostIndex, location.href.indexOf('/',hostIndex+1));
+			
+		}
+		function setMenuModify(){
+			var userId = '${user.me_id}';
+			setMenuCategory(userId);
+			$('.menu-select').change(function(){
+				let sm_num = $(this).val();
+				let sm_name = $('.menu-select option:selected').text();
+				let sm_ca_str = '<input type="hidden" name="sm_num" value="'+sm_num+'">';
+				$('.menu-select-smnum').html(sm_ca_str);
+				
+				$('.get-sm-name').val(sm_name);
+			});
+		}
+		
+		function setMenuDelete(){
+			var userId = '${user.me_id}';
+			setMenuCategory(userId);
+			$('.menu-select').change(function(){
+				let sm_num = $(this).val();
+				let sm_ca_str = '<input type="hidden" name="sm_num" value="'+sm_num+'">';
+				$('.menu-select-smnum').html(sm_ca_str);
+				
+			});
+		}
+		function setMenuCategory(userId){
+			let str='<option value="0">메뉴선택</option>';
+			$.ajax({
+				async :false,
+			    type:'get',
+			    url : '/mypage/menuCategory?userId='+userId,
+			    dataType:"json",
+			    success : function(res){
+			    	for(menu of res.list){
+			    		str += '<option value="'+menu.sm_num+'">'+menu.sm_name+'</option>';
+			    	}
+			    	
+			    	$('.menu-select').html(str);
+			    	}
+			})
+			
+		}
+		
+	})
 	$("#fileUpload").on('change', function () {
 
 	    //Get count of selected files

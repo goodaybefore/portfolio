@@ -3,7 +3,9 @@
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.green.mytrip.service.MemberService;
 import kr.green.mytrip.vo.MemberVO;
+import kr.green.mytrip.vo.MiddleCategoryVO;
 import kr.green.mytrip.vo.SpotMenuVO;
 
 @Controller
@@ -45,7 +48,7 @@ public class HomeController {
 	public ModelAndView loginPost(ModelAndView mv, MemberVO input) {
 		MemberVO user = memberService.loginMember(input);
 		if(user == null) {
-			mv.setViewName("redirect:/board/list");
+			mv.setViewName("redirect:/");
 		}else{
 			//회원의 사용자메뉴리스트 불러오기
 			List<SpotMenuVO> menu = memberService.getMenuList(user.getMe_id());
@@ -89,13 +92,15 @@ public class HomeController {
 	public ModelAndView mypageGet(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
+		List<SpotMenuVO> menuList = memberService.getMenuList(user.getMe_id());
+		
 		System.out.println("user"+user);
 		if(!user.getMe_id().equals(spot_user))
 			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/home");
 		else {
+			mv.addObject("menuList", menuList);
 			mv.setViewName("/member/mypage");
 		}
-		
 		
 		return mv;
 	}
@@ -115,6 +120,26 @@ public class HomeController {
 		return mv;
 	}
 	
+	//메뉴 보기/mypage/menuCategory
+	@RequestMapping(value = "/MemberMenu", method = RequestMethod.GET)
+	public ModelAndView menuView(ModelAndView mv, HttpServletRequest request) {
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		List<SpotMenuVO> menuList = memberService.getMenuList(user.getMe_id());
+		mv.addObject("menuList", menuList);
+		mv.setViewName("member/MemberMenu");
+		return mv;
+	}
+	
+	///mypage/menuCategory
+	@ResponseBody
+	@RequestMapping(value="/mypage/menuCategory", method = RequestMethod.GET)
+	public Map<String, Object> menuCategoryGet(String userId){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		List<SpotMenuVO> list = memberService.getMenuList(userId);
+		System.out.println("list : "+list);
+		map.put("list", list);
+		return map;
+	}
 	
 	//file upload
 	@ResponseBody//리턴값이 직접적으로 화면에(요청한곳에) 가도록 해줌 

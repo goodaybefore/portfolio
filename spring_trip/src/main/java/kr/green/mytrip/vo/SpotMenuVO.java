@@ -12,7 +12,7 @@ public class SpotMenuVO {
 	
 	public SpotMenuVO(String sm_me_id) {
 		this.sm_me_id = sm_me_id;
-		this.sm_name ="기본메뉴";
+		this.sm_name ="나의여행";
 	}
 }
 
