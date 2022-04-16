@@ -16,7 +16,7 @@ public interface MemberService {
 	MemberVO loginMember(MemberVO input);
 	List<SpotMenuVO> getMenuList(String userId);
 	//mypage 수정
-	boolean mypageUpdate(MemberVO user, MemberVO input, List<MultipartFile> file);
+	MemberVO mypageUpdate(MemberVO user, MemberVO input, List<MultipartFile> file);
 	
 	//아이디, 비밀번호 찾기
 	String findId(MemberVO member);

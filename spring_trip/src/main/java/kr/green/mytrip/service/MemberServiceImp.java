@@ -80,15 +80,18 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public boolean mypageUpdate(MemberVO user, MemberVO input, List<MultipartFile> file) {
-		if(!user.getMe_id().equals(input.getMe_id())) return false;
-		//기존프로필가져오기
-		MemberVO dbUser = memberDao.selectMember(user.getMe_id());
+	public MemberVO mypageUpdate(MemberVO user, MemberVO input, List<MultipartFile> file) {
+		System.out.println("user.getMeid : "+user.getMe_id()+", input.getMeid : "+input.getMe_id());
+		if(!user.getMe_id().equals(input.getMe_id())) return null;
+		input.setMe_id(user.getMe_id());
 		
-		//
-		if(dbUser.getMe_photo()!=null) {
-			memberDao.deleteProfile(user.getMe_id());
+		if(input.getMe_pw()==null || input.getMe_pw().length()==0) {
+			input.setMe_pw(user.getMe_pw());
+		}else {
+			String encPw = passwordEncoder.encode(input.getMe_pw());
+			input.setMe_pw(encPw);
 		}
+		System.out.println("input : "+input);
 		//프로필 업데이트
 		memberDao.mypageUpdate(input);
 		//기존사진 가져오기
@@ -96,7 +99,7 @@ public class MemberServiceImp implements MemberService {
 		
 		//프로필 사진 업데이트
 		uploadFile(file, user.getMe_id());
-		return true;
+		return input;
 	}
 	
 	//file upload 함수
@@ -184,6 +187,7 @@ public class MemberServiceImp implements MemberService {
 		return newPw;
 	}
 
+	//메뉴 수정
 	@Override
 	public String setMenu(Map<String, Object> data, MemberVO user) {
 		SpotMenuVO menu = new SpotMenuVO();
@@ -191,9 +195,11 @@ public class MemberServiceImp implements MemberService {
 		String type = (String)data.get("type");
 		System.out.println("type : "+type);
 		menu.setSm_name((String) data.get("sm_name"));
-		String tmp = (String)data.get("sm_num");
-		Integer smNum = Integer.parseInt(tmp);
-		if(type.equals("mod") || type.equals("del")) menu.setSm_num(smNum);
+		if(type.equals("mod") || type.equals("del")) {
+			String tmp = (String)data.get("sm_num");
+			Integer smNum = Integer.parseInt(tmp);
+			menu.setSm_num(smNum);
+		}
 		
 		menu.setSm_me_id(user.getMe_id());
 		Integer menuCnt = memberDao.selectMenuCnt(user.getMe_id());

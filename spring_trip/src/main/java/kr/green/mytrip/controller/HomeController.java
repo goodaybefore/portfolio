@@ -2,12 +2,15 @@
 
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,12 +92,12 @@ public class HomeController {
 	
 	//mypage 회원정보
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public ModelAndView mypageGet(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView mypageGet(ModelAndView mv, HttpServletRequest request,
+			List<MultipartFile> file) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
 		List<SpotMenuVO> menuList = memberService.getMenuList(user.getMe_id());
 		
-		System.out.println("user"+user);
 		if(!user.getMe_id().equals(spot_user))
 			mv.setViewName("redirect:/spot/"+user.getMe_id()+"/home");
 		else {
@@ -106,25 +109,32 @@ public class HomeController {
 	}
 	@RequestMapping(value = "/mypage", method = RequestMethod.POST)
 	public ModelAndView mypagePost(ModelAndView mv, HttpServletRequest request, MemberVO input,
-			List<MultipartFile> file) {
+			List<MultipartFile> file, HttpServletResponse response) throws IOException {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
-		System.out.println("mypage input : "+input);
+		MemberVO newUser = memberService.mypageUpdate(user, input, file);
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
 		
-		if(memberService.mypageUpdate(user, input, file)) {
-			System.out.println("mypage update 성공");
-			mv.setViewName("redirect:/mypage");
+		
+		if(newUser !=null) {
+			request.getSession().setAttribute("user", newUser);
+			out.println("<script>alert('회원정보 수정이 완료되었습니다.');</script>");
+			mv.setViewName("/member/mypage");
 		}else {
-			mv.setViewName("redirect:/mypage");
+			out.println("<script>alert('회원정보 수정에 실패하였습니다.');</script>");
 		}
-		
+		mv.setViewName("/member/mypage");
+		out.flush();
 		return mv;
 	}
 	
 	//메뉴 보기/mypage/menuCategory
-	@RequestMapping(value = "/MemberMenu", method = RequestMethod.GET)
+	@RequestMapping(value = "/MemberMenu")
 	public ModelAndView menuView(ModelAndView mv, HttpServletRequest request) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		List<SpotMenuVO> menuList = memberService.getMenuList(user.getMe_id());
+		//List<SpotMenuVO> newMenuList = memberService.
 		mv.addObject("menuList", menuList);
 		mv.setViewName("member/MemberMenu");
 		return mv;

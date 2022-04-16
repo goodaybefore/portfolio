@@ -160,6 +160,12 @@
 												<label class="mypage-label">nickname</label>
 												<input type="text" class="nickname-input col-6" name="me_nickname" value="${user.me_nickname }">
 											</div>
+											<div class="mypage-box password-container">
+												<label class="mypage-label">change password</label>
+												<input type="password" class="col-6" name="me_pw" placeholder="비밀번호를 입력하세요">
+												<input type="password" class="col-6" name="me_pw2" placeholder="비밀번호를 다시 입력하세요">
+												
+											</div>
 											<div class="mypage-box open-range-container">
 												<label class="mypage-label">open range</label>
 												<div class="label-box">
@@ -183,6 +189,7 @@
 													<div class="profile-img">
 														<c:if test="${user.me_photo != null }">
 															<img class="user-photo-img" src="/img/portfolio/member_profile${user.me_photo}"/>
+															<input type="hidden" name="me_photo" value="${user.me_photo }"/>
 														</c:if>
 														<c:if test="${user.me_photo == null }">no image</c:if>
 													
