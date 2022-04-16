@@ -10,12 +10,13 @@
 	<style>
 	.menu-list-box{
 		margin : 10px;
+		cursor : default;
 	}
 	</style>
 <body>
 	<div class="menu-list-box">
 		<c:forEach items="${menuList }" var="menuList">
-		<p>${menuList.sm_name }</p>
+		<p>- ${menuList.sm_name }</p>
 		</c:forEach>
 	</div>
 </body>
