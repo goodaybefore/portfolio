@@ -141,6 +141,21 @@ public class HomeController {
 		return map;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/mypage/menuSetting", method = RequestMethod.POST)
+	public Map<String, Object> menuSettingPost(@RequestBody Map<String, Object> data,
+			HttpServletRequest request){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		
+		String menuSettingRes = memberService.setMenu(data, user);
+		
+		//menuCntOver(메뉴5개이상), menuCntLake(메뉴1개), true(성공), false
+		map.put("res", menuSettingRes);
+		return map;
+	}
+	
+	
 	//file upload
 	@ResponseBody//리턴값이 직접적으로 화면에(요청한곳에) 가도록 해줌 
 	@RequestMapping("/download")

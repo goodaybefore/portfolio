@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class SpotMenuVO {
-	private int sm_num;
+	private Integer sm_num;
 	private String sm_me_id;
 	private String sm_name;
 	

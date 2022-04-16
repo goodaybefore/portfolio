@@ -54,8 +54,7 @@
 	<update id="updateProfile">
 		UPDATE member
 		SET
-			me_photo = #{photo.me_photo},
-			me_ori_photo_name = #{photo.me_ori_photo_name}
+			me_photo = #{photo.me_photo}
 		WHERE
 			me_id = #{photo.me_id};
 	</update>
@@ -77,5 +76,29 @@
 	  	me_id = #{user.me_id};
 	</update>
 	
+	<select id="selectMenuCnt" resultType="Integer">
+		SELECT COUNT(*) FROM spot_menu WHERE sm_me_id=#{user};
+	</select>
+	
+	<insert id="insertSpotMenu">
+		INSERT INTO spot_menu(
+			sm_name, sm_me_id
+		)VALUES(
+			#{menu.sm_name}, #{menu.sm_me_id}
+		)
+	</insert>
+	
+	<update id="modifySpotMenu">
+		UPDATE spot_menu
+		SET
+			sm_name = #{menu.sm_name}
+		WHERE
+			sm_num = #{menu.sm_num};
+	</update>
+	
+	<delete id="deleteSpotMenu">
+	DELETE spot_menu
+		WHERE sm_num = #{menu.sm_num};
+	</delete>
 	
 </mapper>

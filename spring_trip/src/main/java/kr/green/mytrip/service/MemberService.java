@@ -1,6 +1,7 @@
 package kr.green.mytrip.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,9 @@ public interface MemberService {
 	//아이디, 비밀번호 찾기
 	String findId(MemberVO member);
 	String findPw(MemberVO member);
+	
+	//메뉴 추가 수정 삭제
+	String setMenu(Map<String, Object> data, MemberVO user);
 	
 
 

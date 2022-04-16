@@ -189,7 +189,7 @@
 													</div>
 													<div class="height-line"></div>
 													<div class="menu-setting-container">
-														<div class="menu-view-box" style="width:170px; height:200px; border:1px solid gray; font-weight:bold; color:black;"></div>
+														<div id="menu-view-box" class="menu-view-box" style="width:170px; height:200px; border:1px solid gray; font-weight:bold; color:black;"></div>
 														<div class="button-container" style="margin-left:10px;">
 															<a class="menu-setting-btn btn-menu-add">add</a>
 															<a class="menu-setting-btn btn-menu-mod">mod</a>
@@ -295,9 +295,46 @@
 		})
 		
 		
-		
+		function reloadDiv(divId){
+			$(divId).load(window.location.href + divId);
+		}
 		$(document).on('click', '.btn-submit', function(){
+			
 			console.log('btn-type : '+ $('[name=btn-type]').val());
+			var sm_name = $('[name=sm_name]').val();
+			var sm_num = $('[name=sm_num]').val();
+			var type = $('[name=btn-type]').val();
+			
+			if(sm_name == ''){
+				alert('메뉴제목을 기입해주세요'); return;
+			}
+			if(type != 'add' && type != 'mod' && type !='del'){
+				alert('잘못된 접근입니다.'); return;
+			}
+			
+			if(sm_num == undefined) sm_num = 0;
+			var data = {
+				sm_name : sm_name,
+				sm_num : sm_num,
+				type : type
+			};
+			
+			$.ajax({
+				async:false,
+				url:'/mypage/menuSetting',
+				type:'post',
+				contentType:'application/json; charset=UTF-8',
+				data:JSON.stringify(data),
+				dataType:'json',
+				success:function(res){
+					console.log('res: ',res);
+						if(res == 'true'){
+							console.log('성공');
+							reloadDiv('#menu-view-box');
+						}
+				}
+				
+			})
 		})
 		
 	
@@ -349,11 +386,10 @@
 		}
 		
 	})
-	$("#fileUpload").on('change', function () {
-
+	
+	$("#fileUpload").on('change', function() {
 	    //Get count of selected files
 	    var countFiles = $(this)[0].files.length;
-
 	    var imgPath = $(this)[0].value;
 	    //확장자 체크
 	    var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();

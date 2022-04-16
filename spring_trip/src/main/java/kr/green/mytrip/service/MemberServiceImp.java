@@ -1,6 +1,7 @@
 package kr.green.mytrip.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 
@@ -108,6 +109,7 @@ public class MemberServiceImp implements MemberService {
 					path = UploadFileUtills.uploadProfile(uploadPath, tmpFile.getOriginalFilename(), tmpFile.getBytes(), me_id);
 					MemberVO p = new MemberVO(path);
 					p.setMe_id(me_id);
+					System.out.println("p:"+p);
 					//FileVO f = new FileVO(tmpFile.getOriginalFilename(), path, tr_num);
 					memberDao.updateProfile(p);
 					
@@ -180,6 +182,38 @@ public class MemberServiceImp implements MemberService {
 			}
 		}
 		return newPw;
+	}
+
+	@Override
+	public String setMenu(Map<String, Object> data, MemberVO user) {
+		SpotMenuVO menu = new SpotMenuVO();
+		
+		String type = (String)data.get("type");
+		System.out.println("type : "+type);
+		menu.setSm_name((String) data.get("sm_name"));
+		String tmp = (String)data.get("sm_num");
+		Integer smNum = Integer.parseInt(tmp);
+		if(type.equals("mod") || type.equals("del")) menu.setSm_num(smNum);
+		
+		menu.setSm_me_id(user.getMe_id());
+		Integer menuCnt = memberDao.selectMenuCnt(user.getMe_id());
+		System.out.println("바뀔 menu : "+menu);
+		if(type.equals("add")) {
+			//메뉴가 5개인지 체크
+			if(menuCnt>5) return "menuCntOver";
+			memberDao.insertSpotMenu(menu);
+			return "true";
+		}
+		if(type.equals("mod")) {
+			memberDao.modifySpotMenu(menu);
+			return "true";
+		}
+		if(type.equals("del")) {
+			if(menuCnt == 1) return "menuCntLack";
+			memberDao.deleteSpotMenu(menu);
+			return "true";
+		}
+		return "false";
 	}
 
 	

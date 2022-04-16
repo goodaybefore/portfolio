@@ -29,4 +29,11 @@ public interface MemberDAO {
 	//비밀번호 찾기
 	void updateMember(@Param("user")MemberVO dbuser);
 
+	Integer selectMenuCnt(@Param("user")String me_id);
+
+	//spot_menu 추가 수정 삭제
+	void insertSpotMenu(@Param("menu")SpotMenuVO menu);
+	void modifySpotMenu(@Param("menu")SpotMenuVO menu);
+	void deleteSpotMenu(@Param("menu")SpotMenuVO menu);
+	
 }
