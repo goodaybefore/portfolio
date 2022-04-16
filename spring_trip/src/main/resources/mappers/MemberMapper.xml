@@ -34,6 +34,7 @@
 		UPDATE member
 		SET
 			me_nickname = #{input.me_nickname},
+			me_pw = #{input.me_pw},
 			me_intro = #{input.me_intro},
 			me_op_name = #{input.me_op_name},
 			me_phone = #{input.me_phone},

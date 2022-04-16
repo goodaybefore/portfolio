@@ -162,8 +162,8 @@
 											</div>
 											<div class="mypage-box password-container">
 												<label class="mypage-label">change password</label>
-												<input type="password" class="col-6" name="me_pw" placeholder="비밀번호를 입력하세요">
-												<input type="password" class="col-6" name="me_pw2" placeholder="비밀번호를 다시 입력하세요">
+												<input type="password" class="col-6" name="me_pw" placeholder="변경할 비밀번호를 입력하세요">
+												<input type="password" class="col-6" name="me_pw2" placeholder="다시 입력하세요">
 												
 											</div>
 											<div class="mypage-box open-range-container">
@@ -259,6 +259,17 @@
 	<script src="/resources/assets/js/spot/tripDetail.js"></script>
 	<script>
 	$(document).ready(function(){
+		$('.btn-write').click(function(){
+			var pw = $('[name=me_pw]');
+			var pw2 = $('[name=me_pw2]');
+			if(!pw.equals(pw2)) {
+				alert('비밀번호를 다시 확인하세요');
+				return;
+			}
+			
+			
+		})
+		
 		$('.menu-view-box').load('/MemberMenu');
 		
 		//add

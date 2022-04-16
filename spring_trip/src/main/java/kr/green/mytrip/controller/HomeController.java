@@ -111,11 +111,11 @@ public class HomeController {
 	public ModelAndView mypagePost(ModelAndView mv, HttpServletRequest request, MemberVO input,
 			List<MultipartFile> file, HttpServletResponse response) throws IOException {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println("input : "+input);
 		MemberVO newUser = memberService.mypageUpdate(user, input, file);
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
-		
 		
 		if(newUser !=null) {
 			request.getSession().setAttribute("user", newUser);
