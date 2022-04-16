@@ -4,10 +4,13 @@
 
         $(this).toggleClass("zmdi-eye zmdi-eye-off");
         var input = $($(this).attr("toggle"));
+				
         if (input.attr("type") == "password") {
           input.attr("type", "text");
+					$('toggle-password').addClass('eye-icon');
         } else {
           input.attr("type", "password");
+					$('toggle-password').addClass('eye-icon');					
         }
       });
       
@@ -23,88 +26,6 @@
 			        }
 			    }
 			    return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));          
-			});
-			
-	$('form').submit(function(){
-		
-		//동의체크
-		let isAgree = $('[name=agree-term]').is(':checked');
-		if(!isAgree){
-			alert('Please agree the checkbox');
-			return false;
-		}
-		
-		//아이디체크
-		//구현
-		console.log($('[name=me_id]').val());
-		
-		
-		
-	});
-
+			});		
 	
 })(jQuery);
-
-$('form').validate({
-		rules : {
-			me_id : {
-				required : true//필수항목인지
-				//영어로 시작해야하고, 영어나숫자중 5~8글자
-				//,regex :  /^[A-z]\w{4,7}$/
-			},
-			me_pw : {
-				required : true
-				//영어나 숫자가 들어가있고 8~20자
-				//,regex : /^(?=\w{4,20}$)\w*(\d[A-z]|[A-z]\d)\w*$/
-			},
-			re_password : {
-				required : true,
-				equalTo : password
-			},
-			me_name : {
-				required : true,
-				minlength : 2
-			},
-			me_gender : {
-				required : true
-			}
-		},
-		messages : {
-			me_id : {
-				required : '필수로 입력하세요',
-				regex : '영문자, 숫자로 이루어져있으며 5~8자로 구성되어야합니다.'
-			},
-			me_pw : {
-				required : '필수로 입력하세요',
-				//minlength : '최소 {0}글자 이상이어야 합니다.',
-				//maxlength : '최대 {0}글자 이하여야 합니다.',
-				regex : '영문자, 숫자로 이루어져있으며 5~8자로 구성되어야합니다.'
-			},
-			re_password : {
-				required : '필수로 입력하세요',
-				equalTo : '비밀번호가 일치하지 않습니다.'
-			},
-			me_name : {
-				required : '필수로 입력하세요.'
-			},
-			me_gender : {
-				required : '필수로 입력하세요.'
-			},
-			me_phone : {
-				required : '필수로 입력하세요.'
-			},
-			me_name : {
-				required : '필수로 입력하세요.'
-			},
-			me_email : {
-				required : '필수로 입력하세요.'
-			}
-		}
-	});
-$.validator.addMethod(
-	"regex",
-	function(value, element, regexp) {
-		var re = new RegExp(regexp);
-		return this.optional(element) || re.test(value);
-	},
-		"Please check your input.");

@@ -53,6 +53,13 @@ public class MemberServiceImp implements MemberService {
 		return true;
 	}
 	
+	@Override
+	public boolean idDuplicated(String id) {
+		MemberVO user = memberDao.selectMember(id);
+		if(user == null) return false;
+		return true;
+	}
+	
 	//login
 	@Override
 	public MemberVO loginMember(MemberVO input) {
@@ -221,6 +228,8 @@ public class MemberServiceImp implements MemberService {
 		}
 		return "false";
 	}
+
+	
 
 	
 	

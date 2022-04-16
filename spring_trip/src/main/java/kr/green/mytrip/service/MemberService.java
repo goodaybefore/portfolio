@@ -12,6 +12,7 @@ public interface MemberService {
 
 	//회원가입
 	boolean insertMember(MemberVO member);
+	boolean idDuplicated(String id);
 	//로그인 + 사용자메뉴리스트 불러오기
 	MemberVO loginMember(MemberVO input);
 	List<SpotMenuVO> getMenuList(String userId);
@@ -24,6 +25,9 @@ public interface MemberService {
 	
 	//메뉴 추가 수정 삭제
 	String setMenu(Map<String, Object> data, MemberVO user);
+	
+	
+	
 	
 
 

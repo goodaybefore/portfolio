@@ -90,6 +90,15 @@ public class HomeController {
 		return mv;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value ="/idcheck")
+	public String ajaxIdCheck(String id){
+		if(!memberService.idDuplicated(id) && id.length() != 0 && id != "")
+			return "ok";
+		else
+			return "no";
+	}
+	
 	//mypage 회원정보
 	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
 	public ModelAndView mypageGet(ModelAndView mv, HttpServletRequest request,
