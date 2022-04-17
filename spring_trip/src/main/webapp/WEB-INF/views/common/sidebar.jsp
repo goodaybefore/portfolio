@@ -22,8 +22,17 @@
 					</section>
 					</header>
 					<ul>
-						<p> 현재 로그인 유저 : ${user.me_id}<br> 현재 spot 주인 :  ${spot_user}</p>
-						<li><a href="<%=request.getContextPath()%>/spot/home">my spot home</a></li>
+					
+						<c:if test="${user != null }">
+							<p> 현재 로그인 유저 : ${user.me_id}<br> 현재 spot 주인 :  ${spot_user}</p>
+							<li><a href="<%=request.getContextPath()%>/spot/home">my spot home</a></li>
+						</c:if>
+
+						<c:if test="${user.me_id == 'guest'}">
+							<li><a>Trip Diary(guest mode)</a></li>
+						</c:if>
+						
+						<c:if test="${spot_user !=null && user.me_id !='guest' }">
 						<li>
 							<span class="opener">trip</span>
 							<ul>
@@ -32,21 +41,24 @@
 							</c:forEach>
 							</ul>
 						</li>
-						<c:if test="${user.me_id != spot_user && user.me_id !=null && isTripmate == 'false'}">
+						</c:if>
+						
+						<c:if test="${user.me_id != spot_user && user.me_id !=null && isTripmate == 'false' && user.me_id !='guest'}">
 							<li>
 								<a href="javascript:void(0)" onclick="javascript:goTripmateRequest('${spot_user}')">request tripmate</a>
 							</li>
 						</c:if>
-						<c:if test="${user.me_id == spot_user && user.me_id !=null}">
+						
+						<c:if test="${user.me_id == spot_user && user.me_id !=null && user.me_id !='guest'}">
 						<li>
 							<span class="opener">Tripmate</span>
 							<ul>
 								<li><a href="<%=request.getContextPath()%>/spot/${user.me_id}/tripmate/tripmateRequest">request</a></li>
 								<li><a href="<%=request.getContextPath()%>/spot/${user.me_id}/tripmate/tripmateList">my tripmates</a></li>
 							</ul>
-						
 						</li>
 						</c:if>
+						
 						<li>
 							<span class="opener">trip info</span>
 							<ul>

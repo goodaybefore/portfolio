@@ -33,6 +33,7 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean insertMember(MemberVO member) {
 		if(member.getMe_id()==null || member.getMe_pw()==null || member.getMe_pw().length()==0) return false;
+		if(member.getMe_id().equals("guest"))return false;
 		//아이디 중복 확인
 		if(memberDao.selectMember(member.getMe_id()) != null) return false;
 		
@@ -213,7 +214,7 @@ public class MemberServiceImp implements MemberService {
 		System.out.println("바뀔 menu : "+menu);
 		if(type.equals("add")) {
 			//메뉴가 5개인지 체크
-			if(menuCnt>5) return "menuCntOver";
+			if(menuCnt>=5) return "menuCntOver";
 			memberDao.insertSpotMenu(menu);
 			return "true";
 		}

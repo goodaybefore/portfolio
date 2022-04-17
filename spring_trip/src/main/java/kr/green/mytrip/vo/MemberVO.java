@@ -32,4 +32,9 @@ public class MemberVO {
 	public MemberVO(String me_photo) {
 		this.me_photo = me_photo;
 	}
+	public MemberVO guestLogin() {
+		this.me_id = "guest";
+		MemberVO guestVo = new MemberVO();
+		return guestVo;
+	}
 }

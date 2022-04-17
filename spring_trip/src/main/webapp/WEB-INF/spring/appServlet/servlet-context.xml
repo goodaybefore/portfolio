@@ -65,6 +65,7 @@
 	<interceptors>
 	    <interceptor>
 	        <mapping path="/login"/>
+	        <mapping path="/guestLogin"/>
 	        <beans:ref bean="loginSessionInterceptor"/>
 	    </interceptor>
 	</interceptors>
@@ -79,7 +80,7 @@
 	</interceptors>
 	
 	
-	<!-- guest만 접근 가능한 곳 -->
+	<!-- 비로그인회원만 접근 가능한 곳 -->
 	<interceptors>
 	    <interceptor>
 	        <mapping path="/signup"/>

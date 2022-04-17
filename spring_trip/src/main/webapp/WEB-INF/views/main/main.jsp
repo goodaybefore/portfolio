@@ -50,31 +50,38 @@
 	                       	<div class="form-group mt-3 col-12"><input class="form-control" name="me_pw" type="password" placeholder="Enter your password..." aria-label="Enter your password..." /></div>
 													<div class="form-group mt-3" style="float: left; width: 50%;"><a href="<%=request.getContextPath()%>/signup">sign up>></a><br><a href="<%=request.getContextPath()%>/find">forgot ID/PW?>></a></div>
 													
-													<div class="form-group mt-3" style="float: right; width: 50%;"><button class="btn btn-primary" style="float: right;" type="submit">get started!</button></div>
-													<div class="form-group" style="float: right; width: 100%;"><a href="<%=request.getContextPath()%>/board/list" class="" id="" style="float: right; margin-right: 5px;">guest login>></a></div>
-	                      </div>
-	                    </form>
-					</c:if>
-					<c:if test="${user != null}">
-						<a class="login-menu" href="<%=request.getContextPath()%>/logout">logout</a><br>
-						<a class="login-menu" href="<%=request.getContextPath()%>/spot/${user.me_id}/home">myspot</a><br>
-						<a class="login-menu" href="<%=request.getContextPath()%>/spot/tripmate_list">tripmate</a><br>
-						<a class="login-menu" href="<%=request.getContextPath()%>/board/list">notice</a><br>
-						<a class="login-menu" href="<%=request.getContextPath()%>/board/list">event</a><br>
-						<a class="login-menu" href="<%=request.getContextPath()%>/board/special_trip">special trip</a><br>
-					</c:if>
+													<div class="form-group mt-3" style="float: right; width: 50%;"><button class="btn btn-primary btn-login" style="float: right;" type="submit">get started!</button></div>
+												</div>
+											</form>
+											
+											<form action="<%=request.getContextPath()%>/guestLogin" method="post">
+													<div class="form-group guest-login" style="float: right; width: 100%;"><a href="#" class="guest-login-link" id="" style="float: right; margin-right: 5px;">guest login>></a></div>
+													<input type="submit" class="guestLogin" style="display:none;">
+											</form>
+										</c:if>
+	               </div>
+	                    
+										
+										<c:if test="${user != null}">
+											<a class="login-menu" href="<%=request.getContextPath()%>/logout">logout</a><br>
+											<a class="login-menu" href="<%=request.getContextPath()%>/spot/${user.me_id}/home">myspot</a><br>
+											<a class="login-menu" href="<%=request.getContextPath()%>/spot/tripmate_list">tripmate</a><br>
+											<a class="login-menu" href="<%=request.getContextPath()%>/board/list">notice</a><br>
+											<a class="login-menu" href="<%=request.getContextPath()%>/board/list">event</a><br>
+											<a class="login-menu" href="<%=request.getContextPath()%>/board/special_trip">special trip</a><br>
+									</c:if>
                 </div>
             </div>
-        </div>
+            </div>
         <!-- Social Icons-->
-        <!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands-->
+        <!-- For more icon options, visit https://fontawesome.com/icons?d=gallery&p=2&s=brands
         <div class="social-icons">
             <div class="d-flex flex-row flex-lg-column justify-content-center align-items-center h-100 mt-3 mt-lg-0">
                 <a class="btn btn-dark m-3" href="#!"><i class="fab fa-twitter"></i></a>
                 <a class="btn btn-dark m-3" href="#!"><i class="fab fa-facebook-f"></i></a>
                 <a class="btn btn-dark m-3" href="#!"><i class="fab fa-instagram"></i></a>
             </div>
-        </div>
+        </div>-->
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
@@ -84,6 +91,14 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         
+        <script>
+        	$(function(){
+        		$('.guest-login-link').click(function(){
+        			$('.guestLogin').click();
+        		})
+        		
+        	})
+        </script>
     </body>
 </html>
     

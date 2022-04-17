@@ -30,7 +30,9 @@
 			
 			<ul class="header-logo">
 				<li class="header-logo-li">my Trip Spot</li>
-				<li class="header-logo-li"><a href="<%=request.getContextPath()%>/spot/${spot_user}/home">${spot_user }</a></li>
+				<c:if test="${spot_user != null && user.me_id !='guest'}">
+					<li class="header-logo-li"><a href="<%=request.getContextPath()%>/spot/${spot_user}/home">${spot_user }</a></li>
+				</c:if>
 			</ul>
 			<ul class="icons">
 				<c:if test="${user==null}"><li><a href="<%=request.getContextPath()%>/" class=""><span class="label">login</span></a></li></c:if>

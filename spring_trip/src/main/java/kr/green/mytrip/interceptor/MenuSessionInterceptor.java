@@ -27,6 +27,7 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println("menuInterceptor's user : "+user);
 		String[] url = request.getServletPath().split("/");
 		String isTripmate = "false";
 		
@@ -61,12 +62,14 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 			System.out.println("==========");
 		}
 		
-		if(menuList.isEmpty()) {//menuList에 아무것도 없을 때
+		if(menuList.isEmpty() && !thisUser.equals("guest")) {//menuList에 아무것도 없을 때
 			System.out.println("menu list가 empty : "+menuList);
-			if(user == null) {//접근을 시도하는 사용자가 guest login인 경우
-				response.sendRedirect(request.getContextPath()+"/");
-				return false;
-			}
+			
+//			if(user == null) {
+//				response.sendRedirect(request.getContextPath()+"/");
+//				return false;
+//			}
+			
 			//menuList가 비어있고 접근시도중인 사용자가 login 되어있는 경우 => 본인의 spot으로 이동
 			menuList = memberService.getMenuList(user.getMe_id());
 			//session에 본인 spot 추가

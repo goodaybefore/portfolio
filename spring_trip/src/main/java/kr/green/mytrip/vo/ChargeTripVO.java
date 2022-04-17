@@ -13,5 +13,6 @@ public class ChargeTripVO {
 	private int ch_amount;//결제 금액
 	private int ch_tr_num;//결제번호
 	private Date ch_date;//결제날짜
+	private String ch_merchant_uid;
 
 }

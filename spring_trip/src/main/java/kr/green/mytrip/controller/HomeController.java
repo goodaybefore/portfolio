@@ -61,7 +61,18 @@ public class HomeController {
 		}
 		return mv;
 	}
-	
+	//게스트 로그인
+		@RequestMapping(value = "/guestLogin", method = RequestMethod.POST)
+		public ModelAndView guestLoginPost(ModelAndView mv, MemberVO input) {
+			MemberVO guest = new MemberVO();
+			guest.setMe_id("guest");
+			System.out.println("guest : "+guest);
+			List<SpotMenuVO> menu = memberService.getMenuList(guest.getMe_id());
+			mv.addObject("user", guest);
+			mv.addObject("menu", menu);
+			mv.setViewName("redirect:/board/list");
+			return mv;
+		}
 	
 	//로그아웃
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -81,6 +92,7 @@ public class HomeController {
 	public ModelAndView signupPost(ModelAndView mv, MemberVO member) {
 		boolean isSignup = memberService.insertMember(member);
 		if(isSignup) {
+			System.out.println("회원가입 성공");
 			mv.setViewName("redirect:/");
 		}else {
 			mv.addObject("member", member);
@@ -133,8 +145,9 @@ public class HomeController {
 		}else {
 			out.println("<script>alert('회원정보 수정에 실패하였습니다.');</script>");
 		}
-		mv.setViewName("/member/mypage");
 		out.flush();
+		mv.setViewName("/member/mypage");
+		
 		return mv;
 	}
 	
