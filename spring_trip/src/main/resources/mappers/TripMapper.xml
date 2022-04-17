@@ -114,9 +114,9 @@
 	
 	<insert id="insertChargeRecord">
 		INSERT INTO charge_trip(
-			ch_me_id, ch_amount, ch_tr_num, ch_date
+			ch_me_id, ch_amount, ch_tr_num, ch_date, ch_merchant_uid
 		) VALUES(
-			#{charged.ch_me_id}, #{charged.ch_amount}, #{charged.ch_tr_num}, now()
+			#{charged.ch_me_id}, #{charged.ch_amount}, #{charged.ch_tr_num}, now(), #{charged.ch_merchant_uid}
 		);
 	</insert>
 	

@@ -292,15 +292,16 @@
 				    buyer_tel : '${user.me_phone}'
 				}, function(rsp) {
 					 	//charge_trip 테이블에 결제내역 추가하기(확인)
-					 	var chargeRecords = {
+					 	var chargeTrip = {
 					 			ch_amount : '${trip.tr_charge}',
-					 			ch_tr_num : tr_num
+					 			ch_tr_num : tr_num,
+					 			ch_merchant_uid : rsp.merchant_uid
 					 	}
 					 	
 		        $.ajax({
 		        	async : false,
 		        	type : 'post',
-		        	data : JSON.stringify(chargeRecords),
+		        	data : JSON.stringify(chargeTrip),
 		        	url : '<%=request.getContextPath()%>/spot/'+userId+'/chargeRecord',
 		        	dataType : "json",
 		        	contentType:"application/json; charset=UTF-8",
