@@ -53,12 +53,14 @@
   		
   		.pw-container{
   			position : relative;
+  			width:90%;
+  			min-width:600px;
   		}
   		.toggle-password, .zmdi-eye-off .zmdi-eye{
 	  		position : absolute;
 	  		top:0;
 	  		bottom:0;
-	  		right:80px;
+	  		right:20px;
 	  		margin:auto 2px;
 	  		height:14px;
 	  		font-size:16px;
@@ -66,6 +68,10 @@
   		}
   		.eye-icon{
   			top : -14px;
+  		}
+  		.form-title{  			
+  			min-width : 600px;
+  			width : 90%;
   		}
   		.error{color:red;}
   	</style>
@@ -78,7 +84,9 @@
             
             	<div class="signup-content">
                     <form id="signup-form" class="signup-form" action="<%= request.getContextPath()%>/signup" method="POST">
-                        <h2 class="form-title" style="text-align:center;">Create account</h2>
+                        <div class="form-group">
+	                        <h2 class="form-title" style="text-align:center;">Create account</h2>
+                        </div>
                         <div class="form-group">
                             <input type="text" class="form-input" name="me_id" id="id" placeholder="Your Id" value="${member.me_id}"/>
                             <input type="button" id="idCheck" class="fit btn-id-check" value="ID CHECK">
@@ -146,7 +154,7 @@
 				    //idCheck = res == 'ok' ? true : false;
 				    if(idCheck)
 				    	alert('사용 가능한 아이디입니다.');
-				    else if(idCheck == '')
+				    else if(id == '' || id == 'guest')
 				    	alert('사용할 수 없는 아이디입니다.');
 				    else
 				    	alert('이미 사용 중인 아이디입니다.');
@@ -196,6 +204,10 @@
 	        },
 	        me_gender:{
 	        	required : true
+	        },
+	        me_email:{
+	        	required:true
+	        	
 	        }
 	      },
 	      //규칙체크 실패시 출력될 메시지
@@ -218,6 +230,10 @@
 	        },
 	        me_gender: {
 	        	required : "필수로입력하세요"
+	        },
+	        me_email:{
+	        	required : "필수로입력하세요. 비밀번호찾기 시 이메일로 새 비밀번호를 전송합니다."
+	        	
 	        }
 	      }
 	    });
