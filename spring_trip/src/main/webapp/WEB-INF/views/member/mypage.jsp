@@ -347,7 +347,8 @@
 					//menuCntOver, menuCntLack, true, false
 						if(res.res == 'true'){
 							console.log('성공');
-							$('#menu-view-box').load(window.location.href + '#menu-view-box');
+							//주석 풀면 콘솔창에 target 에러 나면서 add mod del을 여러번 하면 여러번 실행됨(메뉴가 2번 추가되거나..등)
+							//$('#menu-view-box').load(window.location.href + '#menu-view-box');
 						}
 						if(res.res == 'menuCntOver'){
 							alert('메뉴는 최대 5개까지 만들 수 있습니다.');

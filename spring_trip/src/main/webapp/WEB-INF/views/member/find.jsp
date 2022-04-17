@@ -20,10 +20,16 @@
 			position : absolute; top : calc(50vh - 16px);
 			left : calc(50vw - 16px); width : 32px; height : 32px;
 		}
+		h1, h3, button{
+		font-family: NotoSansKR !important;
+		}
+		.tm-title{
+			font-family : NotoSansKR !important;
+		}
 	</style>
 <body>
 	<div class="container body tab-container">
-		<h1>아이디/비밀번호 찾기</h1>
+		<h1><p>아이디/비밀번호 찾기</p></h1>
 		<ul class="nav nav-tabs" role="tablist">
 		  <li class="nav-item">
 		    <a class="nav-link active" data-toggle="tab" href="#home">아이디 찾기</a>

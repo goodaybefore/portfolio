@@ -4,8 +4,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style>
+	.clock-container{
+		font-size : 25px;
+		font-weight : bold;
+		text-align : center;
+		margin-bottom : 15px;
+		color : black;
+	}
+	li{
+		font-family: NotoSansKR !important;
+		font-size:16px;
+	}
+	</style>
 </head>
 <body>
 	<!-- Sidebar -->
@@ -15,10 +28,13 @@
 				<nav id="menu">
 					<header class="major">
 						<h2>My Menu</h2>
-					<section id="search" class="alt">
-						<form method="post" action="#">
+					<section id="search" class="alt" style="width : 90%;">
+						<!-- <form method="post" action="#">
 							<input type="text" name="query" id="query" placeholder="Search" />
-						</form>
+						</form> -->
+						<div class="clock-container">
+							<span id="date" class="date"></span><br><span id="time" class="time"></span>
+						</div>
 					</section>
 					</header>
 					<ul>
@@ -94,6 +110,31 @@
 			var hostIndex = location.href.indexOf(location.host) + location.host.length;
 			var contextPath = location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
 			return contextPath;
+		}
+		
+		let target = document.getElementById('clock');
+		function clock(){
+			let dateInfo = new Date();
+			let hour = modifyNumber(dateInfo.getHours());
+			let min = modifyNumber(dateInfo.getMinutes());
+			let sec = modifyNumber(dateInfo.getSeconds());
+			let year = dateInfo.getFullYear();
+			let month = dateInfo.getMonth();
+			let date = dateInfo.getDate();
+			
+			document.getElementById('time').innerHTML = hour+':'+min+':'+sec;
+			document.getElementById('date').innerHTML = year+'/'+month+'/'+date;
+		}
+		function modifyNumber(time){
+			if(parseInt(time)<10){
+				return "0"+time;
+			}else{
+				return time;
+			}
+		}
+		window.onload = function(){
+			clock();
+			setInterval(clock, 1000);
 		}
 		</script>
 </body>

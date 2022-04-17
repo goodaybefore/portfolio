@@ -1,9 +1,12 @@
 package kr.green.mytrip.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,10 +44,24 @@ public class ActivityController {
 	}
 	@RequestMapping(value = "/activityReg", method = RequestMethod.POST)
 	public ModelAndView activityRegPost(ModelAndView mv, HttpServletRequest request, ActivityVO activity, String from,
-			Integer mc_num, Integer sc_num, Integer reg_sm_num, List<MultipartFile> ac_files) {
+			Integer mc_num, Integer sc_num, Integer reg_sm_num, List<MultipartFile> ac_files,
+			HttpServletResponse response) throws IOException {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		String spot_user = (String)request.getSession().getAttribute("spot_user");
-		System.out.println("activity files");
+		
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+
+		//주소가 안넘어왔다면?
+//		if(activity.getAc_address().isEmpty() || activity.getAc_address().trim().length() == 0) {
+//			out.println("<script>alert('주소를 꼭 기입해주세요')</script>");
+//			mv.addObject("activity", activity);
+//			out.flush();
+//			mv.setViewName("/spot/"+user.getMe_id()+"/activityReg?tr_num="+activity.getAc_tr_num());
+//			return mv;
+//			}
+//		
 		for(MultipartFile tmp : ac_files) {
 			System.out.println(tmp.getOriginalFilename());
 		}

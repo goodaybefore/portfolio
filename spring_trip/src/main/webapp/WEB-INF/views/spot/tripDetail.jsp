@@ -80,7 +80,7 @@
 							<section id="banner">
 								<div class="content">
 									<header>
-										<h1>Detail</h1>
+										<h1>Trip Detail</h1>
 										<p>여행 정보 상세 + 활동정보 관리</p>
 									</header>
 									<div class="trip-detail">

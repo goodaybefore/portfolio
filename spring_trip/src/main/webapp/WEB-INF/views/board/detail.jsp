@@ -48,7 +48,7 @@
 							<section id="banner">
 								<div class="content">
 									<header>
-										<h1>Detail</h1>
+										<h1>Board Detail</h1>
 										<p>게시글 상세</p>
 										<div class="board bd_title">
 											<p>제목</p><input type="text" value="${board.bd_title}" readonly>
@@ -60,7 +60,6 @@
 										</div>
 									</header>
 								</div>
-								<span>span 태그 테스트</span>
 							</section>
 							
 					<c:if test="${user.me_gr_name == '트립매니저' || user.me_gr_name =='트립파트너'}">

@@ -300,13 +300,14 @@ public class TripController {
 	public ModelAndView tripDelete(ModelAndView mv, HttpServletRequest request, Integer tr_num,
 			@PathVariable(required=false, value="spot_user")String spot_user) {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
+		System.out.println("delete user : "+user);
 		TripVO dbTrip = tripService.selectTrip(tr_num);
 
 		if(tripService.deleteTrip(user, dbTrip)){
 			System.out.println("삭제성공");
-			mv.setViewName("redirect:/"+spot_user+"/tripList/"+dbTrip.getTr_sm_num());
+			mv.setViewName("redirect:/spot/"+spot_user+"/tripList/"+dbTrip.getTr_sm_num());
 		}else {
-			mv.setViewName("redirect:/"+spot_user+"/tripDetail/"+dbTrip.getTr_sm_num()+"/"+dbTrip.getTr_num());
+			mv.setViewName("redirect:/spot/"+spot_user+"/tripDetail/"+dbTrip.getTr_sm_num()+"/"+dbTrip.getTr_num());
 		}
 		
 		return mv;

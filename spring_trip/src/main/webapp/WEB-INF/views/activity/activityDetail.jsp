@@ -200,10 +200,14 @@
 												<label class="detail-label">활동제목</label>
 												<p>${activity.ac_title}</p>
 											</div>
+											
+											<hr class="mt-3">
+											
 											<div class="contents-container">
 												<label class="detail-label">활동내용</label>
 												<div>${activity.ac_contents }</div>
 											</div>
+											<hr class="mt-3">
 											<!-- 활동사진 -->
 											<div class="address-container">
 												<label class="detail-label">활동주소</label>
@@ -222,7 +226,6 @@
 										<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityReg?tr_num=${activity.ac_tr_num}" style="border-bottom : none;"><button>add activity</button></a>
 									</div>
 								</div>
-								<span>span 태그 테스트</span>
 							</section>
 					</div>
 				</div>

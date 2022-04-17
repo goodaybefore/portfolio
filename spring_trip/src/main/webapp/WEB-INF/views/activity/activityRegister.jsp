@@ -291,18 +291,25 @@
 					$(this).remove();
 				}
 			});
-			
-			
 			var spot_user = '${spot_user}';
-			$('form').submit(function(){
+			submitFrom(spot_user);
+			function submitFrom(spot_user){
 				
-				let ac_tr_num = '${trip.tr_num}';
-				$('[name=ac_tr_num]').val(ac_tr_num);
-				
-				let reg_sm_num= '${trip.tr_sm_num}';
-				$('[name=reg_sm_num]').val(reg_sm_num);
-				
-			});
+				$('form').submit(function(){
+					let ac_address = $('[name=ac_address]').val();
+					if(ac_address == '' || ac_address.trim().length==0){
+						alert('주소를 꼭 기입해주세요');
+						return;
+					}
+					let ac_tr_num = '${trip.tr_num}';
+					$('[name=ac_tr_num]').val(ac_tr_num);
+					
+					let reg_sm_num= '${trip.tr_sm_num}';
+					$('[name=reg_sm_num]').val(reg_sm_num);
+					
+				});
+			}
+			
 			
 			singleDatePicker();
 			showDateRangePickerr();

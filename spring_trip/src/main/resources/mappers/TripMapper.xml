@@ -5,7 +5,8 @@
 <mapper namespace="kr.green.mytrip.dao.TripDAO">
 	<select id="selectTripPoints" resultType="String">
 		SELECT ac_address FROM activity
-		WHERE ac_me_id = #{spot_user} group by ac_tr_num;
+		WHERE ac_me_id = #{spot_user} AND ac_del='N'
+		group by ac_tr_num;
 	</select>
 	
 	<select id="selectMiddleCategory" resultType="kr.green.mytrip.vo.MiddleCategoryVO">

@@ -28,6 +28,10 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 		
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		System.out.println("menuInterceptor's user : "+user);
+		if(user == null) {
+			response.sendRedirect(request.getContextPath()+"/");
+			return false;
+		}
 		String[] url = request.getServletPath().split("/");
 		String isTripmate = "false";
 		
@@ -35,7 +39,7 @@ public class MenuSessionInterceptor extends HandlerInterceptorAdapter{
 		String thisUser = null;
 		//mypage
 		if(url[1].equals("mypage") && url.length == 2) {
-			if(user == null) {//접근을 시도하는 사용자가 guest login인 경우
+			if(user.getMe_id().equals("guest")) {//접근을 시도하는 사용자가 guest login인 경우
 				response.sendRedirect(request.getContextPath()+"/");
 				return false;
 			}

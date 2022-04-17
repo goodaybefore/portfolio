@@ -26,7 +26,6 @@
 		
 	}
 	.select-group{
-		border : 1px solid black;
 		display : flex;
 	}
 	.menu-selectbox{
@@ -37,15 +36,15 @@
 <body>
 	<form class="copy-trip-select-container"
 	action="<%=request.getContextPath()%>/spot/${spot_user}/tripDetail/${sm_num}/selectMenuCategory" method="post">
-		<input type="text" name="sm_num" value=${sm_num }>
-		<input type="text" name="tr_num" value=${tr_num }>
+		<input type="hidden" name="sm_num" value=${sm_num }>
+		<input type="hidden" name="tr_num" value=${tr_num }>
 		<div class="select-group">
 			<select class="menu-selectbox">
 				<option>메뉴 선택</option>
 			</select>
 		</div>
 		<div class="select-str"></div>
-		<input type="submit" class="btn-select primary" value="copy">
+		<input type="submit" class="btn-select primary fit" value="copy">
 		<input type="submit" class="btn-close" style="display : none;" onClick="window.close()">
 	</form>
 	<script>
