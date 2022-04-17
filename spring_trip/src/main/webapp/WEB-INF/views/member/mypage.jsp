@@ -231,15 +231,6 @@
 												<label class="mypage-label">grade</label>
 												<p>${user.me_gr_name }</p>
 											</div>
-											
-											<div class="mypage-box membership-container">
-												<label class="mypage-label">membership</label>
-												<c:if test="${user.me_membership != 'Y'}">
-													<p>멤버십 사용 기간이 아닙니다.</p>
-													<button class="fit">멤버십 신청하기(30일)</button>
-												</c:if>
-											</div>
-											
 											<div class="mypage-box attend-container">
 												<label class="mypage-label">attend</label>
 												<p>${user.me_attend_num}일째 출석</p>
@@ -249,6 +240,13 @@
 												<input type="submit" class="btn-write primary fit" value="write">
 											</div>
 									</form>
+									<div class="mypage-box membership-container">
+										<label class="mypage-label">membership</label>
+										<c:if test="${user.me_membership != 'Y'}">
+											<p>멤버십 사용 기간이 아닙니다.</p>
+											<button class="fit">멤버십 신청하기(30일)</button>
+										</c:if>
+									</div>
 								</div>
 							</section>
 					
@@ -346,9 +344,19 @@
 				dataType:'json',
 				success:function(res){
 					console.log('res: ',res);
-						if(res == 'true'){
+					//menuCntOver, menuCntLack, true, false
+						if(res.res == 'true'){
 							console.log('성공');
-							reloadDiv('#menu-view-box');
+							$('#menu-view-box').load(window.location.href + '#menu-view-box');
+						}
+						if(res.res == 'menuCntOver'){
+							alert('메뉴는 최대 5개까지 만들 수 있습니다.');
+						}
+						if(res.res == 'menuCntLack'){
+							alert('메뉴는 최소 1개가 존재해야합니다.');
+						}
+						if(res.res == 'false'){
+							alert('잘못된 접근입니다. 다시 시도해주세요');
 						}
 				}
 				

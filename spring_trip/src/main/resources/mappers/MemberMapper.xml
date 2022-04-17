@@ -98,8 +98,10 @@
 	</update>
 	
 	<delete id="deleteSpotMenu">
-	DELETE spot_menu
-		WHERE sm_num = #{menu.sm_num};
+		SET foreign_key_checks = 0;
+		DELETE FROM spot_menu
+		WHERE sm_num = ${menu.sm_num};
+		SET foreign_key_checks = 1;
 	</delete>
 	
 </mapper>
