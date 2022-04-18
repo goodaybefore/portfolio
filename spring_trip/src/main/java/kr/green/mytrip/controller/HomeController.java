@@ -140,6 +140,7 @@ public class HomeController {
 		
 		if(newUser !=null) {
 			request.getSession().setAttribute("user", newUser);
+			mv.addObject("user", input);
 			out.println("<script>alert('회원정보 수정이 완료되었습니다.');</script>");
 			mv.setViewName("/member/mypage");
 		}else {
@@ -193,9 +194,9 @@ public class HomeController {
 	@RequestMapping("/download")
 	public ResponseEntity<byte[]> downloadFile(String fileName)throws Exception{
 		//집
-		String uploadPath = "E:\\2021\\portfolio\\member_profile";
+		//String uploadPath = "E:\\2021\\portfolio\\member_profile";
 		//학원
-		//String uploadPath = "E:\\2021\\portfolio\\upload_file";
+		String uploadPath = "E:\\portfolio_gny\\member_profile";
 		
 	    InputStream in = null;
 	    //byte에 담아서 전송

@@ -33,7 +33,7 @@
 										  	<tr>
 										  		 <td>${mateList.tm_num }</td>
 										  		 <td>${mateList.tm_mate_id }</td>
-										  		 <td><a href="#">spot home</a></td>
+										  		 <td><a href="<%=request.getContextPath()%>/spot/${mateList.tm_mate_id}/home">${mateList.tm_mate_id}의 spot home</a></td>
 										  	</tr>
 										  </c:forEach>
 										  </tbody>

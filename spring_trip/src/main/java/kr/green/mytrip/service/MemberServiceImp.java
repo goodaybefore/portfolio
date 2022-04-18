@@ -27,8 +27,10 @@ public class MemberServiceImp implements MemberService {
 	
 	@Autowired
 	private JavaMailSender mailSender;
-	
-	String uploadPath = "E:\\2021\\portfolio\\member_profile";
+	//집
+	//String uploadPath = "E:\\2021\\portfolio\\member_profile";
+	//학원
+	String uploadPath = "E:\\portfolio_gny\\member_profile";
 	//signup
 	@Override
 	public boolean insertMember(MemberVO member) {

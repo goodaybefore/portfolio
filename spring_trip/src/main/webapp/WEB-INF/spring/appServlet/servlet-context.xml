@@ -19,7 +19,9 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	<!-- 이미지 src에 mapping된 경로가 추가되면 location값부터 경로를 찾아가거라 -->
-	<resources mapping="/img/**" location="file:///E:/2021/" />
+	<!--집
+	<resources mapping="/img/**" location="file:///E:/2021/" /> -->
+	<resources mapping="/img/**" location="file:///E:/" />
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

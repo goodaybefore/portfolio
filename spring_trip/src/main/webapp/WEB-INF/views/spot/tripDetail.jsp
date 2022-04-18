@@ -168,7 +168,13 @@
 											  		<td style="text-overflow: ellipsis; overflow:hidden">
 											  			<a href="<%=request.getContextPath()%>/spot/${spot_user}/activityDetail/${trip.tr_sm_num}/${trip.tr_num}/${actList.ac_num}">${actList.ac_title}</a>
 											  		</td>
-											  		<td>${actList.ac_start_date_str} ~ ${actList.ac_end_date_str }</td>
+											  		<c:if test="${actList.ac_start_date_str == actList.ac_end_date_str}">
+											  			<td>${actList.ac_start_date_str }</td>
+											  		</c:if>
+											  		<c:if test="${actList.ac_start_date_str != actList.ac_end_date_str}">
+											  			<td>${actList.ac_start_date_str} ~ ${actList.ac_end_date_str }</td>
+											  		</c:if>
+											  		
 											  		<td>${actList.ac_mca_name}</td>
 											  		<td>${actList.ac_op_name }</td>
 											  	</tr>

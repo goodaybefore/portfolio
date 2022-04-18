@@ -157,9 +157,9 @@ public class TripController {
 	@RequestMapping("/download")
 	public ResponseEntity<byte[]> downloadFile(String fileName)throws Exception{
 		//집
-//		String uploadPath = "C:\\Users\\tsj02\\Documents\\java_gny\\upload";
+		//String uploadPath = "E:\\2021\\portfolio\\upload_file";
 		//학원
-		String uploadPath = "E:\\2021\\portfolio\\upload_file";
+		String uploadPath = "E:\\portfolio_gny\\upload_file";
 		
 	    InputStream in = null;
 	    //byte에 담아서 전송

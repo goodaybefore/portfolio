@@ -188,7 +188,10 @@
 												<div class="profile-box">
 													<div class="profile-img">
 														<c:if test="${user.me_photo != null }">
-															<img class="user-photo-img" src="/img/portfolio/member_profile${user.me_photo}"/>
+															<!-- 집용
+															<img class="user-photo-img" src="/img/portfolio/member_profile${user.me_photo}"/> -->
+															<!-- 학원용 -->
+															<img class="user-photo-img" src="/img/portfolio_gny/member_profile${user.me_photo}"/>
 															<input type="hidden" name="me_photo" value="${user.me_photo }"/>
 														</c:if>
 														<c:if test="${user.me_photo == null }">no image</c:if>
